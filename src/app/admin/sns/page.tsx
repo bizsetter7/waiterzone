@@ -253,7 +253,7 @@ export default function SnsManagementPage() {
     };
 
     // ── 인증 헤더 ──────────────────────────────────────────────────────────────
-    const getAuthHeader = useCallback(() => {
+    const getAuthHeader = useCallback((): Record<string, string> => {
         const token = (user as any)?.access_token ?? (user as any)?.session?.access_token ?? '';
         return token ? { Authorization: `Bearer ${token}` } : {};
     }, [user]);

@@ -129,9 +129,10 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(
     _req: NextRequest,
-    { params }: { params: { slug: string } }
+    { params }: { params: Promise<{ slug: string }> }
 ) {
-    const slug = params.slug?.toLowerCase().trim();
+    const { slug: rawSlug } = await params;
+    const slug = rawSlug?.toLowerCase().trim();
     const target = SLUG_MAP[slug];
 
     if (!target) {

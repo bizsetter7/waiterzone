@@ -10,14 +10,15 @@ import ShopDetailView from '@/components/jobs/ShopDetailView';
 export const dynamic = 'force-dynamic';
 
 interface Props {
-    params: {
+    params: Promise<{
         id: string;
-    };
+    }>;
 }
 
 // 1. Generate Metadata for SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const shop = (shopsData as Shop[]).find((s) => s.id === params.id);
+    const { id } = await params;
+    const shop = (shopsData as Shop[]).find((s) => s.id === id);
 
     if (!shop) {
         return {
@@ -28,11 +29,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const regionName = shop.region?.replace(/[\[\]]/g, '').split(' ')[0] || '전국';
     const districtName = shop.region?.replace(/[\[\]]/g, '').split(' ')[1] || '';
     const category = shop.workType || shop.category || '룸웨이터';
-    
-    // [v3.6] AI 용어 배제 및 타겟 SEO(여자남성유흥알바) 강화
+
     const cleanTitle = (shop.title || '')
         .replace(/엔터프라이즈|인재솔루션|인재알바/g, '고수익알바');
-    
+
     const pageTitle = `${shop.name} - ${regionName} ${districtName} 여자야간알바·여자남성유흥알바 전문 | 웨이터존`;
     const description = `${regionName} ${districtName} 위치한 ${shop.name}의 ${category} 상세정보. ${cleanTitle} 급여: ${shop.pay || '당일지급'}. 확실하게 검증된 고소득 남성유흥알바 정보를 확인하세요.`;
 
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         openGraph: {
             title: `${shop.name} 채용정보 - 웨이터존`,
             description,
-            url: `https://waiterzone.kr/jobs/${params.id}`,
+            url: `https://waiterzone.kr/jobs/${id}`,
             siteName: '웨이터존',
             type: 'article',
         },
@@ -51,8 +51,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 // 2. Page Component
-export default function JobDetailPage({ params }: Props) {
-    const shop = (shopsData as Shop[]).find((s) => s.id === params.id);
+export default async function JobDetailPage({ params }: Props) {
+    const { id } = await params;
+    const shop = (shopsData as Shop[]).find((s) => s.id === id);
 
     if (!shop) {
         notFound();
@@ -68,7 +69,7 @@ export default function JobDetailPage({ params }: Props) {
         "@type": "WebPage",
         "name": `${shop.name} - ${regionName} 채용정보`,
         "description": `${shop.name}에서 ${category} 파트를 채용합니다.`,
-        "url": `https://waiterzone.kr/jobs/${params.id}`,
+        "url": `https://waiterzone.kr/jobs/${id}`,
         "publisher": { "@type": "Organization", "name": "웨이터존" }
     };
 
@@ -78,7 +79,7 @@ export default function JobDetailPage({ params }: Props) {
         "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "홈", "item": "https://waiterzone.kr" },
             { "@type": "ListItem", "position": 2, "name": "채용정보", "item": "https://waiterzone.kr/jobs" },
-            { "@type": "ListItem", "position": 3, "name": `${shop.name} 채용`, "item": `https://waiterzone.kr/jobs/${params.id}` }
+            { "@type": "ListItem", "position": 3, "name": `${shop.name} 채용`, "item": `https://waiterzone.kr/jobs/${id}` }
         ]
     };
 

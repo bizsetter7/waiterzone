@@ -164,12 +164,14 @@ export async function GET(request: NextRequest) {
         } catch (apiError: any) {
             // X API 실패(402/403 등) → 초안을 DB에 저장하고 200 반환 (크론 실패 처리 방지)
             console.warn('[Cron/twitter-post] X API 실패, 초안 저장 모드:', apiError?.message);
-            await supabaseAdmin.from('tweet_queue').insert({
-                tweet_text: tweetText,
-                tweet_type: tweetType,
-                status: 'pending',
-                created_at: new Date().toISOString(),
-            }).then(() => {}).catch(() => {}); // 테이블 없어도 무시
+            try {
+                await supabaseAdmin.from('tweet_queue').insert({
+                    tweet_text: tweetText,
+                    tweet_type: tweetType,
+                    status: 'pending',
+                    created_at: new Date().toISOString(),
+                });
+            } catch { /* 테이블 없어도 무시 */ }
 
             return NextResponse.json({
                 ok:        true,

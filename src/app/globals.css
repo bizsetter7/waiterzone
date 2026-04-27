@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+/* ── Keyword Marquee Animation ───────────────────────────────────────── */
+@keyframes keyword-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.keyword-marquee {
+  animation: keyword-marquee 12s linear infinite;
+  will-change: transform;
+}
+.keyword-marquee:hover {
+  animation-play-state: paused;
+}
+/* ── /keyword-marquee ────────────────────────────────────────────────── */
+
+/* Force Light Mode Globally */
+:root,
+html,
+body,
+* {
+  color-scheme: light !important;
+  forced-color-adjust: none !important;
+}
+
+/* 웨이터존 프리미엄 디자인 */
+:root {
+  color-scheme: light;
+  --color-primary: #1e3a5f;      /* 다크 블루 */
+  --color-primary-dark: #152942; /* 더 어두운 블루 */
+}
+
+html,
+body {
+  height: auto;
+  min-height: 100%;
+  overscroll-behavior-y: none;
+  font-family: "Pretendard", "Nanum Gothic", sans-serif;
+  background-color: white !important;
+  color: #111827;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-smooth: always;
+}
+
+body.modal-active,
+body.modal-open {
+  overflow: hidden !important;
+  width: 100%;
+  touch-action: none;
+  -webkit-overflow-scrolling: none;
+}
+
+/* Force White Background Override for Mobile Cards */
+
+.force-dark-text {
+  color: #111827 !important;
+}
+
+.force-dark-text * {
+  color: #111827 !important;
+}
+
+/* Rainbow Animations */
+@keyframes rainbow-text {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-rainbow-text {
+  background: linear-gradient(to right, #ef5350, #f48fb1, #7e57c2, #2196f3, #26c6da, #43a047, #eeff41, #f9a825, #ff5722);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: rainbow-text 3s linear infinite;
+}
+
+@keyframes rainbow-border {
+  0% {
+    border-color: #ff0000;
+    box-shadow: 0 0 5px #ff0000;
+  }
+
+  15% {
+    border-color: #ff7f00;
+    box-shadow: 0 0 5px #ff7f00;
+  }
+
+  30% {
+    border-color: #ffff00;
+    box-shadow: 0 0 5px #ffff00;
+  }
+
+  45% {
+    border-color: #00ff00;
+    box-shadow: 0 0 5px #00ff00;
+  }
+
+  60% {
+    border-color: #0000ff;
+    box-shadow: 0 0 5px #0000ff;
+  }
+
+  75% {
+    border-color: #4b0082;
+    box-shadow: 0 0 5px #4b0082;
+  }
+
+  90% {
+    border-color: #9400d3;
+    box-shadow: 0 0 5px #9400d3;
+  }
+
+  100% {
+    border-color: #ff0000;
+    box-shadow: 0 0 5px #ff0000;
+  }
+}
+
+.animate-rainbow-border {
+  animation: rainbow-border 3s linear infinite;
+  border-style: solid;
+}
+
+/* Icon Seesaw Animation (Stronger) */
+@keyframes seesaw {
+
+  0%,
+  100% {
+    transform: rotate(15deg);
+  }
+
+  50% {
+    transform: rotate(-15deg);
+  }
+}
+
+.animate-seesaw {
+  animation: seesaw 0.8s ease-in-out infinite;
+  display: inline-block;
+  transform-origin: bottom center;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}

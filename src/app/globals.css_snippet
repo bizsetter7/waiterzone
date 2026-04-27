@@ -1,0 +1,11 @@
+
+/* Force White Background Override */
+.force-white-bg {
+    background-color: #ffffff !important;
+}
+.force-dark-text {
+    color: #111827 !important;
+}
+.force-dark-text * {
+    color: #111827 !important;
+}

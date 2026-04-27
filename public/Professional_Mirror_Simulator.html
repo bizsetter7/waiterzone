@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coco Pro - Command Simulator v9.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --iphone-width: 450px; --iphone-height: 900px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            height: 100vh; overflow: hidden;
+            background-color: #020617; color: #e2e8f0;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex; flex-direction: column;
+        }
+        header { height: 64px; flex-shrink: 0; z-index: 50; }
+        .main-wrapper { display: flex; height: calc(100vh - 64px); overflow: hidden; width: 100%; }
+        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        .btn-action {
+            background: #1e293b; color: #94a3b8; padding: 6px 12px;
+            border-radius: 10px; font-size: 11px; font-weight: 800;
+            transition: all 0.2s; border: 1px solid #334155; cursor: pointer;
+        }
+        .btn-action:hover { background: #334155; color: white; }
+        .btn-action.active { background: #3b82f622; color: #3b82f6; border-color: #3b82f6; }
+
+        .btn-nav {
+            background: #1e293b; color: #64748b; width: 28px; height: 28px;
+            border-radius: 8px; font-size: 13px; font-weight: 900;
+            transition: all 0.15s; border: 1px solid #334155; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .btn-nav:hover { background: #334155; color: white; }
+        .btn-nav:active { transform: scale(0.92); }
+
+        .workspace { display: flex; flex: 1; overflow: hidden; position: relative; }
+
+        .control-sidebar {
+            width: 280px; background: #0f172a; border-right: 1px solid #1e293b;
+            display: flex; flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100; height: 100%; overflow: hidden;
+        }
+        .sidebar-scroll-area { flex: 1; overflow-y: auto; overflow-x: hidden; }
+        .sidebar-scroll-area::-webkit-scrollbar { width: 6px; }
+        .sidebar-scroll-area::-webkit-scrollbar-track { background: #0f172a; }
+        .sidebar-scroll-area::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+        .sidebar-scroll-area::-webkit-scrollbar-thumb:hover { background: #60a5fa; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+
+        @media (max-width: 800px) {
+            .control-sidebar { position: absolute; left: 0; top: 0; bottom: 0; transform: translateX(-100%); height: 100%; }
+            .control-sidebar.open { transform: translateX(0); }
+        }
+
+        .iphone-container {
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            background: radial-gradient(circle at center, #111827 0%, #020617 100%);
+            position: relative; padding: 0; overflow: hidden; min-height: 0;
+        }
+
+        .iphone-frame {
+            width: var(--iphone-width); height: var(--iphone-height);
+            background: #111; border-radius: 28px; padding: 8px; /* Android S21 기본 */
+            position: relative;
+            box-shadow: 0 0 0 1px #2a2a2a, 0 0 0 3px #0f0f0f, 0 40px 100px rgba(0,0,0,0.8), 0 100px 200px -40px rgba(0,0,0,0.9);
+            transform-origin: center center; flex-shrink: 0;
+            transition: border-radius 0.3s ease, transform 0.1s ease-out;
+            backface-visibility: hidden; -webkit-font-smoothing: antialiased; transform: translateZ(0);
+        }
+
+        .iphone-screen {
+            width: 100%; height: 100%; background: #000;
+            border-radius: 20px; overflow: hidden; position: relative; /* Android S21 기본 */
+            box-shadow: inset 0 0 4px rgba(255,255,255,0.05);
+            mask-image: -webkit-radial-gradient(white, black);
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
+            transition: border-radius 0.3s ease;
+        }
+
+        /* iPhone 프레임 오버라이드 */
+        .iphone-frame.frame-iphone { border-radius: 54px; padding: 10px; }
+        .iphone-frame.frame-iphone .iphone-screen { border-radius: 44px; }
+
+        /* 펀치홀 (Android S21 기본) */
+        .notch {
+            position: absolute; top: 14px; left: 50%;
+            width: 14px; height: 14px;
+            background: #000; border-radius: 50%; transform: translateX(-50%); z-index: 1000;
+            box-shadow: 0 0 0 2px #1a1a1a, inset 0 0 3px rgba(255,255,255,0.15);
+            transition: all 0.3s ease;
+        }
+        /* iPhone Notch */
+        .notch.notch-iphone {
+            width: 100px; height: 30px; top: 18px; border-radius: 20px;
+            box-shadow: inset 0 0 4px rgba(255,255,255,0.1);
+        }
+        /* Dynamic Island */
+        .notch.dynamic-island {
+            width: 110px; height: 34px; top: 12px; border-radius: 20px;
+            box-shadow: 0 0 0 1px #1a1a1a, inset 0 0 8px rgba(0,0,0,0.8);
+        }
+
+        iframe {
+            width: 100%; height: 100%; border: none; background: #fff;
+            image-rendering: -webkit-optimize-contrast; -webkit-font-smoothing: antialiased;
+        }
+
+        .accordion-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 16px; background: #1e293b55; cursor: pointer;
+            border-bottom: 1px solid #1e293b; font-size: 11px; font-weight: 900;
+            color: #94a3b8; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .accordion-content {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0, 1, 0, 1); background: #0f172a;
+        }
+        .accordion-content.open {
+            max-height: 1200px;
+            transition: max-height 0.4s cubic-bezier(1, 0, 1, 0); border-bottom: 1px solid #1e293b;
+        }
+        .accordion-inner { padding: 16px; }
+
+        .checklist-row {
+            display: flex; align-items: center; gap: 10px; padding: 10px 16px;
+            font-size: 11px; font-weight: 600; color: #64748b; transition: all 0.2s; cursor: pointer;
+        }
+        .checklist-row.checked { color: #3b82f6; background: #3b82f60a; }
+
+        input[type="range"] {
+            width: 100%; accent-color: #3b82f6; height: 4px;
+            background: #334155; border-radius: 2px; cursor: pointer;
+        }
+
+        /* Quick Nav chips */
+        .quick-chip {
+            display: inline-flex; align-items: center; gap: 4px;
+            background: #1e293b; border: 1px solid #334155; color: #94a3b8;
+            padding: 5px 10px; border-radius: 8px; font-size: 10px; font-weight: 800;
+            cursor: pointer; transition: all 0.15s; white-space: nowrap;
+        }
+        .quick-chip:hover { background: #3b82f622; border-color: #3b82f6; color: #60a5fa; }
+        .quick-chip:active { transform: scale(0.95); }
+        .quick-chip.admin { border-color: #7c3aed44; color: #a78bfa; }
+        .quick-chip.admin:hover { background: #7c3aed22; border-color: #7c3aed; }
+
+        /* Page title strip */
+        #page-title-strip {
+            font-size: 10px; font-weight: 700; color: #475569;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            max-width: 200px;
+        }
+
+        /* Rotate animation */
+        .rotating { animation: spin 0.4s linear; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* Landscape badge */
+        #landscape-badge {
+            display: none; font-size: 8px; font-weight: 900; color: #f59e0b;
+            background: #f59e0b22; border: 1px solid #f59e0b44; padding: 2px 6px;
+            border-radius: 4px; text-transform: uppercase; letter-spacing: 1px;
+        }
+        #landscape-badge.visible { display: block; }
+
+        /* Auto-refresh pulse */
+        #auto-refresh-dot { display: none; }
+        #auto-refresh-dot.active { display: block; }
+
+        #sidebar-toggle { position: absolute; left: 10px; top: 10px; z-index: 200; display: none; }
+        @media (max-width: 800px) { #sidebar-toggle { display: block; } }
+    </style>
+</head>
+<body>
+
+    <!-- 🌐 Header Bar -->
+    <header class="glass flex items-center justify-between shrink-0 z-[110] px-4 gap-3">
+        <!-- LEFT: Logo + Port -->
+        <div class="flex items-center gap-3 shrink-0">
+            <div class="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center font-black text-xl shadow-lg shadow-blue-500/20">C</div>
+            <div class="hidden lg:block">
+                <h1 class="font-black text-xs tracking-tighter leading-none">COCO PRO</h1>
+                <p class="text-[8px] text-slate-500 font-bold tracking-[0.2em] uppercase mt-0.5">v9.0 Command</p>
+            </div>
+            <div class="h-6 w-px bg-slate-800 mx-1"></div>
+            <div class="flex gap-1" id="port-selector">
+                <button onclick="setBasePort(3000)" class="btn-action active px-2 py-1 text-[10px]">3000</button>
+                <button onclick="setBasePort(3001)" class="btn-action px-2 py-1 text-[10px]">3001</button>
+                <button onclick="setBasePort(3002)" class="btn-action px-2 py-1 text-[10px]">3002</button>
+                <button onclick="setBasePort(3003)" class="btn-action px-2 py-1 text-[10px]">3003</button>
+            </div>
+        </div>
+
+        <!-- CENTER: Nav Controls + URL Bar -->
+        <div class="flex-1 flex items-center gap-2 min-w-0 max-w-2xl mx-auto">
+            <!-- Back / Forward / Reload -->
+            <div class="flex gap-1 shrink-0">
+                <button class="btn-nav" onclick="navBack()" title="뒤로">←</button>
+                <button class="btn-nav" onclick="navForward()" title="앞으로">→</button>
+                <button class="btn-nav" id="reload-btn" onclick="navReload()" title="새로고침">↻</button>
+            </div>
+
+            <!-- URL Input -->
+            <div class="relative flex items-center flex-1 min-w-0">
+                <div class="absolute left-3 text-slate-500 font-bold text-[9px] py-0.5 px-1.5 bg-slate-900 rounded border border-slate-800 z-10">LOCAL</div>
+                <input type="text" id="url-input" value="/"
+                    class="w-full bg-slate-900 border border-slate-800 rounded-full py-1.5 pl-14 pr-20 text-xs font-mono focus:outline-none focus:border-blue-500/50 transition-all text-slate-300">
+                <button onclick="updateMirror()" class="absolute right-1 px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-[10px] font-black transition-all shadow-lg shadow-blue-500/20">GO</button>
+            </div>
+
+            <!-- Copy URL + Page Title -->
+            <button onclick="copyCurrentUrl()" class="btn-nav shrink-0" title="URL 복사">⎘</button>
+            <span id="page-title-strip" class="hidden lg:block">로딩 중...</span>
+        </div>
+
+        <!-- RIGHT: Controls -->
+        <div class="flex items-center gap-2 shrink-0">
+            <span id="landscape-badge">가로</span>
+            <span id="auto-refresh-dot" class="w-2 h-2 rounded-full bg-amber-500 animate-pulse" title="자동 새로고침 ON"></span>
+
+            <div class="h-6 w-px bg-slate-800"></div>
+            <button onclick="smartFit()" class="btn-action text-[9px] px-2 py-1 border-blue-500/30 bg-blue-500/5 hover:bg-blue-500/20 text-blue-400 uppercase">Fit</button>
+            <div id="zoom-badge" class="bg-slate-800 px-2 py-1 rounded-md text-[9px] text-slate-400 font-black">100%</div>
+        </div>
+    </header>
+
+    <div class="main-wrapper">
+        <button id="sidebar-toggle" onclick="toggleSidebar()" class="btn-action">☰</button>
+
+        <!-- 📑 Compact Control Panel -->
+        <aside class="control-sidebar shrink-0" id="sidebar">
+            <div class="sidebar-scroll-area">
+
+                <!-- ⚡ Quick Nav -->
+                <div class="accordion-header active" onclick="toggleAccordion(this)">
+                    <span>⚡ Quick Nav</span>
+                    <svg class="w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="accordion-content open" style="max-height:1200px">
+                    <div class="accordion-inner">
+                        <!-- 주요 페이지 -->
+                        <p class="text-[8px] text-slate-600 font-black uppercase tracking-widest mb-2">주요 페이지</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <button class="quick-chip" onclick="goPage('/')">🏠 홈</button>
+                            <button class="quick-chip" onclick="goPage('/jobs')">💼 채용</button>
+                            <button class="quick-chip" onclick="goPage('/community')">💬 커뮤니티</button>
+                            <button class="quick-chip" onclick="goPage('/region')">📍 지역</button>
+                            <button class="quick-chip" onclick="goPage('/guide')">📖 가이드</button>
+                            <button class="quick-chip" onclick="goPage('/customer-center')">📞 고객센터</button>
+                        </div>
+                        <!-- 회원 -->
+                        <p class="text-[8px] text-slate-600 font-black uppercase tracking-widest mb-2">회원 영역</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <button class="quick-chip" onclick="goPage('/my-shop')">👤 마이샵</button>
+                            <button class="quick-chip" onclick="goPage('/my-shop?view=resume-form')">📄 이력서</button>
+                            <button class="quick-chip" onclick="goPage('/my-shop?view=point-shop')">💰 포인트</button>
+                            <button class="quick-chip" onclick="goPage('/?page=login')">🔑 로그인</button>
+                        </div>
+                        <!-- 어드민 -->
+                        <p class="text-[8px] text-slate-600 font-black uppercase tracking-widest mb-2">어드민</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <button class="quick-chip admin" onclick="goPage('/admin')">🛡 어드민 홈</button>
+                            <button class="quick-chip admin" onclick="goPage('/admin?tab=users')">👥 회원관리</button>
+                            <button class="quick-chip admin" onclick="goPage('/admin?tab=ad-audit')">📋 광고심사</button>
+                            <button class="quick-chip admin" onclick="goPage('/admin?tab=payments')">💳 결제내역</button>
+                            <button class="quick-chip admin" onclick="goPage('/admin?tab=marketing')">📣 마케팅</button>
+                            <button class="quick-chip admin" onclick="goPage('/admin/system-verification')">🔍 헬스체크</button>
+                        </div>
+                        <!-- 지역 채용 샘플 -->
+                        <p class="text-[8px] text-slate-600 font-black uppercase tracking-widest mb-2">지역 채용 (샘플)</p>
+                        <div class="flex flex-wrap gap-1.5">
+                            <button class="quick-chip" onclick="goPage('/coco/gangnam')">강남</button>
+                            <button class="quick-chip" onclick="goPage('/coco/hongdae')">홍대</button>
+                            <button class="quick-chip" onclick="goPage('/coco/incheon')">인천</button>
+                            <button class="quick-chip" onclick="goPage('/coco/busan')">부산</button>
+                            <button class="quick-chip" onclick="goPage('/coco/daegu')">대구</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 📓 Sticky Task Pad -->
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>📓 Sticky Memo</span>
+                    <svg class="w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner p-3">
+                        <textarea id="taskPad" placeholder="세션 메모 (자동 저장)"
+                            class="w-full h-28 bg-slate-900/50 border border-slate-700 rounded-lg p-2 text-[10px] text-slate-300 outline-none focus:border-blue-500 transition-all resize-none"></textarea>
+                        <button onclick="clearMemo()" class="mt-1.5 text-[9px] text-slate-600 hover:text-red-400 transition-colors font-bold">메모 지우기</button>
+                    </div>
+                </div>
+
+                <!-- 🌐 Production Projects -->
+                <div class="accordion-header active" onclick="toggleAccordion(this)">
+                    <span>🚀 Production (Vercel)</span>
+                    <svg class="w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="accordion-content open" style="max-height:1200px">
+                    <div class="accordion-inner space-y-1.5">
+                        <button onclick="loadRemote('https://www.cocoalba.kr')" class="w-full btn-action flex justify-between items-center group py-2.5">
+                            <div class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
+                                <span class="text-[10px] text-emerald-400 font-black">cocoalba.kr (운영)</span>
+                            </div>
+                            <svg class="w-3 h-3 text-slate-500 group-hover:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </button>
+                        <button onclick="loadRemote('https://chocoidea.vercel.app')" class="w-full btn-action flex justify-between items-center group py-2.5">
+                            <span class="text-[10px] text-white">P1. 초코아이디어</span>
+                            <svg class="w-3 h-3 text-slate-500 group-hover:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </button>
+                        <button onclick="loadRemote('https://coco-universe.vercel.app')" class="w-full btn-action flex justify-between items-center group py-2.5">
+                            <span class="text-[10px] text-white">P2. 코코알바 통합</span>
+                            <svg class="w-3 h-3 text-slate-500 group-hover:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </button>
+                        <button onclick="loadRemote('https://coco-inky.vercel.app')" class="w-full btn-action flex justify-between items-center group py-2.5">
+                            <span class="text-[10px] text-white">P3. 73개 지역 랜딩</span>
+                            <svg class="w-3 h-3 text-slate-500 group-hover:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </button>
+                        <button onclick="loadRemote('https://partners-credit.vercel.app')" class="w-full btn-action flex justify-between items-center group py-2.5">
+                            <span class="text-[10px] text-white">P4. 파트너스크레딧</span>
+                            <svg class="w-3 h-3 text-slate-500 group-hover:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 📍 P3 Regional Selector -->
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>📍 P3 지역 랜딩</span>
+                    <svg class="w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner space-y-3">
+                        <input type="text" id="regionSearch" placeholder="지역 검색 (예: gangnam)"
+                            oninput="filterRegions(this.value)"
+                            class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-[10px] text-white outline-none focus:border-blue-500">
+                        <div id="region-list" class="max-h-48 overflow-y-auto space-y-1 pr-1 custom-scrollbar"></div>
+                    </div>
+                </div>
+
+                <!-- 🏦 Management Hub -->
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🏦 Management Hub</span>
+                    <svg class="w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner grid grid-cols-2 gap-2">
+                        <a href="https://vercel.com/dashboard" target="_blank" class="btn-action flex flex-col items-center gap-1 py-3 group no-underline text-center">
+                            <svg class="w-4 h-4 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M24 22.525H0L12 .475l12 22.05z"/></svg>
+                            <span class="text-[8px]">VERCEL</span>
+                        </a>
+                        <a href="https://github.com/bizsetter7" target="_blank" class="btn-action flex flex-col items-center gap-1 py-3 group no-underline text-center">
+                            <svg class="w-4 h-4 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.43.372.823 1.102.823 2.222 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                            <span class="text-[8px]">GITHUB</span>
+                        </a>
+                        <a href="https://search.google.com/search-console" target="_blank" class="btn-action flex flex-col items-center gap-1 py-3 group no-underline text-center">
+                            <svg class="w-4 h-4 group-hover:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                            <span class="text-[8px]">CONSOLE</span>
+                        </a>
+                        <a href="https://supabase.com/dashboard" target="_blank" class="btn-action flex flex-col items-center gap-1 py-3 group no-underline text-center">
+                            <svg class="w-4 h-4 group-hover:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path></svg>
+                            <span class="text-[8px]">SUPABASE</span>
+                        </a>
+                        <a href="https://searchadvisor.naver.com" target="_blank" class="btn-action flex flex-col items-center gap-1 py-3 group no-underline text-center col-span-2">
+                            <svg class="w-4 h-4 group-hover:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <span class="text-[8px]">NAVER 서치어드바이저</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 📱 Device Tuner -->
+                <div class="accordion-header active" onclick="toggleAccordion(this)">
+                    <span>📱 Device Tuner</span>
+                    <svg class="w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="accordion-content open" style="max-height:1200px">
+                    <div class="accordion-inner space-y-5">
+                        <!-- Presets -->
+                        <div class="space-y-2">
+                            <label class="text-[9px] text-slate-500 font-black uppercase">디바이스 프리셋</label>
+                            <div class="grid grid-cols-2 gap-1.5">
+                                <button onclick="setDevice(412,780)" class="btn-action text-[10px]" id="preset-s21-ultra">S21/S24 Ultra</button>
+                                <button onclick="setDevice(360,720)" class="btn-action text-[10px]" id="preset-s21">S21 (Full)</button>
+                                <button onclick="setDevice(360,668)" class="btn-action active text-[10px]" id="preset-s21-real">S21 (Real)</button>
+                                <button onclick="setDevice(393,740)" class="btn-action text-[10px]" id="preset-i15">iPhone 15 Pro</button>
+                                <button onclick="setDevice(375,548)" class="btn-action text-[10px]" id="preset-ise">iPhone SE</button>
+                                <button onclick="setDevice(414,736)" class="btn-action text-[10px]" id="preset-i8plus">iPhone 8 Plus</button>
+                            </div>
+                        </div>
+
+                        <!-- 가로/세로 토글 -->
+                        <div class="flex items-center justify-between">
+                            <label class="text-[9px] text-slate-500 font-black uppercase">가로 모드</label>
+                            <button onclick="toggleLandscape()" id="landscape-btn" class="btn-action text-[10px] px-3">⟳ 회전</button>
+                        </div>
+
+                        <!-- Width Slider -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <label class="text-[9px] text-slate-500 font-black uppercase">Width</label>
+                                <span id="width-label" class="text-[10px] text-blue-400 font-black">360px</span>
+                            </div>
+                            <input type="range" id="widthSlider" min="300" max="900" value="360" oninput="manualWidth(this.value)">
+                        </div>
+
+                        <!-- Height Slider -->
+                        <div class="space-y-2 border-b border-white/5 pb-4">
+                            <div class="flex justify-between">
+                                <label class="text-[9px] text-slate-500 font-black uppercase">Height</label>
+                                <span id="height-label" class="text-[10px] text-emerald-400 font-black">668px</span>
+                            </div>
+                            <input type="range" id="heightSlider" min="400" max="1200" value="668" oninput="manualHeight(this.value)">
+                        </div>
+
+                        <!-- Frame Options -->
+                        <div class="space-y-2">
+                            <label class="text-[9px] text-slate-500 font-black uppercase">프레임 / 카메라</label>
+                            <div class="grid grid-cols-2 gap-1.5 mb-2">
+                                <button onclick="setFrame('android')" id="btn-android" class="btn-action active text-[10px]">🤖 Android S21</button>
+                                <button onclick="setFrame('iphone')" id="btn-iphone" class="btn-action text-[10px]">🍎 iPhone</button>
+                            </div>
+                            <div id="iphone-cam-opts" class="grid grid-cols-2 gap-1.5" style="display:none">
+                                <button onclick="setNotch('notch-iphone')" id="btn-notch" class="btn-action text-[10px]">📱 Notch</button>
+                                <button onclick="setNotch('dynamic-island')" id="btn-di" class="btn-action text-[10px]">💊 Dynamic Island</button>
+                            </div>
+                        </div>
+
+                        <!-- Display Engine -->
+                        <div class="space-y-2 pt-1 border-t border-slate-800">
+                            <label class="text-[9px] text-slate-500 font-black uppercase block">Display Engine</label>
+                            <button onclick="toggleSharp()" class="w-full btn-action flex justify-between items-center group">
+                                <span>Anti-Aliasing Boost</span>
+                                <div id="sharpToggle" class="w-8 h-4 bg-blue-600 rounded-full relative transition-colors p-0.5">
+                                    <div class="w-3 h-3 bg-white rounded-full transition-transform translate-x-4" id="sharpKnob"></div>
+                                </div>
+                            </button>
+                        </div>
+
+                        <!-- Auto-Refresh -->
+                        <div class="space-y-2 pt-1 border-t border-slate-800">
+                            <label class="text-[9px] text-slate-500 font-black uppercase block">자동 새로고침</label>
+                            <div class="flex items-center gap-2">
+                                <button onclick="toggleAutoRefresh()" id="auto-refresh-btn" class="flex-1 btn-action text-[10px]">OFF</button>
+                                <select id="auto-refresh-interval" class="bg-slate-900 border border-slate-700 text-slate-400 text-[10px] rounded px-2 py-1.5 outline-none">
+                                    <option value="3000">3초</option>
+                                    <option value="5000" selected>5초</option>
+                                    <option value="10000">10초</option>
+                                    <option value="30000">30초</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 🛡️ Audit Checklist -->
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="flex items-center gap-2">
+                        <span>🛡️ Audit</span>
+                        <span id="integrity-score" class="text-[10px] text-blue-500 font-bold">0%</span>
+                    </div>
+                    <svg class="w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner py-2" id="audit-list"></div>
+                </div>
+
+            </div>
+
+            <div class="p-4 border-t border-slate-800 shrink-0">
+                <div class="text-[9px] text-slate-600 font-bold">COCO PRO v9.0 — Upgraded by Claude</div>
+            </div>
+        </aside>
+
+        <!-- 📱 Primary Mirroring Container -->
+        <main class="iphone-container">
+            <div class="iphone-frame" id="frame">
+                <div class="iphone-screen">
+                    <div class="notch" id="notch"></div>
+                    <iframe id="mirrorFrame" src="/" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals allow-top-navigation"></iframe>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // ─── State ───────────────────────────────────────────────
+        const FRAME_OFFSET = 32;
+        let basePort = 3000;
+        let currentWidth = 360;
+        let currentHeight = 668;
+        let isSharp = true;
+        let isLandscape = false;
+        let autoRefreshTimer = null;
+
+        // ─── DOM Refs ─────────────────────────────────────────────
+        const frameWrapper  = document.getElementById('frame');
+        const mirrorFrame   = document.getElementById('mirrorFrame');
+        const urlInput      = document.getElementById('url-input');
+        const sharpToggle   = document.getElementById('sharpToggle');
+        const sharpKnob     = document.getElementById('sharpKnob');
+        const notchEl       = document.getElementById('notch');
+
+        // ─── Audit Items ─────────────────────────────────────────
+        const AUDIT_ITEMS = [
+            { id:1,  text:"보안 서버 (SSL/TLS 1.2+)",      checked:true },
+            { id:2,  text:"변조 방지 (HMAC-SHA256)",        checked:true },
+            { id:3,  text:"세션-토큰 교차 검증",            checked:true },
+            { id:4,  text:"토큰 재사용 원천 차단",          checked:true },
+            { id:5,  text:"개인정보 마스킹 처리",           checked:true },
+            { id:6,  text:"RLS 정책 활성화",                checked:true },
+            { id:7,  text:"관리자 접근 제어 보호",          checked:true },
+            { id:8,  text:"봇 및 Rate Limit 차단",         checked:true },
+            { id:9,  text:"이용약관/방침 푸터 노출",        checked:true },
+            { id:10, text:"사업자 정보 일관성 검증",        checked:true },
+            { id:11, text:"에러 핸들링 한국어 처리",        checked:true },
+            { id:12, text:"sitemap.xml 정상 서빙",         checked:true },
+            { id:13, text:"GTM 단일 컨테이너 확인",        checked:true },
+            { id:14, text:"OG 태그 / Twitter Card",        checked:true },
+            { id:15, text:"FAQPage JSON-LD 삽입",          checked:true },
+        ];
+
+        // ─── P3 Regions ──────────────────────────────────────────
+        const REGIONS = [
+            'ansan','ansan-gojan','ansan-jungang','anseong','bucheon-jungdong','bucheon-sangdong',
+            'busan','busan-haeundae','busan-seomyeon','busan-yeonsan','byeongjeom','changwon-sangnam',
+            'cheonan','cheonan-dujeong','cheongju','cheongju-habokdae','cheongju-sannam',
+            'daegu','daegu-dongseongro','daegu-seongseo','daegu-suseong','daejeon','daejeon-dunsan','daejeon-yuseong',
+            'dongtan','gangnam','gangnam-nonhyeon','gangnam-seolleung','gangnam-shinsa','gangnam-yeoksam',
+            'gangseo','gangseo-magok','gwangju-sangmu','hwagok','hwaseong-dongtan','ilsan-lafest','ilsan-wedom',
+            'incheon','incheon-bupyeong','incheon-cheongna','incheon-complex','incheon-guwol','incheon-juan','incheon-songdo',
+            'magok','poseung','pyeongtaek','pyeongtaek-godeok','seocho','seocho-gyodae','seongnam','seongnam-bundang',
+            'seongnam-jeongja','seongnam-seohyun','seongnam-yatap','songpa','songpa-bangyi','songpa-jamsil','songtan',
+            'suwon-ingye','suwon-mangpo','suwon-yeongtong','uijeongbu','uijeongbu-shinsigaji','ulsan-samsan',
+            'yeongdeungpo','yeongdeungpo-yeouido','yeouido','yongin','yongin-cheoin','yongin-giheung','yongin-suji'
+        ].sort();
+
+        // ─── Init ─────────────────────────────────────────────────
+        window.addEventListener('load', () => {
+            renderAudit();
+            renderRegions();
+            initTaskPad();
+            applySize();
+            applySharp();
+            requestAnimationFrame(() => smartFit());
+            const observer = new ResizeObserver(() => smartFit());
+            const container = document.querySelector('.iphone-container');
+            if (container) observer.observe(container);
+        });
+
+        // ─── Navigation ──────────────────────────────────────────
+        function navBack()    { try { mirrorFrame.contentWindow.history.back(); } catch(e) {} }
+        function navForward() { try { mirrorFrame.contentWindow.history.forward(); } catch(e) {} }
+        function navReload()  {
+            const btn = document.getElementById('reload-btn');
+            btn.classList.add('rotating');
+            setTimeout(() => btn.classList.remove('rotating'), 400);
+            try { mirrorFrame.contentWindow.location.reload(); }
+            catch(e) { mirrorFrame.src = mirrorFrame.src; }
+        }
+
+        function goPage(path) {
+            urlInput.value = path;
+            updateMirror();
+        }
+
+        function copyCurrentUrl() {
+            let url;
+            try { url = mirrorFrame.contentWindow.location.href; }
+            catch(e) { url = mirrorFrame.src; }
+            navigator.clipboard.writeText(url).then(() => {
+                const btn = document.querySelector('[onclick="copyCurrentUrl()"]');
+                const orig = btn.title;
+                btn.style.color = '#22c55e';
+                btn.title = '복사됨!';
+                setTimeout(() => { btn.style.color = ''; btn.title = orig; }, 1500);
+            });
+        }
+
+        // Page title tracking
+        mirrorFrame.addEventListener('load', () => {
+            try {
+                const title = mirrorFrame.contentDocument?.title || '';
+                const strip = document.getElementById('page-title-strip');
+                if (strip) strip.textContent = title || '─';
+                // Sync URL bar
+                const loc = mirrorFrame.contentWindow.location.pathname + mirrorFrame.contentWindow.location.search;
+                if (loc && !mirrorFrame.src.startsWith('http://localhost') === false) {
+                    urlInput.value = loc;
+                }
+            } catch(e) {}
+        });
+
+        // ─── URL & Port ──────────────────────────────────────────
+        function updateMirror() {
+            let path = urlInput.value.trim();
+            if (path.startsWith('http')) {
+                mirrorFrame.src = path;
+            } else {
+                mirrorFrame.src = `http://localhost:${basePort}${path.startsWith('/') ? '' : '/'}${path}`;
+            }
+        }
+
+        function loadRemote(url) { urlInput.value = url; updateMirror(); }
+
+        function setBasePort(port) {
+            basePort = port;
+            document.querySelectorAll('#port-selector button').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.trim() === port.toString());
+            });
+            updateMirror();
+        }
+
+        urlInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') updateMirror(); });
+
+        // ─── Device & Size ────────────────────────────────────────
+        function setDevice(w, h) {
+            isLandscape = false;
+            currentWidth = w; currentHeight = h;
+            syncSliders();
+            document.querySelectorAll('.btn-action[id^="preset-"]').forEach(b => b.classList.remove('active'));
+            const map = { '412,780':'s21-ultra','360,720':'s21','360,668':'s21-real','393,740':'i15','375,548':'ise','414,736':'i8plus' };
+            const key = `${w},${h}`;
+            if (map[key]) document.getElementById(`preset-${map[key]}`)?.classList.add('active');
+            applySize();
+        }
+
+        function manualWidth(w)  { currentWidth = parseInt(w);  document.getElementById('width-label').textContent = w+'px'; clearPresets(); applySize(); }
+        function manualHeight(h) { currentHeight = parseInt(h); document.getElementById('height-label').textContent = h+'px'; clearPresets(); applySize(); }
+        function clearPresets()  { document.querySelectorAll('.btn-action[id^="preset-"]').forEach(b => b.classList.remove('active')); }
+
+        function syncSliders() {
+            document.getElementById('widthSlider').value = currentWidth;
+            document.getElementById('heightSlider').value = currentHeight;
+            document.getElementById('width-label').textContent  = currentWidth + 'px';
+            document.getElementById('height-label').textContent = currentHeight + 'px';
+        }
+
+        function toggleLandscape() {
+            isLandscape = !isLandscape;
+            [currentWidth, currentHeight] = [currentHeight, currentWidth];
+            syncSliders();
+            clearPresets();
+            document.getElementById('landscape-badge').classList.toggle('visible', isLandscape);
+            applySize();
+        }
+
+        function applySize() {
+            const fw = currentWidth + FRAME_OFFSET;
+            const fh = currentHeight + FRAME_OFFSET;
+            frameWrapper.style.width  = fw + 'px';
+            frameWrapper.style.height = fh + 'px';
+            // iframe viewport
+            mirrorFrame.style.width  = currentWidth  + 'px';
+            mirrorFrame.style.height = currentHeight + 'px';
+            smartFit();
+        }
+
+        function smartFit() {
+            const container = document.querySelector('.iphone-container');
+            if (!container || !frameWrapper) return;
+            void container.offsetHeight;
+            const rect = container.getBoundingClientRect();
+            if (rect.width <= 0 || rect.height <= 0) return;
+            const targetW = rect.width  * 0.92;
+            const targetH = rect.height * 0.92;
+            const baseW = frameWrapper.offsetWidth;
+            const baseH = frameWrapper.offsetHeight;
+            if (baseW <= 0 || baseH <= 0) return;
+            let scale = Math.min(targetW / baseW, targetH / baseH);
+            if (!isFinite(scale) || isNaN(scale)) scale = 1;
+            scale = Math.min(1, Math.max(0.1, scale));
+            frameWrapper.style.transformOrigin = 'center center';
+            frameWrapper.style.transform = `scale(${scale.toFixed(4)})`;
+            document.getElementById('zoom-badge').textContent = `${Math.round(scale * 100)}%`;
+        }
+
+        // ─── Frame: Android / iPhone ─────────────────────────────
+        function setFrame(type) {
+            const isIphone = type === 'iphone';
+            frameWrapper.classList.toggle('frame-iphone', isIphone);
+            document.getElementById('btn-android').classList.toggle('active', !isIphone);
+            document.getElementById('btn-iphone').classList.toggle('active', isIphone);
+            // 카메라 옵션 표시
+            document.getElementById('iphone-cam-opts').style.display = isIphone ? 'grid' : 'none';
+            // 기본 카메라 세팅
+            if (isIphone) {
+                setNotch('notch-iphone');
+            } else {
+                notchEl.className = 'notch'; // 펀치홀
+            }
+        }
+
+        // ─── Notch / Dynamic Island (iPhone 전용) ───────────────
+        function setNotch(type) {
+            notchEl.className = 'notch ' + type;
+            document.getElementById('btn-notch')?.classList.toggle('active', type === 'notch-iphone');
+            document.getElementById('btn-di')?.classList.toggle('active', type === 'dynamic-island');
+        }
+
+        // ─── Sharp Focus ──────────────────────────────────────────
+        function applySharp() {
+            if (isSharp) {
+                mirrorFrame.style.filter = 'contrast(1.05) saturate(1.02) brightness(1.02)';
+                mirrorFrame.style.imageRendering = 'pixelated';
+                sharpToggle.classList.replace('bg-slate-800','bg-blue-600');
+                sharpKnob.style.transform = 'translateX(16px)';
+            } else {
+                mirrorFrame.style.filter = 'none';
+                mirrorFrame.style.imageRendering = 'auto';
+                sharpToggle.classList.replace('bg-blue-600','bg-slate-800');
+                sharpKnob.style.transform = 'translateX(0)';
+            }
+        }
+        function toggleSharp() { isSharp = !isSharp; applySharp(); }
+
+        // ─── Auto Refresh ─────────────────────────────────────────
+        function toggleAutoRefresh() {
+            const btn = document.getElementById('auto-refresh-btn');
+            const dot = document.getElementById('auto-refresh-dot');
+            if (autoRefreshTimer) {
+                clearInterval(autoRefreshTimer);
+                autoRefreshTimer = null;
+                btn.textContent = 'OFF';
+                btn.classList.remove('active');
+                dot.classList.remove('active');
+            } else {
+                const ms = parseInt(document.getElementById('auto-refresh-interval').value);
+                autoRefreshTimer = setInterval(() => {
+                    try { mirrorFrame.contentWindow.location.reload(); }
+                    catch(e) { mirrorFrame.src = mirrorFrame.src; }
+                }, ms);
+                btn.textContent = 'ON ✓';
+                btn.classList.add('active');
+                dot.classList.add('active');
+            }
+        }
+
+        // ─── Accordion ───────────────────────────────────────────
+        function toggleAccordion(el) {
+            const content = el.nextElementSibling;
+            content.classList.toggle('open');
+            content.style.maxHeight = content.classList.contains('open') ? content.scrollHeight + 'px' : '0px';
+        }
+
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+
+        // ─── Task Pad ─────────────────────────────────────────────
+        function initTaskPad() {
+            const pad = document.getElementById('taskPad');
+            if (!pad) return;
+            pad.value = localStorage.getItem('coco_tasks') || '';
+            pad.addEventListener('input', () => localStorage.setItem('coco_tasks', pad.value));
+        }
+        function clearMemo() {
+            if (!confirm('메모를 지우시겠습니까?')) return;
+            document.getElementById('taskPad').value = '';
+            localStorage.removeItem('coco_tasks');
+        }
+
+        // ─── P3 Regions ──────────────────────────────────────────
+        function renderRegions(list = REGIONS) {
+            document.getElementById('region-list').innerHTML = list.map(r => `
+                <button onclick="loadRemote('https://coco-inky.vercel.app/${r}')"
+                    class="w-full text-left px-2 py-1.5 hover:bg-slate-800 rounded text-[10px] text-slate-400 hover:text-white transition-colors border border-transparent hover:border-slate-700">
+                    /${r}
+                </button>`).join('');
+        }
+        function filterRegions(val) {
+            renderRegions(REGIONS.filter(r => r.includes(val.toLowerCase())));
+        }
+
+        // ─── Audit ───────────────────────────────────────────────
+        function renderAudit() {
+            const list = document.getElementById('audit-list');
+            list.innerHTML = AUDIT_ITEMS.map(item => `
+                <div class="checklist-row ${item.checked?'checked':''}" onclick="toggleCheck(${item.id})">
+                    <input type="checkbox" ${item.checked?'checked':''} onclick="event.stopPropagation();toggleCheck(${item.id})">
+                    <span>${item.text}</span>
+                </div>`).join('');
+            const checked = AUDIT_ITEMS.filter(i => i.checked).length;
+            document.getElementById('integrity-score').textContent = `${Math.round(checked/AUDIT_ITEMS.length*100)}%`;
+        }
+        function toggleCheck(id) {
+            const item = AUDIT_ITEMS.find(i => i.id === id);
+            if (item) { item.checked = !item.checked; renderAudit(); }
+        }
+    </script>
+</body>
+</html>

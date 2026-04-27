@@ -1,0 +1,49 @@
+{
+  "name": "coco-universe",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -H 0.0.0.0",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.95.3",
+    "@tanstack/react-query": "^5.90.21",
+    "chart.js": "^4.5.1",
+    "coolsms-node-sdk": "^2.1.0",
+    "dotenv": "^17.3.1",
+    "html-to-image": "^1.11.13",
+    "lucide-react": "^0.562.0",
+    "next": "15.5.9",
+    "react": "19.2.3",
+    "react-chartjs-2": "^5.3.1",
+    "react-dom": "19.2.3",
+    "react-hot-toast": "^2.6.0",
+    "web-push": "^3.6.7",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "^20",
+    "@types/react": "^19.2.3",
+    "@types/react-dom": "^19.2.3",
+    "@types/uuid": "^10.0.0",
+    "@types/web-push": "^3.6.4",
+    "@vitejs/plugin-react": "^5.1.4",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.9",
+    "jsdom": "^28.1.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5",
+    "uuid": "^13.0.0",
+    "vitest": "^4.0.18"
+  },
+  "engines": {
+    "node": "20.x"
+  }
+}

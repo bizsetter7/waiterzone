@@ -1,0 +1,71 @@
+{
+  "themes": {
+    "colorScheme": "light",
+    "supportedColorSchemes": "light"
+  },
+  "metadata": {
+    "title": "룸웨이터·유흥룸웨이터·노래방웨이터·여자남성유흥알바 1위 웨이터존",
+    "description": "대한민국 1등 고수익 남성알바 웨이터존. 유흥룸웨이터, 룸웨이터, 노래방웨이터, 여자남성유흥알바, 여자노래방웨이터, 여자노래방알바, BJ알바 정보를 실시간 확인하세요. 당일지급 100% 보장!",
+    "keywords": [
+      "룸웨이터",
+      "유흥룸웨이터",
+      "노래방웨이터",
+      "노래방알바",
+      "남성유흥알바",
+      "여자남성유흥알바",
+      "여자노래방웨이터",
+      "여자노래방알바",
+      "BJ알바",
+      "엔터알바",
+      "남성알바",
+      "야간알바",
+      "고수익알바",
+      "당일지급알바",
+      "웨이터알바",
+      "텐프로",
+      "쩜오알바",
+      "바알바",
+      "강남 룸웨이터",
+      "강남 유흥룸웨이터",
+      "부산 노래방웨이터",
+      "수원 남성유흥알바",
+      "웨이터존"
+    ],
+    "verification": {
+      "google": "enzbVhzoI9Bq9YzGqFaLghzkqVlFHwe-DBnnNajWC0Y",
+      "other": {
+        "naver-site-verification": [
+          "950201bcd2e28188884dfc9feeb6951a40c0887c"
+        ]
+      }
+    }
+  },
+  "schemas": [
+    {
+      "@context": "https://schema.org",
+      "@type": "EmploymentAgency",
+      "name": "웨이터존 (COCOALBA)",
+      "description": "대한민국 1등 고수익 남성알바 웨이터존. 룸웨이터, 노래방알바, 남성유흥알바, BJ알바, 엔터알바 정보를 실시간 확인하세요. 일급 50만원 이상, 당일지급 100% 보장!",
+      "url": "https://waiterzone.kr",
+      "logo": "https://waiterzone.kr/logo.png",
+      "telephone": "+82-1877-1442",
+      "areaServed": {
+        "@type": "Country",
+        "name": "대한민국"
+      },
+      "serviceType": [
+        "룸웨이터 정보",
+        "유흥룸웨이터 정보",
+        "노래방웨이터 정보",
+        "노래방알바 정보",
+        "남성유흥알바 정보",
+        "여자남성유흥알바 정보",
+        "여자노래방웨이터 정보",
+        "여자노래방알바 정보",
+        "BJ알바 정보",
+        "고소득 남성알바 매칭"
+      ],
+      "sameAs": "https://www.waiterzone.kr"
+    }
+  ]
+}

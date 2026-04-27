@@ -29,14 +29,14 @@ function cleanupExpiredTokens() {
     }
 }
 
-export function markTokenUsed(token: string, ip: string): boolean {
+function markTokenUsed(token: string, ip: string): boolean {
     cleanupExpiredTokens();
     if (USED_TOKENS.has(token)) return false; // 이미 사용됨
     USED_TOKENS.set(token, { usedAt: Date.now(), ip });
     return true;
 }
 
-export function isTokenUsed(token: string): boolean {
+function isTokenUsed(token: string): boolean {
     return USED_TOKENS.has(token);
 }
 
@@ -46,7 +46,7 @@ if (!HMAC_SECRET) {
     console.error('❌ CRITICAL: IDENTITY_HMAC_SECRET environment variable is missing!');
 }
 
-export function generateHmac(payload: Record<string, unknown>): string {
+function generateHmac(payload: Record<string, unknown>): string {
     if (!HMAC_SECRET) throw new Error('Security Error: HMAC Secret is not configured.');
     const normalized = JSON.stringify(payload, Object.keys(payload).sort());
     return crypto
@@ -55,7 +55,7 @@ export function generateHmac(payload: Record<string, unknown>): string {
         .digest('hex');
 }
 
-export function verifyHmac(payload: Record<string, unknown>, signature: string): boolean {
+function verifyHmac(payload: Record<string, unknown>, signature: string): boolean {
     const expected = generateHmac(payload);
     // timing-safe 비교: 길이 다르면 즉시 false
     if (expected.length !== signature.length) return false;
@@ -69,11 +69,11 @@ export function verifyHmac(payload: Record<string, unknown>, signature: string):
 // 인증 발급 시 세션 ID 바인딩 → 결과 수신 시 세션 일치 확인
 const SESSION_BINDINGS = new Map<string, { sessionId: string; provider: string; issuedAt: number }>();
 
-export function bindTokenToSession(token: string, sessionId: string, provider: string) {
+function bindTokenToSession(token: string, sessionId: string, provider: string) {
     SESSION_BINDINGS.set(token, { sessionId, provider, issuedAt: Date.now() });
 }
 
-export function verifyTokenSession(token: string, sessionId: string): boolean {
+function verifyTokenSession(token: string, sessionId: string): boolean {
     const binding = SESSION_BINDINGS.get(token);
     if (!binding) return false;
     if (Date.now() - binding.issuedAt > TOKEN_EXPIRY_MS) {

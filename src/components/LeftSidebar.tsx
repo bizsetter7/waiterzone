@@ -511,7 +511,7 @@ export default function LeftSidebar({
                 </div>
                 <div className="relative z-10 h-full flex flex-col items-center justify-center text-white text-center p-4">
                     <p className="text-xs font-black text-white/70 tracking-widest mb-1 uppercase">
-                        COCOALBA OFFICIAL
+                        WAITERZONE OFFICIAL
                     </p>
                     <h4 className="text-[24px] font-black mb-1 drop-shadow-md tracking-tighter">
                         광고입점상담

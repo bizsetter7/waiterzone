@@ -90,7 +90,7 @@ export default function JobDetailPage({ params }: Props) {
             .replace(/엔터프라이즈|인재솔루션|인재알바/g, '고수익알바'),
         "identifier": {
             "@type": "PropertyValue",
-            "name": "COCOALBA",
+            "name": "WAITERZONE",
             "value": shop.id
         },
         "datePosted": shop.created_at || "2026-03-01T00:00:00Z",
@@ -98,7 +98,7 @@ export default function JobDetailPage({ params }: Props) {
         "employmentType": "FULL_TIME",
         "hiringOrganization": {
             "@type": "Organization",
-            "name": "COCOALBA",
+            "name": "WAITERZONE",
             "sameAs": "https://waiterzone.kr"
         },
         "jobLocation": {

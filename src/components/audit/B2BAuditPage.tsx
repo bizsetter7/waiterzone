@@ -169,7 +169,7 @@ export default function B2BAuditPage() {
           <div className="md:text-right">
             <p className="text-[11px] font-black uppercase tracking-widest text-gray-600 mb-2">Customer Center</p>
             <p className="text-4xl font-black text-white tracking-tighter mb-2">1877-1442</p>
-            <p className="text-[12px] font-bold">평일 09:00 - 18:00 | © COCOALBA B2B</p>
+            <p className="text-[12px] font-bold">평일 09:00 - 18:00 | © WAITERZONE B2B</p>
           </div>
         </div>
       </footer>

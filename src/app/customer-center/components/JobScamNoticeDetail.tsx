@@ -87,7 +87,7 @@ export const JobScamNoticeDetail = () => {
                     <Phone size={22} fill="white" className="animate-pulse" />
                     <span className="text-xl md:text-2xl font-black">웨이터존 고객센터 1877-1442</span>
                 </div>
-                <p className="text-[10px] opacity-80 uppercase tracking-[0.2em] font-black">COPYRIGHT(C) 2026 COCOALBA ALL RIGHTS RESERVED.</p>
+                <p className="text-[10px] opacity-80 uppercase tracking-[0.2em] font-black">COPYRIGHT(C) 2026 WAITERZONE ALL RIGHTS RESERVED.</p>
             </div>
         </div>
     );

@@ -132,7 +132,7 @@ export default function JobScamNoticePage() {
                             <span className="text-xl md:text-2xl font-black">웨이터존 고객센터 1877-1442</span>
                         </div>
                         <p className="text-[10px] opacity-70 uppercase tracking-widest font-bold">
-                            Copyright(c) 2026 COCOALBA All Rights Reserved.
+                            Copyright(c) 2026 WAITERZONE All Rights Reserved.
                         </p>
                     </div>
                 </div>

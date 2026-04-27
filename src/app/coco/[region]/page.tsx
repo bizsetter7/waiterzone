@@ -191,7 +191,7 @@ export default async function CocoRegionPage({ params }: { params: Promise<{ reg
         "description": `${regionName} 지역 1등 고소득 남성알바 정보를 실시간 확인하세요. 엔터, 노래주점, 마사지 등 대한민국 프리미엄 고수익 알바 정보를 안전하게 제공합니다.`,
         "identifier": {
             "@type": "PropertyValue",
-            "name": "COCOALBA",
+            "name": "WAITERZONE",
             "value": `REGION_ADS_${region}`
         },
         "datePosted": isoDate,
@@ -199,7 +199,7 @@ export default async function CocoRegionPage({ params }: { params: Promise<{ reg
         "employmentType": "FULL_TIME",
         "hiringOrganization": {
             "@type": "Organization",
-            "name": "COCOALBA",
+            "name": "WAITERZONE",
             "sameAs": "https://waiterzone.kr"
         },
         "jobLocation": {

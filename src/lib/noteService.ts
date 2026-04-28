@@ -32,7 +32,8 @@ export const NoteService = {
     getInbox: async (userName: string, userId?: string): Promise<Note[]> => {
         let query = supabase
             .from('messages')
-            .select('*');
+            .select('*')
+            .eq('platform', 'waiterzone'); // [Phase 6] 웨이터존 메시지만
 
         const ADMIN_ALIASES = ['시스템 관리자', '운영자', '관리자', 'admin', '마스터관리자', 'admin_user'];
 
@@ -68,6 +69,7 @@ export const NoteService = {
             .from('messages')
             .select('*')
             .eq('receiver_id', userId)
+            .eq('platform', 'waiterzone') // [Phase 6] 웨이터존 메시지만
             .order('created_at', { ascending: false });
 
         if (error) {
@@ -89,7 +91,8 @@ export const NoteService = {
     getUnread: async (userName: string, userId?: string): Promise<Note[]> => {
         let query = supabase
             .from('messages')
-            .select('*');
+            .select('*')
+            .eq('platform', 'waiterzone'); // [Phase 6] 웨이터존 메시지만
 
         const ADMIN_ALIASES = ['시스템 관리자', '운영자', '관리자', 'admin', '마스터관리자', 'admin_user'];
 
@@ -120,7 +123,8 @@ export const NoteService = {
     getSent: async (userName: string): Promise<Note[]> => {
         let query = supabase
             .from('messages')
-            .select('*');
+            .select('*')
+            .eq('platform', 'waiterzone'); // [Phase 6] 웨이터존 메시지만
 
         const ADMIN_ALIASES = ['시스템 관리자', '운영자', '관리자', 'admin', '마스터관리자', 'admin_user'];
 
@@ -149,7 +153,8 @@ export const NoteService = {
             sender_name: senderName,
             receiver_name: receiverName,
             content: content,
-            is_read: false
+            is_read: false,
+            platform: 'waiterzone', // [Phase 6] 웨이터존 메시지
         };
         if (senderId) payload.sender_id = senderId;
         if (receiverId) payload.receiver_id = receiverId;

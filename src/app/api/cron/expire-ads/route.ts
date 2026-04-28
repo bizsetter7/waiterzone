@@ -26,11 +26,12 @@ export async function GET(request: Request) {
     try {
         const todayKST = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' }); // YYYY-MM-DD
 
-        // active 상태이면서 deadline이 오늘 이전인 공고 조회
+        // active 상태이면서 deadline이 오늘 이전인 웨이터존 공고 조회
         const { data: expiredShops, error: fetchError } = await supabaseAdmin
             .from('shops')
             .select('id, user_id, title, name, deadline')
             .eq('status', 'active')
+            .eq('platform', 'waiterzone') // [Phase 6] 웨이터존 공고만 만료 처리
             .lt('deadline', todayKST)
             .not('deadline', 'is', null);
 
@@ -67,6 +68,7 @@ export async function GET(request: Request) {
                         message: `'${shop.title || shop.name}' 공고의 게재 기간이 만료되어 마감 처리되었습니다. 광고 연장을 원하시면 마이샵에서 신청해주세요.`,
                         read: false,
                         link: '/my-shop?view=closed-ads',
+                        platform: 'waiterzone', // [Phase 6] 웨이터존 알림
                         created_at: nowIso,
                     });
                 } catch (notifErr) {

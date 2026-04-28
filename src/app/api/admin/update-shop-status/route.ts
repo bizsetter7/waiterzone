@@ -167,6 +167,7 @@ export async function POST(request: NextRequest) {
                         message: `'${adData?.title || adData?.name || '공고'}'가 심사를 통과하여 정상 게재 중입니다.`,
                         read: false,
                         link: '/my-shop?view=dashboard',
+                        platform: 'waiterzone', // [Phase 6] 웨이터존 알림
                         created_at: nowIso,
                     });
                 }

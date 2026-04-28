@@ -100,9 +100,19 @@ export async function GET(request: NextRequest) {
         }
 
         // 5) 모든 체크 통과 → 접근 허용
+        // 구독 플랜 → 공고 티어 자동 매핑 (Step 3 자동화용)
+        const PLAN_TO_TIER: Record<string, string> = {
+            basic:    'p4',  // T4 standard
+            standard: 'p4',  // T4 standard
+            special:  'p3',  // T3 special
+            deluxe:   'p2',  // T2 deluxe
+            premium:  'p1',  // T1 premium
+        };
+        const planKey = (sub.plan_name || sub.plan || '').toLowerCase();
         return NextResponse.json({
             hasAccess: true,
             plan: sub.plan_name || sub.plan,
+            tier: PLAN_TO_TIER[planKey] || 'p4',
             platform: sub.platform_choice,
             expiresAt: sub.status === 'trial' ? sub.trial_ends_at : sub.next_billing_at,
         });

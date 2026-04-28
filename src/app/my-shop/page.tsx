@@ -579,6 +579,11 @@ function MyShopContent() {
             const data = await res.json();
             if (data.hasAccess) {
                 prepareNewAdState();
+                // [Step 3 자동화] 구독 플랜 기반 티어 자동 설정 → AdForm Step 3 skip 지원
+                if (data.tier) {
+                    formState.setSelectedAdProduct(data.tier);
+                    formState.setSelectedAdPeriod(30);
+                }
                 setShowWarningModal(true);
             } else {
                 setSubscriptionModalMsg(data.message || '웨이터존 구독이 필요합니다. 야사장에서 구독 플랜을 선택해주세요.');

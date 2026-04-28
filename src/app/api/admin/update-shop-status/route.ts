@@ -144,6 +144,7 @@ export async function POST(request: NextRequest) {
                     pay_type: 'AD',           // pay_type (type 컬럼 없음)
                     method: 'bank_transfer',
                     description: `[관리자승인] ${shopName} 결제 완료`,
+                    platform: 'waiterzone',   // [Phase 6] 웨이터존 결제
                     created_at: nowIso,
                     metadata: {
                         shopName,

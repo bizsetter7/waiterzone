@@ -150,6 +150,7 @@ export async function POST(request: NextRequest) {
                 pay_type: 'SOS',        // ✅ pay_type (type 컬럼 없음)
                 method: 'points',
                 description: `[SOS] ${shopName} — ${recipientCount}명 발송`,
+                platform: 'waiterzone', // [Phase 6] 웨이터존 결제
                 metadata: {
                     reason: pointReason,
                     recipient_count: recipientCount,

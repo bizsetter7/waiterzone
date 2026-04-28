@@ -107,7 +107,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
 
     const title = `${shop.name} - ${shadowRegionData.mainRegion} 최고의 ${shadowRegionData.keywords[0]} | 웨이터존`;
-    const description = `${shadowRegionData.mainRegion} ${shop.name}에서 함께할 가족을 찾습니다. ${shop.payType || ''} ${shop.pay} 이상. 확실한 고수익과 안전을 보장합니다. 지금 바로 확인하세요.`;
+    const description = `${shadowRegionData.mainRegion} ${shop.name}에서 함께할 가족을 찾습니다. ${shop.pay_type || ''} ${shop.pay} 이상. 확실한 고수익과 안전을 보장합니다. 지금 바로 확인하세요.`;
 
     return {
         title,
@@ -278,12 +278,12 @@ export default async function ShopDetailPage({ params }: Props) {
         '주급': 'FULL_TIME',
         'TC': 'CONTRACTOR',
     };
-    const employmentType = shop.payType ? (employmentTypeMap[shop.payType] ?? 'OTHER') : 'OTHER';
+    const employmentType = shop.pay_type ? (employmentTypeMap[shop.pay_type] ?? 'OTHER') : 'OTHER';
 
     // ── baseSalary value: 숫자만 추출, 최소값 보장
     const salaryRaw = shop.pay ? shop.pay.replace(/[^0-9]/g, '') : '';
     const salaryValue = salaryRaw.length > 0 ? salaryRaw : '50000';
-    const salaryUnit = shop.payType === '시급' ? 'HOUR' : shop.payType === '일급' ? 'DAY' : 'MONTH';
+    const salaryUnit = shop.pay_type === '시급' ? 'HOUR' : shop.pay_type === '일급' ? 'DAY' : 'MONTH';
 
     // ── jobBenefits: options.icons + options.keywords 조합
     const benefitParts: string[] = [];
@@ -301,7 +301,7 @@ export default async function ShopDetailPage({ params }: Props) {
     // ── description: 실 광고 내용 우선, 없으면 기본 문구
     const jobDescription = (shop.description && shop.description.trim().length > 10)
         ? shop.description.trim()
-        : `${shop.name}에서 ${mainKeyword}를 모집합니다. ${shop.payType || ''} ${shop.pay} 이상 보장. 최고의 대우와 확실한 수익을 약속드립니다.`;
+        : `${shop.name}에서 ${mainKeyword}를 모집합니다. ${shop.pay_type || ''} ${shop.pay} 이상 보장. 최고의 대우와 확실한 수익을 약속드립니다.`;
 
     // ── title: 실 광고 제목 우선
     const jobTitle = (shop.title && shop.title.trim().length > 2)
@@ -321,7 +321,7 @@ export default async function ShopDetailPage({ params }: Props) {
         "employmentType": employmentType,
         "datePosted": datePosted,
         "validThrough": validThrough,
-        "occupationalCategory": shop.workType || mainKeyword,
+        "occupationalCategory": shop.work_type || mainKeyword,
         "workHours": shop.workTime || undefined,
         "qualifications": shop.age ? `${shop.age} 지원 가능` : '나이 무관, 경험 무관',
         ...(jobBenefits ? { "jobBenefits": jobBenefits } : {}),
@@ -354,10 +354,10 @@ export default async function ShopDetailPage({ params }: Props) {
                 "height": 1200,
                 "caption": generateShopImageAlt({
                     region:     shop.region,
-                    work_type:  shop.workType || shop.category,
+                    work_type:  shop.work_type || shop.category,
                     pay:        shop.pay,
-                    pay_type:   shop.payType,
-                    pay_amount: shop.payAmount,
+                    pay_type:   shop.pay_type,
+                    pay_amount: shop.pay_amount,
                 }),
                 "representativeOfPage": true
             }

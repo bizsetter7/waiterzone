@@ -133,28 +133,28 @@ export const Step4Extras: React.FC<Step4Props> = ({
     );
 
     return (
-        <section id="myshop-step-4" className={`p-1.5 md:p-5 rounded-[32px] shadow-lg border-2 overflow-hidden ${brand.theme === 'dark' ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-100'}`}>
-            <div className="bg-gradient-to-r from-[#9333ea] via-[#a855f7] to-[#ec4899] text-white p-5 md:p-7 rounded-[24px] mb-6 md:mb-8 shadow-xl relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl group-hover:scale-110 transition-transform duration-700"></div>
-                <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <section id="myshop-step-4" className="p-1.5 md:p-5 rounded-[32px] shadow-lg border-2 overflow-hidden bg-white border-gray-100">
+            <div className="border-b border-gray-100 pb-5 mb-6 md:mb-8">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-white/30 rounded-2xl flex items-center justify-center border border-white/40 shadow-inner">
-                            <Sparkles size={28} className="text-white animate-pulse" />
+                        <div className="w-1 h-7 bg-[#1e3a5f] rounded-full shrink-0" />
+                        <div className="w-12 h-12 bg-[#1e3a5f]/10 rounded-2xl flex items-center justify-center">
+                            <Sparkles size={28} className="text-[#1e3a5f]" />
                         </div>
                         <div>
-                            <h2 className="font-black text-xl md:text-2xl tracking-tight flex items-center gap-2">
+                            <h2 className="font-black text-xl md:text-2xl tracking-tight text-gray-900 flex items-center gap-2">
                                 STEP 4 : 추가 노출 강조 옵션
                             </h2>
                             <div className="flex items-center gap-4 mt-1">
-                                <span className="text-yellow-300 font-black text-sm md:text-base animate-bounce">노출 효과의 압도적 극대화!!</span>
-                                <div className="hidden md:block w-px h-4 bg-white/30"></div>
-                                <span className="text-white/80 font-bold text-xs md:text-sm">다양한 옵션으로 시선을 사로 잡으세요!</span>
+                                <span className="text-[#1e3a5f] font-black text-sm md:text-base">노출 효과의 압도적 극대화!!</span>
+                                <div className="hidden md:block w-px h-4 bg-gray-200"></div>
+                                <span className="text-gray-500 font-bold text-xs md:text-sm">다양한 옵션으로 시선을 사로 잡으세요!</span>
                             </div>
                         </div>
                     </div>
-                    <div className="bg-black/30 px-4 py-2 rounded-full border border-white/20 mx-auto md:mx-0 flex items-center justify-center w-fit">
-                        <span className="text-[10px] md:text-xs font-black tracking-widest text-[#e9d5ff]">SELECTION OPTIONS</span>
-                        <span className="text-white font-black text-xs md:text-sm ml-2">선택 시 추가 비용 발생</span>
+                    <div className="bg-gray-50 px-4 py-2 rounded-full border border-gray-200 mx-auto md:mx-0 flex items-center justify-center w-fit">
+                        <span className="text-[10px] md:text-xs font-black tracking-widest text-gray-500">SELECTION OPTIONS</span>
+                        <span className="text-gray-700 font-black text-xs md:text-sm ml-2">선택 시 추가 비용 발생</span>
                     </div>
                 </div>
             </div>
@@ -215,7 +215,7 @@ export const Step4Extras: React.FC<Step4Props> = ({
                         </div>
                         <span className="text-[12px] md:text-[14px] font-black text-blue-500">{selectedKeywords.length}/10</span>
                     </div>
-                    <div className={`p-2 md:p-5 rounded-2xl border-2 border-dashed ${brand.theme === 'dark' ? 'bg-gray-900/40 border-gray-800' : 'bg-white/40 border-gray-100 shadow-inner'}`}>
+                    <div className={`p-2 md:p-5 rounded-2xl border-2 border-dashed bg-white/40 border-gray-100 shadow-inner`}>
                         <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1.5 md:gap-2">
                             {STEP4_CONVENIENCE_KEYWORDS.map(kw => (
                                 <button

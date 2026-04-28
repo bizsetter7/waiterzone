@@ -53,7 +53,7 @@ export default function CocoGuidePage() {
                     </div>
 
                     {/* Step 2: COMMUNITY / LIST NATIVE Style */}
-                    <div className="relative group bg-blue-50/10 rounded-[28px] p-7 border-2 border-dashed border-blue-200 shadow-[0_10px_30px_-15px_rgba(248,43,96,0.08)] transition-all hover:-translate-y-1">
+                    <div className="relative group bg-blue-50/10 rounded-[28px] p-7 border-2 border-dashed border-blue-200 shadow-[0_10px_30px_-15px_rgba(30,58,95,0.12)] transition-all hover:-translate-y-1">
                         <div className="flex flex-col items-center text-center">
                             <span className="text-[10px] md:text-[11px] font-[900] text-[#1e3a5f] uppercase tracking-[0.1em] mb-4">Community / List Native</span>
                             <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-[#1e3a5f] mb-5 shadow-lg shadow-blue-900/5 ring-4 ring-blue-50">

@@ -19,16 +19,16 @@ export default function WorkTypeGuidePage({ regionSlug, regionName, workTypeSlug
 
             {/* 브레드크럼 */}
             <nav className="text-sm text-gray-400 mb-6 flex items-center gap-1 flex-wrap">
-                <Link href="/" className="hover:text-pink-500">홈</Link>
+                <Link href="/" className="hover:text-[#1e3a5f]">홈</Link>
                 <span>›</span>
-                <Link href={`/coco/${regionSlug}`} className="hover:text-pink-500">{regionName} 알바</Link>
+                <Link href={`/coco/${regionSlug}`} className="hover:text-[#1e3a5f]">{regionName} 알바</Link>
                 <span>›</span>
                 <span className="text-gray-700 font-medium">{regionName} {workTypeInfo.name}</span>
             </nav>
 
             {/* 타이틀 */}
             <div className="mb-8">
-                <div className="inline-block bg-pink-100 text-pink-600 text-xs font-bold px-3 py-1 rounded-full mb-3">
+                <div className="inline-block bg-[#1e3a5f]/10 text-[#1e3a5f] text-xs font-bold px-3 py-1 rounded-full mb-3">
                     {regionName} 지역 가이드
                 </div>
                 <h1 className="text-2xl font-bold text-gray-900 leading-tight mb-3">
@@ -41,7 +41,7 @@ export default function WorkTypeGuidePage({ regionSlug, regionName, workTypeSlug
 
             {/* 급여 정보 */}
             {payData && (
-                <section className="bg-gradient-to-r from-pink-50 to-orange-50 border border-pink-100 rounded-2xl p-6 mb-8">
+                <section className="bg-[#1e3a5f]/5 border border-[#1e3a5f]/20 rounded-2xl p-6 mb-8">
                     <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                         <span className="text-2xl">💰</span>
                         {regionName} {workTypeInfo.name} 평균 급여
@@ -50,7 +50,7 @@ export default function WorkTypeGuidePage({ regionSlug, regionName, workTypeSlug
                         {payData.tc && (
                             <div className="bg-white rounded-xl p-4 shadow-sm">
                                 <div className="text-xs text-gray-400 mb-1">TC (테이블차지)</div>
-                                <div className="text-xl font-bold text-pink-600">{payData.tc}</div>
+                                <div className="text-xl font-bold text-[#1e3a5f]">{payData.tc}</div>
                             </div>
                         )}
                         {payData.hourly && (
@@ -82,7 +82,7 @@ export default function WorkTypeGuidePage({ regionSlug, regionName, workTypeSlug
                 <ul className="space-y-2">
                     {workTypeInfo.characteristics.map((item, i) => (
                         <li key={i} className="flex items-start gap-2 text-gray-700">
-                            <span className="text-pink-400 mt-0.5 flex-shrink-0">•</span>
+                            <span className="text-[#1e3a5f] mt-0.5 flex-shrink-0">•</span>
                             <span>{item}</span>
                         </li>
                     ))}
@@ -115,7 +115,7 @@ export default function WorkTypeGuidePage({ regionSlug, regionName, workTypeSlug
                     {workTypeInfo.faqs.map((item, i) => (
                         <div key={i} className="border border-gray-100 rounded-xl overflow-hidden">
                             <div className="bg-gray-50 px-4 py-3 font-medium text-gray-900 flex items-start gap-2">
-                                <span className="text-pink-500 font-bold flex-shrink-0">Q.</span>
+                                <span className="text-[#1e3a5f] font-bold flex-shrink-0">Q.</span>
                                 {item.q}
                             </div>
                             <div className="px-4 py-3 text-gray-700 text-sm leading-relaxed flex items-start gap-2">
@@ -138,7 +138,7 @@ export default function WorkTypeGuidePage({ regionSlug, regionName, workTypeSlug
                         <Link
                             key={slug}
                             href={`/coco/${regionSlug}/${slug}`}
-                            className="px-4 py-2 rounded-full border border-gray-200 text-sm text-gray-600 hover:border-pink-300 hover:text-pink-600 hover:bg-pink-50 transition-colors"
+                            className="px-4 py-2 rounded-full border border-gray-200 text-sm text-gray-600 hover:border-[#1e3a5f]/30 hover:text-[#1e3a5f] hover:bg-[#1e3a5f]/5 transition-colors"
                         >
                             {WORK_TYPE_INFO[slug].name}
                         </Link>
@@ -147,16 +147,16 @@ export default function WorkTypeGuidePage({ regionSlug, regionName, workTypeSlug
             </section>
 
             {/* CTA */}
-            <section className="bg-gradient-to-r from-pink-500 to-orange-400 rounded-2xl p-6 text-white text-center">
+            <section className="bg-[#1e3a5f] rounded-2xl p-6 text-white text-center">
                 <div className="text-xl font-bold mb-2">
                     {regionName} {workTypeSlug} 공고 지금 확인하기
                 </div>
-                <p className="text-pink-100 text-sm mb-4">
+                <p className="text-white/70 text-sm mb-4">
                     웨이터존에서 검증된 {regionName} 지역 업소만 모아보세요
                 </p>
                 <Link
                     href={`/coco/${regionSlug}`}
-                    className="inline-block bg-white text-pink-600 font-bold px-6 py-3 rounded-full hover:bg-pink-50 transition-colors"
+                    className="inline-block bg-white text-[#1e3a5f] font-bold px-6 py-3 rounded-full hover:bg-blue-50 transition-colors"
                 >
                     {regionName} 공고 보러가기 →
                 </Link>

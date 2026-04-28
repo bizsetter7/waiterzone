@@ -79,7 +79,7 @@ function MainHeaderContent({ showBackButton, title: propTitle }: MainHeaderProps
     const getHeaderContent = () => {
         if (propTitle) {
             return (
-                <span className={`text-lg md:text-xl font-black tracking-tight ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                <span className={`text-lg md:text-xl font-black tracking-tight text-white`}>
                     {propTitle}
                 </span>
             );
@@ -94,7 +94,7 @@ function MainHeaderContent({ showBackButton, title: propTitle }: MainHeaderProps
                         </span>
                         <div className="flex items-center gap-0.5">
                             <span className="text-xl md:text-2xl font-black tracking-tighter group-hover:scale-105 transition-transform origin-left" style={{ color: '#1e3a5f' }}>WAITER</span>
-                            <span className={`text-xl md:text-2xl font-black tracking-tighter ${brand.theme === 'dark' ? 'text-white' : 'text-slate-900'} group-hover:scale-105 transition-transform origin-left`}>
+                            <span className={`text-xl md:text-2xl font-black tracking-tighter text-white group-hover:scale-105 transition-transform origin-left`}>
                                 ZONE
                             </span>
                         </div>
@@ -106,7 +106,7 @@ function MainHeaderContent({ showBackButton, title: propTitle }: MainHeaderProps
         if (pathname?.startsWith('/my-shop')) {
             const isRegForm = searchParams.get('view') === 'form';
             return (
-                <span className={`text-lg md:text-xl font-black ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                <span className={`text-lg md:text-xl font-black text-white`}>
                     {isRegForm ? '공고등록페이지' : '마이페이지'}
                 </span>
             );
@@ -114,7 +114,7 @@ function MainHeaderContent({ showBackButton, title: propTitle }: MainHeaderProps
 
         if (pathname?.startsWith('/jobs')) {
             return (
-                <span className={`text-lg md:text-xl font-black ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                <span className={`text-lg md:text-xl font-black text-white`}>
                     업종별 채용
                 </span>
             );
@@ -122,7 +122,7 @@ function MainHeaderContent({ showBackButton, title: propTitle }: MainHeaderProps
 
         if (pathname?.startsWith('/region')) {
             return (
-                <span className={`text-lg md:text-xl font-black ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                <span className={`text-lg md:text-xl font-black text-white`}>
                     지역별 채용
                 </span>
             );
@@ -130,7 +130,7 @@ function MainHeaderContent({ showBackButton, title: propTitle }: MainHeaderProps
 
         if (pathname?.startsWith('/talent')) {
             return (
-                <span className={`text-lg md:text-xl font-black ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                <span className={`text-lg md:text-xl font-black text-white`}>
                     인재(이력서)정보
                 </span>
             );
@@ -162,7 +162,7 @@ function MainHeaderContent({ showBackButton, title: propTitle }: MainHeaderProps
                     <div className="w-7 h-7 bg-[#1e3a5f] rounded-lg flex items-center justify-center">
                         <span className="text-white text-[10px] font-black leading-none">CS</span>
                     </div>
-                    <span className={`text-lg md:text-xl font-black ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                    <span className={`text-lg md:text-xl font-black text-white`}>
                         고객지원센터
                     </span>
                 </div>
@@ -179,7 +179,7 @@ function MainHeaderContent({ showBackButton, title: propTitle }: MainHeaderProps
                         <span className="text-lg md:text-xl font-black tracking-tighter" style={{ color: '#1e3a5f' }}>
                             WAITER
                         </span>
-                        <span className={`text-lg md:text-xl font-black tracking-tighter ${brand.theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
+                        <span className={`text-lg md:text-xl font-black tracking-tighter text-white`}>
                             ZONE
                         </span>
                     </div>
@@ -191,7 +191,7 @@ function MainHeaderContent({ showBackButton, title: propTitle }: MainHeaderProps
     return (
         <React.Fragment>
             {/* UI_Z_INDEX.HEADER (10000) 표준 적용 */}
-            <header className={`sticky top-0 z-[10000] w-full h-[56px] border-b ${brand.theme === 'dark' ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-100'}`}>
+            <header className={`sticky top-0 z-[10000] w-full h-[56px] border-b bg-gray-900 border-gray-800`}>
                 <div className="w-full max-w-[1432px] h-full flex items-center justify-between mx-auto px-4 xl:px-[192px]">
                     <div className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
                         {shouldShowBackButton && (
@@ -200,7 +200,7 @@ function MainHeaderContent({ showBackButton, title: propTitle }: MainHeaderProps
                                     e.stopPropagation();
                                     isRegistration ? router.push('/my-shop') : router.push('/');
                                 }}
-                                className="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full"
+                                className="p-1 hover:bg-white/20 rounded-full text-white"
                             >
                                 <ChevronLeft size={24} />
                             </div>
@@ -302,7 +302,7 @@ function MainHeaderContent({ showBackButton, title: propTitle }: MainHeaderProps
                                             setShowMobileMenu(true);
                                         }
                                     }} 
-                                    className={`p-1.5 focus:outline-none ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}
+                                    className={`p-1.5 focus:outline-none text-white`}
                                 >
                                     <Menu size={24} />
                                 </button>

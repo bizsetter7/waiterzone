@@ -52,7 +52,7 @@ export const BRANDS: Record<string, BrandConfig> = {
         logoText: 'WAITERZONE',
         displayName: '웨이터존',
         tagline: '대한민국 1등 웨이터 전문 구인 플랫폼',
-        theme: 'dark',
+        theme: 'light',
     },
     /**
      * P4 초코파트너스 / 파트너스크레딧

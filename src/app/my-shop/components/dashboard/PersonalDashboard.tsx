@@ -329,7 +329,7 @@ export function PersonalDashboardHome({ setView, resumeCount = 0 }: { setView: (
             {todayChecked === false && (
                 <button
                     onClick={() => setView('attendance')}
-                    className="w-full p-4 rounded-[24px] bg-gradient-to-r from-[#1e3a5f] to-pink-400 text-white flex items-center justify-between gap-3 shadow-lg shadow-blue-200 hover:brightness-110 active:scale-[0.99] transition-all"
+                    className="w-full p-4 rounded-[24px] bg-[#1e3a5f] text-white flex items-center justify-between gap-3 shadow-lg shadow-blue-200 hover:brightness-110 active:scale-[0.99] transition-all"
                 >
                     <div className="flex items-center gap-3">
                         <span className="text-2xl">📅</span>

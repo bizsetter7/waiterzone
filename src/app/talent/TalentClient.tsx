@@ -176,23 +176,21 @@ export default function TalentPage() {
 
                 {/* [New] Individual Member - Resume Registration CTA */}
                 {userType !== 'corporate' && (
-                    <div className="mb-8 p-6 rounded-[32px] bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-600 shadow-xl shadow-purple-100 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 p-8 opacity-20 rotate-12">
-                            <Sparkles size={120} className="text-white" />
-                        </div>
-                        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div className="mb-8 p-6 rounded-[32px] border border-[#1e3a5f]/30 bg-white shadow-sm relative overflow-hidden">
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#1e3a5f] rounded-l-[32px]" />
+                        <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-white mb-2 leading-tight">
+                                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-2 leading-tight">
                                     이력서 등록하고 <br className="md:hidden" />
-                                    <span className="text-yellow-300">포인트 500P </span> 즉시 받기! 🛍️
+                                    <span className="text-[#1e3a5f]">포인트 500P </span> 즉시 받기! 🛍️
                                 </h2>
-                                <p className="text-white/80 text-sm font-bold">
+                                <p className="text-gray-500 text-sm font-bold">
                                     자세한 내용은 마이페이지에서 확인해주세요!
                                 </p>
                             </div>
                             <button
                                 onClick={() => router.push('/my-shop?view=resume-form&new=true')}
-                                className="px-8 py-4 bg-white text-purple-700 rounded-2xl font-black text-lg shadow-lg hover:scale-105 active:scale-95 transition-all"
+                                className="px-8 py-4 bg-[#1e3a5f] text-white rounded-2xl font-black text-lg shadow-md hover:bg-[#152d4a] hover:scale-105 active:scale-95 transition-all"
                             >
                                 내 이력서 등록하기
                             </button>
@@ -207,7 +205,7 @@ export default function TalentPage() {
                             type="text"
                             placeholder="지역, 키워드로 인재를 찾아보세요"
                             disabled={!hasTalentAccess}
-                            className={`w-full py-4 pl-12 pr-4 rounded-2xl border ${brand.theme === 'dark' ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-500' : 'bg-white border-gray-200 text-gray-900 placeholder-gray-400'} focus:ring-2 focus:ring-blue-500 outline-none font-bold transition-shadow shadow-sm ${!hasTalentAccess ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            className={`w-full py-4 pl-12 pr-4 rounded-2xl border bg-white border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 outline-none font-bold transition-shadow shadow-sm ${!hasTalentAccess ? 'opacity-50 cursor-not-allowed' : ''}`}
                         />
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                     </div>

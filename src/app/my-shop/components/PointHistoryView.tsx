@@ -61,9 +61,9 @@ export function PointHistoryView({ userId }: { userId: string }) {
             case 'RESUME_UPLOAD': return <FileText size={16} className="text-purple-500" />;
             case 'COMMUNITY_POST': return <MessageSquare size={16} className="text-green-500" />;
             case 'COMMUNITY_COMMENT': return <MessageSquare size={16} className="text-emerald-500" />;
-            case 'ATTENDANCE_CHECK': return <CalendarCheck size={16} className="text-rose-500" />;
+            case 'ATTENDANCE_CHECK': return <CalendarCheck size={16} className="text-[#1e3a5f]" />;
             case 'SHOP_JUMP': return <Zap size={16} className="text-amber-500" />;
-            case 'COUPON_EXCHANGE': return <ShoppingBag size={16} className="text-rose-500" />;
+            case 'COUPON_EXCHANGE': return <ShoppingBag size={16} className="text-[#1e3a5f]" />;
             default: return <CreditCard size={16} className="text-gray-400" />;
         }
     };
@@ -188,7 +188,7 @@ export function PointHistoryView({ userId }: { userId: string }) {
                                                 </p>
                                             </div>
                                         </div>
-                                        <div className={`text-base md:text-lg font-black shrink-0 ml-2 ${log.amount > 0 ? 'text-blue-600' : 'text-rose-500'}`}>
+                                        <div className={`text-base md:text-lg font-black shrink-0 ml-2 ${log.amount > 0 ? 'text-blue-600' : 'text-[#1e3a5f]'}`}>
                                             {log.amount > 0 ? '+' : ''}{log.amount.toLocaleString()} <span className="text-[10px] md:text-xs">P</span>
                                         </div>
                                     </div>

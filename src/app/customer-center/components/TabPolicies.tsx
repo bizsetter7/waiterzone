@@ -7,8 +7,8 @@ export const TabPolicies = () => {
     const brand = useBrand();
 
     const sectionHeader = (title: string) => (
-        <div className="flex items-center gap-3 mb-6 bg-slate-50/10 dark:bg-white/5 p-2 rounded-xl md:bg-white/40 md:p-4 md:rounded-2xl md:border md:border-gray-100/50 md:dark:border-gray-800/50">
-            <div className="w-2 h-8 bg-[#f82b60] rounded-full"></div>
+        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
+            <div className="w-1 h-7 bg-[#1e3a5f] rounded-full shrink-0" />
             <h3 className={`text-2xl font-black ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{title}</h3>
         </div>
     );

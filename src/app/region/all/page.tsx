@@ -20,10 +20,10 @@ export default function RegionAllPage() {
     return (
         <div className="min-h-screen bg-white">
             {/* Header Area */}
-            <div className="bg-gradient-to-b from-[#f82b60]/5 to-transparent py-12 border-b border-gray-100">
+            <div className="bg-gradient-to-b from-[#1e3a5f]/5 to-transparent py-12 border-b border-gray-100">
                 <div className="max-w-5xl mx-auto px-6 text-center">
                     <h1 className="text-3xl font-black text-gray-900 mb-4 tracking-tight">
-                        전국 지역별 <span className="text-[#f82b60]">고소득 남성알바</span> 통합정보
+                        전국 지역별 <span className="text-[#1e3a5f]">고소득 남성알바</span> 통합정보
                     </h1>
                     <p className="text-gray-500 text-sm leading-relaxed max-w-2xl mx-auto">
                         서울 강남부터 제주까지, 웨이터존가 보증하는 프리미엄 업소 정보를 지역별로 한눈에 확인하세요.<br />
@@ -39,7 +39,7 @@ export default function RegionAllPage() {
                         <a 
                             key={province} 
                             href={`#section-${province}`}
-                            className="text-[13px] font-bold text-gray-600 hover:text-[#f82b60] transition-colors"
+                            className="text-[13px] font-bold text-gray-600 hover:text-[#1e3a5f] transition-colors"
                         >
                             {province}
                         </a>
@@ -56,7 +56,7 @@ export default function RegionAllPage() {
                     return (
                         <section key={province} id={`section-${province}`} className="mb-20 scroll-mt-28">
                             <div className="flex items-center gap-4 mb-8">
-                                <h2 className="text-2xl font-black text-gray-900 border-b-4 border-[#f82b60]/20 pb-1">
+                                <h2 className="text-2xl font-black text-gray-900 border-b-4 border-[#1e3a5f]/20 pb-1">
                                     {province}
                                 </h2>
                                 <span className="text-xs font-bold text-gray-400">총 {regions.length}개 지역</span>
@@ -67,13 +67,13 @@ export default function RegionAllPage() {
                                     <Link
                                         key={region.id}
                                         href={`/region/${region.id}`}
-                                        className="py-2.5 px-3 rounded-lg border border-gray-100 hover:border-[#f82b60]/30 hover:bg-[#f82b60]/5 transition-all group"
+                                        className="py-2.5 px-3 rounded-lg border border-gray-100 hover:border-[#1e3a5f]/30 hover:bg-[#1e3a5f]/5 transition-all group"
                                     >
                                         <div className="flex flex-col">
-                                            <span className="text-[13px] font-medium text-gray-700 group-hover:text-[#f82b60]">
+                                            <span className="text-[13px] font-medium text-gray-700 group-hover:text-[#1e3a5f]">
                                                 {region.mainRegion}
                                             </span>
-                                            <span className="text-[10px] text-gray-400 group-hover:text-[#f82b60]/60">
+                                            <span className="text-[10px] text-gray-400 group-hover:text-[#1e3a5f]/60">
                                                 남성알바 공고 &gt;
                                             </span>
                                         </div>

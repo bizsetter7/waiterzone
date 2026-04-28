@@ -347,7 +347,7 @@ function MainHeaderContent({ showBackButton, title: propTitle }: MainHeaderProps
                                             <LogOut size={14} /> 로그아웃
                                         </button>
                                     </div>
-                                    <button onClick={() => { router.push('/admin'); setShowMobileMenu(false); }} className="w-full text-left py-3 px-4 rounded-xl font-black text-[#1e3a5f] bg-rose-50/50 flex items-center gap-2">
+                                    <button onClick={() => { router.push('/admin'); setShowMobileMenu(false); }} className="w-full text-left py-3 px-4 rounded-xl font-black text-[#1e3a5f] bg-blue-50/50 flex items-center gap-2">
                                         <ShieldCheck size={16} /> 어드민 센터 이동
                                     </button>
                                     <button onClick={() => { router.push('/admin?tab=ads'); setShowMobileMenu(false); }} className="w-full text-left py-3 px-4 rounded-xl font-bold text-slate-600">광고 심사 관리</button>
@@ -367,7 +367,7 @@ function MainHeaderContent({ showBackButton, title: propTitle }: MainHeaderProps
                                                 if (cat.name !== '전체') params.set('category', cat.name);
                                                 router.push(`/community?${params.toString()}`);
                                             }}
-                                            className={`w-full text-left py-3 px-4 rounded-xl font-bold ${searchParams.get('category') === cat.name || (!searchParams.get('category') && cat.name === '전체') ? 'bg-rose-50 text-[#1e3a5f]' : 'text-gray-600'}`}
+                                            className={`w-full text-left py-3 px-4 rounded-xl font-bold ${searchParams.get('category') === cat.name || (!searchParams.get('category') && cat.name === '전체') ? 'bg-blue-50 text-[#1e3a5f]' : 'text-gray-600'}`}
                                         >
                                             {cat.name}
                                         </button>
@@ -394,7 +394,7 @@ function MainHeaderContent({ showBackButton, title: propTitle }: MainHeaderProps
                                                 router.push(tabUrl);
                                                 setShowMobileMenu(false);
                                             }}
-                                            className={`w-full text-left py-3 px-4 rounded-xl font-bold ${(searchParams.get('tab') === item.id || (page === 'support' && item.id === 'notice') || page === item.id) ? 'bg-rose-50 text-[#1e3a5f]' : 'text-gray-600'}`}
+                                            className={`w-full text-left py-3 px-4 rounded-xl font-bold ${(searchParams.get('tab') === item.id || (page === 'support' && item.id === 'notice') || page === item.id) ? 'bg-blue-50 text-[#1e3a5f]' : 'text-gray-600'}`}
                                         >
                                             {item.label}
                                         </button>

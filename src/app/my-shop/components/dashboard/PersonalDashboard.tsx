@@ -97,14 +97,14 @@ export function PersonalSidebar({ view, setView }: { view: any, setView: (v: any
                     <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleFileChange} />
                     <button
                         onClick={() => fileInputRef.current?.click()}
-                        className="px-4 py-1.5 bg-rose-50 text-[#f82b60] text-[10px] font-black rounded-full border border-rose-100 hover:bg-rose-100 transition active:scale-95 flex items-center gap-1"
+                        className="px-4 py-1.5 bg-blue-50 text-[#1e3a5f] text-[10px] font-black rounded-full border border-blue-100 hover:bg-blue-100 transition active:scale-95 flex items-center gap-1"
                     >
                         사진 등록/수정
                     </button>
                     <button
                         onClick={() => setView('member-edit')}
                         className={`w-full py-2.5 mt-2 flex items-center justify-center gap-2 text-xs font-black rounded-2xl transition-all ${typeof view === 'string' && view === 'member-edit'
-                            ? 'bg-[#f82b60] text-white shadow-lg shadow-rose-100'
+                            ? 'bg-[#1e3a5f] text-white shadow-lg shadow-sm'
                             : 'bg-gray-50 text-gray-500 hover:bg-gray-100'
                             }`}
                     >
@@ -121,9 +121,9 @@ export function PersonalSidebar({ view, setView }: { view: any, setView: (v: any
                             key={item.id}
                             onClick={() => setView(item.id)}
                             className={`w-full flex items-center gap-3 p-3.5 rounded-2xl text-sm font-black transition-all ${isItemActive(item.id)
-                                ? 'bg-[#f82b60] text-white shadow-lg shadow-rose-100'
+                                ? 'bg-[#1e3a5f] text-white shadow-lg shadow-sm'
                                 : item.id === 'point-exchange'
-                                    ? 'text-[#f82b60] bg-rose-50 hover:bg-rose-100 border border-rose-100'
+                                    ? 'text-[#1e3a5f] bg-blue-50 hover:bg-blue-100 border border-blue-100'
                                     : 'text-gray-500 hover:bg-gray-50'
                                 }`}
                         >
@@ -197,7 +197,7 @@ export function ScrapJobsView({ setView }: { setView: (v: any) => void }) {
                 </h2>
                 <div className="flex items-center gap-2">
                     <span className="text-xs text-gray-400 font-bold">{SCRAP_EXPIRE_DAYS}일 후 자동 삭제</span>
-                    <span className="text-sm font-black text-[#f82b60]">{favoriteShops.length}건</span>
+                    <span className="text-sm font-black text-[#1e3a5f]">{favoriteShops.length}건</span>
                 </div>
             </div>
 
@@ -208,7 +208,7 @@ export function ScrapJobsView({ setView }: { setView: (v: any) => void }) {
                     <p className="text-gray-300 text-xs mt-1">공고 상세 화면의 ☆ 버튼을 눌러 스크랩하세요.</p>
                     <button
                         onClick={() => router.push('/')}
-                        className="mt-6 px-6 py-2.5 bg-[#f82b60] text-white rounded-xl text-sm font-black hover:bg-[#db2456] transition-all"
+                        className="mt-6 px-6 py-2.5 bg-[#1e3a5f] text-white rounded-xl text-sm font-black hover:bg-[#162d4a] transition-all"
                     >
                         공고 보러 가기
                     </button>
@@ -226,7 +226,7 @@ export function ScrapJobsView({ setView }: { setView: (v: any) => void }) {
                             >
                                 <div className="flex items-center justify-between gap-3">
                                     <div className="flex items-center gap-3 flex-1 min-w-0">
-                                        <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center shrink-0">
+                                        <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
                                             <Star size={18} className="text-yellow-400 fill-yellow-400" />
                                         </div>
                                         <div className="min-w-0">
@@ -319,8 +319,8 @@ export function PersonalDashboardHome({ setView, resumeCount = 0 }: { setView: (
 
     const stats = [
         { label: '스크랩한 공고', val: scrapCount, icon: <Star className="text-yellow-400" />, onClick: () => setView('scrap-jobs') },
-        { label: '열람한 공고', val: viewedCount, icon: <Home className="text-[#f82b60]" />, onClick: undefined },
-        { label: '지원한 내역', val: applyCount, icon: <FileText className="text-[#f82b60]" />, onClick: undefined },
+        { label: '열람한 공고', val: viewedCount, icon: <Home className="text-[#1e3a5f]" />, onClick: undefined },
+        { label: '지원한 내역', val: applyCount, icon: <FileText className="text-[#1e3a5f]" />, onClick: undefined },
     ];
 
     return (
@@ -329,7 +329,7 @@ export function PersonalDashboardHome({ setView, resumeCount = 0 }: { setView: (
             {todayChecked === false && (
                 <button
                     onClick={() => setView('attendance')}
-                    className="w-full p-4 rounded-[24px] bg-gradient-to-r from-[#f82b60] to-pink-400 text-white flex items-center justify-between gap-3 shadow-lg shadow-rose-200 hover:brightness-110 active:scale-[0.99] transition-all"
+                    className="w-full p-4 rounded-[24px] bg-gradient-to-r from-[#1e3a5f] to-pink-400 text-white flex items-center justify-between gap-3 shadow-lg shadow-blue-200 hover:brightness-110 active:scale-[0.99] transition-all"
                 >
                     <div className="flex items-center gap-3">
                         <span className="text-2xl">📅</span>
@@ -363,7 +363,7 @@ export function PersonalDashboardHome({ setView, resumeCount = 0 }: { setView: (
                         <div className="flex items-center gap-3 p-5 md:hidden">
                             <span className="p-2 bg-gray-50 rounded-xl shrink-0">{item.icon}</span>
                             <span className="text-sm font-black flex-1">{item.label}</span>
-                            <span className="font-black text-lg text-[#f82b60]">{item.val}<span className="text-xs text-gray-400 ml-0.5">건</span></span>
+                            <span className="font-black text-lg text-[#1e3a5f]">{item.val}<span className="text-xs text-gray-400 ml-0.5">건</span></span>
                         </div>
                         {/* PC 레이아웃 (md 이상): 기존 스타일 유지 */}
                         <div className="hidden md:block p-6">
@@ -392,14 +392,14 @@ export function PersonalDashboardHome({ setView, resumeCount = 0 }: { setView: (
 
                     <div className="text-center space-y-2">
                         <div className="text-xs md:text-sm font-black text-gray-500">이력서 등록수</div>
-                        <div className="text-3xl md:text-5xl font-black text-[#f82b60] flex items-baseline justify-center gap-1">
+                        <div className="text-3xl md:text-5xl font-black text-[#1e3a5f] flex items-baseline justify-center gap-1">
                             {resumeCount}<span className="text-sm md:text-lg text-gray-400 font-bold">개</span>
                         </div>
                     </div>
 
                     <div className="text-center space-y-2">
                         <div className="text-xs md:text-sm font-black text-gray-500">공개중인 이력서</div>
-                        <div className="text-3xl md:text-5xl font-black text-[#f82b60] flex items-baseline justify-center gap-1">
+                        <div className="text-3xl md:text-5xl font-black text-[#1e3a5f] flex items-baseline justify-center gap-1">
                             {resumeCount}<span className="text-sm md:text-lg text-gray-400 font-bold">개</span>
                         </div>
                     </div>
@@ -418,7 +418,7 @@ export function PersonalDashboardHome({ setView, resumeCount = 0 }: { setView: (
                             <p className="text-sm text-gray-500 font-bold">회원님만을 위한 맞춤 취업 정보를 제공합니다.</p>
                         </div>
                     </div>
-                    <button onClick={() => setView('resume-form')} className="w-full md:w-auto py-4 px-10 bg-[#f82b60] text-white rounded-2xl font-black hover:bg-[#db2456] shadow-xl shadow-rose-200 transition-all flex items-center justify-center gap-2 active:scale-95">
+                    <button onClick={() => setView('resume-form')} className="w-full md:w-auto py-4 px-10 bg-[#1e3a5f] text-white rounded-2xl font-black hover:bg-[#162d4a] shadow-xl shadow-blue-200 transition-all flex items-center justify-center gap-2 active:scale-95">
                         <span className="text-lg">+</span> 이력서 등록하기
                     </button>
                 </div>
@@ -471,12 +471,12 @@ function MobileProfileHeader({ view, setView }: { view: any, setView: (v: any) =
             <div className="flex items-center gap-4">
                 <div
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-16 h-16 rounded-full overflow-hidden border-2 border-rose-100 bg-rose-50 flex items-center justify-center shrink-0 cursor-pointer relative group"
+                    className="w-16 h-16 rounded-full overflow-hidden border-2 border-blue-100 bg-blue-50 flex items-center justify-center shrink-0 cursor-pointer relative group"
                 >
                     {profileImage ? (
                         <img src={profileImage} alt="프로필" className="w-full h-full object-cover" />
                     ) : (
-                        <User size={28} className="text-[#f82b60]" />
+                        <User size={28} className="text-[#1e3a5f]" />
                     )}
                     <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 rounded-full transition">
                         <Settings size={14} className="text-white" />
@@ -488,7 +488,7 @@ function MobileProfileHeader({ view, setView }: { view: any, setView: (v: any) =
                     <div className="flex gap-2 mt-2">
                         <button
                             onClick={() => fileInputRef.current?.click()}
-                            className="px-3 py-1.5 text-[10px] font-black rounded-full bg-rose-50 text-[#f82b60] border border-rose-100 hover:bg-rose-100 transition"
+                            className="px-3 py-1.5 text-[10px] font-black rounded-full bg-blue-50 text-[#1e3a5f] border border-blue-100 hover:bg-blue-100 transition"
                         >
                             사진 등록/수정
                         </button>
@@ -496,7 +496,7 @@ function MobileProfileHeader({ view, setView }: { view: any, setView: (v: any) =
                             onClick={() => setView('member-edit')}
                             className={`px-3 py-1.5 text-[10px] font-black rounded-full border transition ${
                                 currentViewId === 'member-edit'
-                                    ? 'bg-[#f82b60] text-white border-[#f82b60]'
+                                    ? 'bg-[#1e3a5f] text-white border-[#1e3a5f]'
                                     : 'bg-gray-50 text-gray-500 border-gray-200 hover:bg-gray-100'
                             }`}
                         >

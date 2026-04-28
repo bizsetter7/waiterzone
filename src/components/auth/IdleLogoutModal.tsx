@@ -27,9 +27,9 @@ export const IdleLogoutModal = ({ isOpen, secondsLeft, onKeepAlive, onLogout }: 
                 
                 {/* Visual Header */}
                 <div className="p-6 pb-0 flex flex-col items-center text-center">
-                    <div className="w-16 h-16 rounded-full bg-rose-50 dark:bg-rose-900/20 flex items-center justify-center mb-4 relative">
-                        <Clock size={32} className="text-rose-500 animate-pulse" />
-                        <div className="absolute inset-0 rounded-full border-4 border-rose-500/20 border-t-rose-500 animate-spin" style={{ animationDuration: '3s' }} />
+                    <div className="w-16 h-16 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center mb-4 relative">
+                        <Clock size={32} className="text-[#1e3a5f] animate-pulse" />
+                        <div className="absolute inset-0 rounded-full border-4 border-[#1e3a5f]/20 border-t-[#1e3a5f] animate-spin" style={{ animationDuration: '3s' }} />
                     </div>
                     
                     <h2 className="text-xl font-black text-slate-900 dark:text-white tracking-tight mb-2">
@@ -37,13 +37,13 @@ export const IdleLogoutModal = ({ isOpen, secondsLeft, onKeepAlive, onLogout }: 
                     </h2>
                     <p className="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed px-2">
                         장시간 활동이 감지되지 않아<br />
-                        <span className="font-black text-rose-500 underline underline-offset-4 decoration-2">자동 로그아웃</span>될 예정입니다.
+                        <span className="font-black text-[#1e3a5f] underline underline-offset-4 decoration-2">자동 로그아웃</span>될 예정입니다.
                     </p>
                 </div>
 
                 {/* Countdown Display */}
                 <div className="mt-6 mx-6 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center">
-                    <div className="flex items-baseline gap-1 text-[#f82b60]">
+                    <div className="flex items-baseline gap-1 text-[#1e3a5f]">
                         <span className="text-4xl font-black tabular-nums">{minutes}</span>
                         <span className="text-xl font-bold">분</span>
                         <span className="text-4xl font-black tabular-nums ml-1">
@@ -68,7 +68,7 @@ export const IdleLogoutModal = ({ isOpen, secondsLeft, onKeepAlive, onLogout }: 
                     
                     <button
                         onClick={onLogout}
-                        className="w-full h-12 bg-transparent text-slate-400 dark:text-slate-500 hover:text-rose-500 font-bold text-sm flex items-center justify-center gap-1 transition-colors"
+                        className="w-full h-12 bg-transparent text-slate-400 dark:text-slate-500 hover:text-[#1e3a5f] font-bold text-sm flex items-center justify-center gap-1 transition-colors"
                     >
                         <LogOut size={16} />
                         즉시 로그아웃

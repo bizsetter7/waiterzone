@@ -221,7 +221,7 @@ export const PersonalMemberEdit = ({ setView, onOpenMenu }: { setView: (v: any) 
         <>
             <div className={`max-w-4xl mx-auto p-3 md:p-10 rounded-[24px] md:rounded-[32px] shadow-xl border ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-100'}`}>
                 <h2 className={`text-lg md:text-2xl font-black mb-3 md:mb-10 pb-3 md:pb-5 border-b flex items-center gap-2 md:gap-3 ${isDark ? 'text-white border-gray-800' : 'text-gray-950 border-gray-100'}`}>
-                    <span className="w-2 h-8 bg-[#f82b60] rounded-full hidden md:block"></span>
+                    <span className="w-2 h-8 bg-[#1e3a5f] rounded-full hidden md:block"></span>
                     개인 회원 정보 수정
                 </h2>
 
@@ -251,9 +251,9 @@ export const PersonalMemberEdit = ({ setView, onOpenMenu }: { setView: (v: any) 
                     </div>
 
                     {/* 본인인증 정보 (생년월일 / 성별) — 표시 전용 */}
-                    <div className={`p-4 rounded-xl border ${isDark ? 'bg-gray-800/50 border-gray-700' : 'bg-rose-50/50 border-rose-100'}`}>
-                        <p className={`text-xs font-black mb-3 flex items-center gap-2 ${isDark ? 'text-gray-400' : 'text-rose-700'}`}>
-                            <span className="w-1 h-4 bg-[#f82b60] rounded-full inline-block" />
+                    <div className={`p-4 rounded-xl border ${isDark ? 'bg-gray-800/50 border-gray-700' : 'bg-white border-gray-100'}`}>
+                        <p className={`text-xs font-black mb-3 flex items-center gap-2 ${isDark ? 'text-gray-400' : 'text-blue-700'}`}>
+                            <span className="w-1 h-4 bg-[#1e3a5f] rounded-full inline-block" />
                             본인인증 확인 정보
                         </p>
                         <div className="grid grid-cols-2 gap-4">
@@ -278,14 +278,14 @@ export const PersonalMemberEdit = ({ setView, onOpenMenu }: { setView: (v: any) 
                                 />
                             </div>
                         </div>
-                        <p className="text-[10px] text-rose-500 mt-2 font-bold">* 본인인증으로 확인된 정보로 임의 수정이 불가합니다.</p>
+                        <p className="text-[10px] text-[#1e3a5f] mt-2 font-bold">* 본인인증으로 확인된 정보로 임의 수정이 불가합니다.</p>
                     </div>
 
                     {/* 닉네임 */}
                     <div>
                         <div className="flex items-center gap-2 mb-2">
                             <label className={`text-xs font-black ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>닉네임</label>
-                            <span className="text-[10px] font-bold text-[#f82b60]">*1일 1회 수정가능</span>
+                            <span className="text-[10px] font-bold text-[#1e3a5f]">*1일 1회 수정가능</span>
                         </div>
                         <input
                             type="text"
@@ -295,7 +295,7 @@ export const PersonalMemberEdit = ({ setView, onOpenMenu }: { setView: (v: any) 
                             maxLength={10}
                             className={`w-full p-3 md:p-4 rounded-xl font-bold border transition outline-none ${
                                 canEditNickname
-                                    ? `focus:ring-2 focus:ring-rose-500/20 ${isDark ? 'bg-gray-800 border-gray-700 text-white focus:border-rose-500' : 'bg-white border-gray-200 text-gray-950 focus:border-rose-500'}`
+                                    ? `focus:ring-2 focus:ring-blue-500/20 ${isDark ? 'bg-gray-800 border-gray-700 text-white focus:border-[#1e3a5f]' : 'bg-white border-gray-200 text-gray-950 focus:border-[#1e3a5f]'}`
                                     : `cursor-not-allowed ${isDark ? 'bg-gray-800 border-gray-700 text-gray-500' : 'bg-gray-100 border-gray-200 text-gray-400'}`
                             }`}
                         />
@@ -321,7 +321,7 @@ export const PersonalMemberEdit = ({ setView, onOpenMenu }: { setView: (v: any) 
                             />
                             <button
                                 onClick={() => setShowIdentityModal(true)}
-                                className="px-4 py-3 md:py-4 bg-[#f82b60] hover:bg-[#db2456] text-white rounded-xl text-xs font-black shrink-0 transition shadow-lg shadow-rose-500/20 active:scale-95"
+                                className="px-4 py-3 md:py-4 bg-[#1e3a5f] hover:bg-[#162d4a] text-white rounded-xl text-xs font-black shrink-0 transition shadow-lg shadow-blue-900/20 active:scale-95"
                             >
                                 재인증
                             </button>
@@ -338,14 +338,14 @@ export const PersonalMemberEdit = ({ setView, onOpenMenu }: { setView: (v: any) 
                                 placeholder="새 비밀번호 (6자 이상)"
                                 value={formData.newPassword}
                                 onChange={(e) => handleChange('newPassword', e.target.value)}
-                                className={`w-full p-3 md:p-4 rounded-xl font-bold border outline-none focus:ring-2 focus:ring-rose-500/20 ${isDark ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-200 text-gray-950'}`}
+                                className={`w-full p-3 md:p-4 rounded-xl font-bold border outline-none focus:ring-2 focus:ring-blue-500/20 ${isDark ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-200 text-gray-950'}`}
                             />
                             <input
                                 type="password"
                                 placeholder="비밀번호 확인"
                                 value={formData.newPasswordConfirm}
                                 onChange={(e) => handleChange('newPasswordConfirm', e.target.value)}
-                                className={`w-full p-3 md:p-4 rounded-xl font-bold border outline-none focus:ring-2 focus:ring-rose-500/20 ${isDark ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-200 text-gray-950'}`}
+                                className={`w-full p-3 md:p-4 rounded-xl font-bold border outline-none focus:ring-2 focus:ring-blue-500/20 ${isDark ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-200 text-gray-950'}`}
                             />
                         </div>
                     </div>
@@ -356,7 +356,7 @@ export const PersonalMemberEdit = ({ setView, onOpenMenu }: { setView: (v: any) 
                             type="checkbox"
                             checked={formData.smsConsent}
                             onChange={(e) => handleChange('smsConsent', e.target.checked)}
-                            className="w-4 h-4 accent-[#f82b60]"
+                            className="w-4 h-4 accent-[#1e3a5f]"
                         />
                         <span className={`text-sm font-bold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>SMS 수신 동의 (중요 알림 및 공지사항)</span>
                     </label>
@@ -381,7 +381,7 @@ export const PersonalMemberEdit = ({ setView, onOpenMenu }: { setView: (v: any) 
                             <button
                                 onClick={handleSave}
                                 disabled={isSaving}
-                                className="px-8 py-4 rounded-2xl bg-[#f82b60] text-white font-black hover:bg-[#db2456] shadow-xl shadow-rose-500/20 transition active:scale-95 disabled:opacity-60"
+                                className="px-8 py-4 rounded-2xl bg-[#1e3a5f] text-white font-black hover:bg-[#162d4a] shadow-xl shadow-blue-900/20 transition active:scale-95 disabled:opacity-60"
                             >
                                 {isSaving ? '저장 중...' : '정보 수정하기'}
                             </button>

@@ -10,8 +10,8 @@ export const TabUsageGuide = () => {
     return (
         <div className="space-y-12">
             <section>
-                <div className="flex items-center gap-3 mb-8 bg-slate-50/10 dark:bg-white/5 p-2 rounded-xl md:bg-white/40 md:p-4 md:rounded-2xl md:border md:border-gray-100/50 md:dark:border-gray-800/50">
-                    <div className="w-2 h-8 bg-[#f82b60] rounded-full"></div>
+                <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-100">
+                    <div className="w-1 h-7 bg-[#1e3a5f] rounded-full shrink-0" />
                     <h3 className={`text-2xl font-black uppercase tracking-tighter ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>구직자 이용가이드</h3>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -22,8 +22,8 @@ export const TabUsageGuide = () => {
                         { step: '04', title: '1:1 상담', icon: <MessageSquare />, desc: '안심 면접을 위한 소통' },
                     ].map((item, i) => (
                         <div key={i} className={`p-6 rounded-[30px] border text-center relative overflow-hidden group hover:shadow-xl transition-all ${brand.theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-                            <span className={`absolute -top-3 -left-3 text-5xl font-black transition-colors pointer-events-none ${brand.theme === 'dark' ? 'text-gray-700' : 'text-gray-50'} group-hover:text-rose-50/50`}>{item.step}</span>
-                            <div className="w-14 h-14 bg-rose-50 text-[#f82b60] rounded-2xl flex items-center justify-center mx-auto mb-5 relative z-10 shadow-inner">
+                            <span className={`absolute -top-3 -left-3 text-5xl font-black transition-colors pointer-events-none ${brand.theme === 'dark' ? 'text-gray-700' : 'text-gray-50'} group-hover:text-blue-50/50`}>{item.step}</span>
+                            <div className="w-14 h-14 bg-blue-50 text-[#1e3a5f] rounded-2xl flex items-center justify-center mx-auto mb-5 relative z-10 shadow-inner">
                                 {item.icon}
                             </div>
                             <h4 className={`font-black text-[15px] mb-1 relative z-10 ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{item.title}</h4>
@@ -34,13 +34,13 @@ export const TabUsageGuide = () => {
             </section>
 
             <section>
-                <div className="flex items-center gap-3 mb-8 bg-slate-50/10 dark:bg-white/5 p-2 rounded-xl md:bg-white/40 md:p-4 md:rounded-2xl md:border md:border-gray-100/50 md:dark:border-gray-800/50">
-                    <div className="w-2 h-8 bg-[#f82b60] rounded-full"></div>
+                <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-100">
+                    <div className="w-1 h-7 bg-[#1e3a5f] rounded-full shrink-0" />
                     <h3 className={`text-2xl font-black uppercase tracking-tighter ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>구인자(사장님) 가이드</h3>
                 </div>
-                <div className={`p-8 md:p-10 rounded-[45px] border shadow-xl shadow-rose-100/10 space-y-10 ${brand.theme === 'dark' ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-100 text-gray-900'}`}>
+                <div className={`p-8 md:p-10 rounded-[45px] border shadow-xl shadow-gray-100/10 space-y-10 ${brand.theme === 'dark' ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-100 text-gray-900'}`}>
                     <div className="flex flex-col md:flex-row items-center gap-8">
-                        <div className="w-20 h-20 bg-rose-50 text-[#f82b60] rounded-[28px] flex items-center justify-center shrink-0 border border-rose-100">
+                        <div className="w-20 h-20 bg-blue-50 text-[#1e3a5f] rounded-[28px] flex items-center justify-center shrink-0 border border-blue-100">
                             <Briefcase size={36} />
                         </div>
                         <div className="text-center md:text-left flex flex-col items-center md:items-start">
@@ -62,7 +62,7 @@ export const TabUsageGuide = () => {
                             { num: '3', title: '컨택 & 매칭', sub: '열람권을 통해 적합한 인재를 먼저 선점하세요.' }
                         ].map((box, i) => (
                             <div key={i} className={`flex items-start gap-4 md:gap-5 p-6 md:p-0 rounded-3xl border md:border-0 ${brand.theme === 'dark' ? 'bg-gray-700/50 border-gray-700' : 'bg-gray-50 md:bg-transparent border-gray-100'}`}>
-                                <span className="text-4xl md:text-5xl font-black text-[#f82b60]/20 shrink-0 leading-none w-[36px] md:w-12 text-center">{box.num}</span>
+                                <span className="text-4xl md:text-5xl font-black text-[#1e3a5f]/20 shrink-0 leading-none w-[36px] md:w-12 text-center">{box.num}</span>
                                 <div className="flex flex-col items-start text-left pt-1 md:pt-2">
                                     <h5 className="font-black text-base md:text-lg text-gray-900 leading-none mb-2">{box.title}</h5>
                                     <p className="text-[12px] md:text-[13px] text-gray-500 font-bold leading-relaxed break-keep">

@@ -106,7 +106,7 @@ export const AdTemplateModal: React.FC<AdTemplateModalProps> = ({ brand, onClose
                 {/* Header */}
                 <div className="flex items-center justify-between px-8 py-5 border-b border-gray-100 shrink-0 bg-white/50 backdrop-blur-sm z-20">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-rose-600 flex items-center justify-center text-white shadow-xl shadow-blue-500/20">
+                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#1e3a5f] to-blue-700 flex items-center justify-center text-white shadow-xl shadow-blue-500/20">
                             <Sparkles size={28} />
                         </div>
                         <div>
@@ -219,7 +219,7 @@ export const AdTemplateModal: React.FC<AdTemplateModalProps> = ({ brand, onClose
                                 {canAddBlock('benefit') && (
                                     <button
                                         onClick={() => handleAddBlock('benefit')}
-                                        className="w-full py-4 rounded-2xl border-2 border-dashed border-gray-200 text-gray-300 flex items-center justify-center gap-2 hover:border-blue-200 hover:text-blue-400 hover:bg-blue-50/30 transition-all font-black text-xs"
+                                        className="w-full py-4 rounded-2xl border-2 border-dashed border-gray-200 text-gray-300 flex items-center justify-center gap-2 hover:border-blue-200 hover:text-blue-400 hover:bg-gray-50/50 transition-all font-black text-xs"
                                     >
                                         <Plus size={16} /> 새로운 블록 추가하기
                                     </button>
@@ -253,7 +253,7 @@ export const AdTemplateModal: React.FC<AdTemplateModalProps> = ({ brand, onClose
 
                 {/* Footer */}
                 <div className="px-8 py-6 border-t border-gray-100 flex items-center justify-between shrink-0 bg-white shadow-[0_-10px_30px_-15px_rgba(0,0,0,0.05)] z-20">
-                    <div className="flex items-center gap-3 px-4 py-2 bg-rose-50 rounded-2xl text-rose-500">
+                    <div className="flex items-center gap-3 px-4 py-2 bg-blue-50 rounded-2xl text-[#1e3a5f]">
                         <AlertCircle size={16} />
                         <span className="text-[11px] font-black">적용 시 에디터에 작성된 기존 내용이 이 디자인으로 교체됩니다.</span>
                     </div>
@@ -264,7 +264,7 @@ export const AdTemplateModal: React.FC<AdTemplateModalProps> = ({ brand, onClose
                                 onApply(renderedHtml);
                                 onClose();
                             }}
-                            className="px-12 py-3.5 rounded-2xl text-sm font-black bg-gradient-to-r from-blue-500 to-rose-600 text-white shadow-2xl shadow-blue-500/40 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2 group"
+                            className="px-12 py-3.5 rounded-2xl text-sm font-black bg-gradient-to-r from-[#1e3a5f] to-blue-700 text-white shadow-2xl shadow-blue-500/40 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2 group"
                         >
                             <Sparkles size={18} className="group-hover:rotate-12 transition-transform" />
                             지금 바로 적용하기

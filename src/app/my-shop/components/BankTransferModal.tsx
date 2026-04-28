@@ -26,7 +26,7 @@ export function BankTransferModal({ amount, onConfirm, title }: BankTransferModa
         <div className="fixed inset-0 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4" style={{ zIndex: UI_Z_INDEX.MODAL }}>
             <div className="bg-white rounded-[28px] shadow-2xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in-95 duration-300">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-blue-500 to-rose-600 px-6 py-5 text-white text-center">
+                <div className="bg-[#1e3a5f] px-6 py-5 text-white text-center">
                     <div className="text-3xl mb-2">✅</div>
                     <h2 className="text-xl font-black">{title ?? '공고가 접수되었습니다!'}</h2>
                     <p className="text-white/80 text-sm mt-1 font-semibold">아래 계좌로 입금하시면 관리자 심사 후 광고가 노출됩니다.</p>
@@ -35,9 +35,9 @@ export function BankTransferModal({ amount, onConfirm, title }: BankTransferModa
                 {/* Body */}
                 <div className="p-6 space-y-4">
                     {/* Amount */}
-                    <div className="bg-rose-50 border border-rose-200 rounded-2xl p-4 text-center">
-                        <p className="text-xs font-bold text-rose-500 mb-1">입금 금액</p>
-                        <p className="text-3xl font-black text-rose-600">{amount.toLocaleString()}원</p>
+                    <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4 text-center">
+                        <p className="text-xs font-bold text-[#1e3a5f] mb-1">입금 금액</p>
+                        <p className="text-3xl font-black text-[#1e3a5f]">{amount.toLocaleString()}원</p>
                     </div>
 
                     {/* Bank Info */}
@@ -80,7 +80,7 @@ export function BankTransferModal({ amount, onConfirm, title }: BankTransferModa
                 <div className="px-6 pb-6">
                     <button
                         onClick={onConfirm}
-                        className="w-full py-4 bg-gradient-to-r from-blue-500 to-rose-600 text-white font-black text-base rounded-2xl shadow-lg hover:brightness-110 active:scale-[0.98] transition-all"
+                        className="w-full py-4 bg-[#1e3a5f] text-white font-black text-base rounded-2xl shadow-lg hover:brightness-110 active:scale-[0.98] transition-all"
                     >
                         확인
                     </button>

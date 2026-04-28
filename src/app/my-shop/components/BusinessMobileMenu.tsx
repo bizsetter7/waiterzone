@@ -40,7 +40,7 @@ export const BusinessMobileMenu: React.FC<MobileMenuProps> = ({ brand, onClose, 
                         </div>
                         <button
                             onClick={() => { if (window.confirm('로그아웃 하시겠습니까?')) logout(); }}
-                            className={`p-2.5 rounded-xl border shrink-0 transition-all ${brand.theme === 'dark' ? 'bg-gray-800 border-gray-700 text-gray-400 hover:text-rose-500' : 'bg-gray-50 border-gray-100 text-gray-400 hover:bg-rose-50 hover:text-rose-500 hover:border-rose-100'}`}
+                            className={`p-2.5 rounded-xl border shrink-0 transition-all ${brand.theme === 'dark' ? 'bg-gray-800 border-gray-700 text-gray-400 hover:text-[#1e3a5f]' : 'bg-gray-50 border-gray-100 text-gray-400 hover:bg-blue-50 hover:text-[#1e3a5f] hover:border-blue-100'}`}
                             title="로그아웃"
                         >
                             <LogOut size={16} />

@@ -246,7 +246,7 @@ export default function B2BAuditPage() {
                  <div className="p-10 space-y-8 bg-white">
                     <div className="text-center bg-gray-50 py-10 rounded-3xl border-2 border-dashed border-gray-100">
                        <p className="text-sm font-bold text-gray-400 mb-6">가입을 위해 본인인증이 반드시 필요합니다.</p>
-                       <button onClick={handleIdentityAuth} className={`px-8 py-4 rounded-xl font-black transition-all ${isAuthed ? 'bg-green-100 text-green-600 border border-green-200' : 'bg-blue-600 text-white shadow-lg shadow-blue-100 hover:bg-blue-700 active:scale-95 cursor-pointer'}`}>
+                       <button onClick={handleIdentityAuth} className={`px-8 py-4 rounded-xl font-black transition-all ${isAuthed ? 'bg-green-100 text-green-600 border border-green-200' : 'bg-blue-600 text-white shadow-lg shadow-sm hover:bg-blue-700 active:scale-95 cursor-pointer'}`}>
                          {isAuthed ? '✅ 본인인증 완료' : '📲 휴대폰 본인인증'}
                        </button>
                     </div>

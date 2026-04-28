@@ -201,7 +201,7 @@ export const JobDetailContent = ({
     const getHeaderTheme = (tid: string) => {
         switch (tid) {
             case 'p1':     return { bg: "from-amber-400 via-orange-500 to-amber-600", accent: "text-amber-500",   badge: "bg-white/20" }; // Grand
-            case 'p2':     return { bg: "from-red-500 to-rose-700",                   accent: "text-red-600",     badge: "bg-white/20" }; // Premium
+            case 'p2':     return { bg: "from-red-500 to-blue-700",                   accent: "text-red-600",     badge: "bg-white/20" }; // Premium
             case 'p3':     return { bg: "from-blue-500 to-indigo-600",                accent: "text-blue-600",    badge: "bg-white/20" }; // Deluxe
             case 'p4':     return { bg: "from-emerald-400 to-teal-600",               accent: "text-emerald-600", badge: "bg-white/20" }; // Special
             case 'p5':     return { bg: "from-purple-500 to-violet-600",              accent: "text-purple-500",  badge: "bg-white/20" }; // Recommended 🟣
@@ -702,7 +702,7 @@ export const JobDetailContent = ({
                     onClick={() => requireVerification(() => {
                         window.location.href = `tel:${shop.phone}`;
                     })}
-                    className="col-span-2 py-2 md:py-3 bg-[#f82b60] text-white rounded-2xl flex items-center justify-center gap-2 hover:bg-[#db2456] transition shadow-lg shadow-[#f82b60]/30 group"
+                    className="col-span-2 py-2 md:py-3 bg-[#1e3a5f] text-white rounded-2xl flex items-center justify-center gap-2 hover:bg-[#162d4a] transition shadow-lg shadow-[#1e3a5f]/30 group"
                 >
                     <Phone size={17} fill="currentColor" className="group-hover:animate-bounce shrink-0" />
                     <span className="text-[13px] font-black">전화/문자문의</span>

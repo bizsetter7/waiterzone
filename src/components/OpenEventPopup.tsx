@@ -66,7 +66,7 @@ export default function OpenEventPopup() {
                 onClick={e => e.stopPropagation()}
             >
                 {/* Decorative Top Gradient */}
-                <div className="h-2 md:h-3 w-full bg-gradient-to-r from-[#f82b60] to-[#ff6b95]"></div>
+                <div className="h-2 md:h-3 w-full bg-gradient-to-r from-[#1e3a5f] to-blue-600"></div>
 
                 {/* Close X Button (Top Right) */}
                 <button
@@ -79,13 +79,13 @@ export default function OpenEventPopup() {
                 <div className="p-4 md:p-10 pb-4 md:pb-8 text-center min-h-fit md:min-h-[340px] flex flex-col justify-center">
                     {viewMode === 'event' ? (
                         <div className="animate-in fade-in duration-300">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f82b60]/10 text-[#f82b60] font-black text-[11px] mb-3 md:mb-6">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1e3a5f]/10 text-[#1e3a5f] font-black text-[11px] mb-3 md:mb-6">
                                 <Megaphone size={14} /> 오픈기념 상생지원 이벤트
                             </div>
 
                             <h2 className="text-[20px] md:text-[30px] font-black leading-[1.2] tracking-tighter text-gray-900 mb-4 md:mb-6">
                                 사장님 주목! 🙌<br />
-                                <span className="text-[#f82b60]">통큰 혜택</span> 드립니다
+                                <span className="text-[#1e3a5f]">통큰 혜택</span> 드립니다
                             </h2>
 
                             {/* Event Blocks (Extreme compact for mobile) */}
@@ -97,7 +97,7 @@ export default function OpenEventPopup() {
                                     <div>
                                         <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">EVENT 01</p>
                                         <p className="text-[12px] md:text-[14px] font-black text-gray-800 leading-tight">
-                                            지역별 <span className="text-[#f82b60]">선착순 10곳</span><br />
+                                            지역별 <span className="text-[#1e3a5f]">선착순 10곳</span><br />
                                             베이직 무료 광고 게시!
                                         </p>
                                     </div>
@@ -111,7 +111,7 @@ export default function OpenEventPopup() {
                                         <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">EVENT 02</p>
                                         <p className="text-[12px] md:text-[14px] font-black text-gray-800 leading-tight">
                                             모든 광고 등록 시<br />
-                                            <span className="text-[#f82b60]">추가 1개월 무료(1+1)</span>
+                                            <span className="text-[#1e3a5f]">추가 1개월 무료(1+1)</span>
                                         </p>
                                     </div>
                                 </div>
@@ -120,7 +120,7 @@ export default function OpenEventPopup() {
                             {/* CTA Button */}
                             <button
                                 onClick={() => setViewMode('notice')}
-                                className="group w-full py-3.5 md:py-5 bg-[#f82b60] hover:bg-[#db2456] text-white font-black text-[16px] md:text-lg rounded-[18px] md:rounded-[20px] shadow-xl shadow-[#f82b60]/30 transition-all active:scale-95 flex items-center justify-center gap-2"
+                                className="group w-full py-3.5 md:py-5 bg-[#1e3a5f] hover:bg-blue-900 text-white font-black text-[16px] md:text-lg rounded-[18px] md:rounded-[20px] shadow-xl shadow-[#1e3a5f]/30 transition-all active:scale-95 flex items-center justify-center gap-2"
                             >
                                 무료 공고 등록하기 <ArrowRight size={20} />
                             </button>
@@ -132,7 +132,7 @@ export default function OpenEventPopup() {
                     ) : (
                         <div className="animate-in fade-in duration-0">
                             <div className="bg-gray-50 p-4 md:p-6 rounded-[24px] md:rounded-[28px] border border-gray-100 mb-5 md:mb-8">
-                                <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full text-[20px] md:text-[22px] font-black text-[#f82b60] shadow-sm mb-4 md:mb-5 border border-gray-100">
+                                <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full text-[20px] md:text-[22px] font-black text-[#1e3a5f] shadow-sm mb-4 md:mb-5 border border-gray-100">
                                     📢 이용안내
                                 </div>
                                 <p className="text-[13px] md:text-[15px] font-bold text-gray-800 leading-[1.6] whitespace-pre-wrap">
@@ -146,7 +146,7 @@ export default function OpenEventPopup() {
                             <div className="flex flex-col gap-2 md:gap-3">
                                 <button
                                     onClick={handleRedirect}
-                                    className="w-full py-4 md:py-5 bg-[#f82b60] hover:bg-[#db2456] text-white font-black text-[16px] md:text-lg rounded-[18px] md:rounded-[22px] shadow-xl shadow-[#f82b60]/30 transition-all active:scale-95 flex items-center justify-center gap-2"
+                                    className="w-full py-4 md:py-5 bg-[#1e3a5f] hover:bg-blue-900 text-white font-black text-[16px] md:text-lg rounded-[18px] md:rounded-[22px] shadow-xl shadow-[#1e3a5f]/30 transition-all active:scale-95 flex items-center justify-center gap-2"
                                 >
                                     확인 및 이동하기 <ArrowRight size={20} />
                                 </button>
@@ -173,7 +173,7 @@ export default function OpenEventPopup() {
                     </button>
                     <button
                         onClick={() => closePopup(false)}
-                        className="flex-1 py-4 md:py-5 text-[13px] font-black text-[#f82b60] hover:bg-gray-50 transition-colors"
+                        className="flex-1 py-4 md:py-5 text-[13px] font-black text-[#1e3a5f] hover:bg-gray-50 transition-colors"
                     >
                         닫기
                     </button>

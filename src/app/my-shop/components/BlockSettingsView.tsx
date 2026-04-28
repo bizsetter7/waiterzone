@@ -42,10 +42,10 @@ export function BlockSettingsView() {
             {/* 헤더 */}
             <div className="flex items-center justify-between mb-2">
                 <h2 className={`text-xl font-black flex items-center gap-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                    <ShieldOff size={20} className="text-[#f82b60]" />
+                    <ShieldOff size={20} className="text-[#1e3a5f]" />
                     회원 차단 설정
                     {blockedList.length > 0 && (
-                        <span className="text-sm font-black text-[#f82b60]">{blockedList.length}명</span>
+                        <span className="text-sm font-black text-[#1e3a5f]">{blockedList.length}명</span>
                     )}
                 </h2>
             </div>

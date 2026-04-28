@@ -4,7 +4,7 @@ import React from 'react';
 import { AlertTriangle, Phone } from 'lucide-react';
 
 export const JobScamNoticeDetail = () => {
-    const HOT_PINK = '#f82b60';
+    const HOT_PINK = '#1e3a5f';
     return (
         <div className="flex flex-col py-6 md:py-10 max-w-4xl mx-auto space-y-8 font-sans">
             <div className="text-center space-y-3">
@@ -82,7 +82,7 @@ export const JobScamNoticeDetail = () => {
                     </div>
                 </section>
             </div>
-            <div className="py-6 px-6 rounded-[28px] flex flex-col items-center justify-center text-white shadow-xl shadow-rose-100" style={{ backgroundColor: HOT_PINK }}>
+            <div className="py-6 px-6 rounded-[28px] flex flex-col items-center justify-center text-white shadow-xl shadow-sm" style={{ backgroundColor: HOT_PINK }}>
                 <div className="flex items-center gap-2 mb-2">
                     <Phone size={22} fill="white" className="animate-pulse" />
                     <span className="text-xl md:text-2xl font-black">웨이터존 고객센터 1877-1442</span>

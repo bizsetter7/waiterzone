@@ -1152,7 +1152,7 @@ function MyShopContent() {
     const showingLoader = !mounted || userType === null || (authLoading && !initialLoadDoneRef.current) || (userType === 'corporate' && !isDataLoaded);
     if (showingLoader) return (
         <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-4">
-            <div className="w-10 h-10 border-4 border-[#f82b60] border-t-transparent rounded-full animate-spin" />
+            <div className="w-10 h-10 border-4 border-[#1e3a5f] border-t-transparent rounded-full animate-spin" />
             <p className="text-sm font-bold text-gray-400 animate-pulse">정보를 안전하게 불러오는 중...</p>
         </div>
     );
@@ -1323,7 +1323,7 @@ function MyShopContent() {
                 <div className="max-w-6xl mx-auto px-4 py-20 text-center">
                     <p className="text-gray-500 font-bold text-lg mb-2">업체회원만 접근할 수 있는 페이지입니다.</p>
                     <p className="text-gray-400 text-sm mb-6">공고등록은 업체회원 계정으로 이용해 주세요.</p>
-                    <button onClick={() => setView('dashboard')} className="px-8 py-3 bg-[#f82b60] text-white rounded-2xl font-black hover:bg-[#db2456] transition-all">마이홈으로 이동</button>
+                    <button onClick={() => setView('dashboard')} className="px-8 py-3 bg-[#1e3a5f] text-white rounded-2xl font-black hover:bg-[#162d4a] transition-all">마이홈으로 이동</button>
                 </div>
             )}
 

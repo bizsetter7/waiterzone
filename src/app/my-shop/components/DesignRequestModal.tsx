@@ -92,7 +92,7 @@ export const DesignRequestModal: React.FC<ModalProps> = ({ brand, onClose, user,
                             <button
                                 onClick={handleSubmit}
                                 disabled={loading}
-                                className="py-4 rounded-xl bg-blue-600 text-white font-black hover:bg-blue-700 shadow-xl shadow-blue-100/10 transition-all flex items-center justify-center gap-2 disabled:opacity-60"
+                                className="py-4 rounded-xl bg-blue-600 text-white font-black hover:bg-blue-700 shadow-xl shadow-gray-100/10 transition-all flex items-center justify-center gap-2 disabled:opacity-60"
                             >
                                 {loading ? <><Loader2 size={18} className="animate-spin" /> 접수 중...</> : '실시간 1:1 문의 접수하기'}
                             </button>

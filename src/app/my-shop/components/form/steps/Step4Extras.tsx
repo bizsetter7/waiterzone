@@ -133,7 +133,7 @@ export const Step4Extras: React.FC<Step4Props> = ({
     );
 
     return (
-        <section id="myshop-step-4" className={`p-1.5 md:p-5 rounded-[32px] shadow-lg border-2 overflow-hidden ${brand.theme === 'dark' ? 'bg-gradient-to-br from-rose-950 via-gray-900 to-gray-950 border-rose-900/50' : 'bg-gradient-to-br from-rose-50 via-white to-blue-50 border-rose-200'}`}>
+        <section id="myshop-step-4" className={`p-1.5 md:p-5 rounded-[32px] shadow-lg border-2 overflow-hidden ${brand.theme === 'dark' ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-100'}`}>
             <div className="bg-gradient-to-r from-[#9333ea] via-[#a855f7] to-[#ec4899] text-white p-5 md:p-7 rounded-[24px] mb-6 md:mb-8 shadow-xl relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl group-hover:scale-110 transition-transform duration-700"></div>
                 <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-4">

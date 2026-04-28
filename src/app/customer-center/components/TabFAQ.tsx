@@ -18,8 +18,8 @@ export const TabFAQ = () => {
 
     return (
         <div className="space-y-6">
-            <div className="flex items-center gap-3 mb-6 bg-slate-50/10 dark:bg-white/5 p-2 rounded-xl md:bg-white/40 md:p-4 md:rounded-2xl md:border md:border-gray-100/50 md:dark:border-gray-800/50">
-                <div className="w-2 h-8 bg-[#f82b60] rounded-full"></div>
+            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
+                <div className="w-1 h-7 bg-[#1e3a5f] rounded-full shrink-0" />
                 <h3 className={`text-2xl font-black ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>자주 묻는 질문</h3>
             </div>
             <div className="space-y-4">
@@ -30,7 +30,7 @@ export const TabFAQ = () => {
                             className={`w-full p-7 flex items-center justify-between text-left transition-colors ${brand.theme === 'dark' ? 'hover:bg-gray-700/50' : 'hover:bg-gray-50'}`}
                         >
                             <span className={`font-black text-[15px] flex gap-4 pr-4 ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                                <span className="text-[#f82b60]">Q.</span> {faq.question}
+                                <span className="text-[#1e3a5f]">Q.</span> {faq.question}
                             </span>
                             {expandedFaq === faq.id ? <ChevronUp size={24} className={brand.theme === 'dark' ? 'text-white' : 'text-gray-900'} /> : <ChevronDown size={24} className="text-gray-400" />}
                         </button>

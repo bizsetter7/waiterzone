@@ -281,7 +281,7 @@ export default function AdForm(props: AdFormProps) {
                         </button>
                         <button
                             onClick={() => props.onSave?.()}
-                            className="flex-[2] py-3 bg-gradient-to-r from-blue-500 to-rose-600 text-white font-black text-xs md:text-sm rounded-2xl flex items-center justify-center gap-1.5 shadow-xl shadow-blue-500/20 active:scale-[0.98] transition-all hover:brightness-110 whitespace-nowrap"
+                            className="flex-[2] py-3 bg-[#1e3a5f] text-white font-black text-xs md:text-sm rounded-2xl flex items-center justify-center gap-1.5 shadow-xl shadow-blue-900/20 active:scale-[0.98] transition-all hover:bg-[#162d4a] whitespace-nowrap"
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
                             저장 및 심사

@@ -104,7 +104,7 @@ export default function MessageModal({ isOpen, onClose, initialReceiver }: Messa
     const getTabClass = (tab: Tab) => `
         flex-1 py-3 text-xs sm:text-sm font-bold transition-colors text-center relative
         ${activeTab === tab
-            ? 'text-[#f82b60] after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-[#f82b60]'
+            ? 'text-[#1e3a5f] after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-[#1e3a5f]'
             : 'text-gray-500 hover:text-gray-700 bg-gray-50'}
     `;
 
@@ -123,7 +123,7 @@ export default function MessageModal({ isOpen, onClose, initialReceiver }: Messa
                     </div>
 
                     {/* Close Button (Inside Header) */}
-                    <button onClick={onClose} className="absolute right-0 top-0 h-full w-12 text-gray-400 hover:text-[#f82b60] transition-colors flex items-center justify-center border-l border-gray-200 bg-gray-50 z-20">
+                    <button onClick={onClose} className="absolute right-0 top-0 h-full w-12 text-gray-400 hover:text-[#1e3a5f] transition-colors flex items-center justify-center border-l border-gray-200 bg-gray-50 z-20">
                         <X size={20} />
                     </button>
                 </div>
@@ -136,28 +136,28 @@ export default function MessageModal({ isOpen, onClose, initialReceiver }: Messa
 
                         {/* Greeting (Integrated nicely) */}
                         <div className="text-gray-800 font-bold text-base sm:text-lg leading-tight px-1 mb-2">
-                            <span className="text-[#f82b60]">{userName}</span>님<br />환영합니다
+                            <span className="text-[#1e3a5f]">{userName}</span>님<br />환영합니다
                             <div className="text-[10px] sm:text-xs font-normal text-gray-500 mt-1 sm:mt-2">오늘도 즐거운 하루 되세요</div>
                         </div>
 
                         {/* Stats Box (White) */}
                         <div className="bg-white rounded-lg p-1 shadow-sm border border-gray-200">
                             {/* Inbox */}
-                            <div onClick={() => setActiveTab('inbox')} className="flex justify-between items-center cursor-pointer hover:bg-rose-50 p-2 sm:p-3 rounded transition-colors group border-b border-gray-100 last:border-0">
-                                <span className={`text-xs sm:text-sm font-bold ${activeTab === 'inbox' ? 'text-[#f82b60]' : 'text-gray-600 group-hover:text-[#f82b60]'}`}>받은쪽지함</span>
-                                <span className="font-bold text-[#f82b60] text-xs sm:text-sm">{inbox.length} 건</span>
+                            <div onClick={() => setActiveTab('inbox')} className="flex justify-between items-center cursor-pointer hover:bg-blue-50 p-2 sm:p-3 rounded transition-colors group border-b border-gray-100 last:border-0">
+                                <span className={`text-xs sm:text-sm font-bold ${activeTab === 'inbox' ? 'text-[#1e3a5f]' : 'text-gray-600 group-hover:text-[#1e3a5f]'}`}>받은쪽지함</span>
+                                <span className="font-bold text-[#1e3a5f] text-xs sm:text-sm">{inbox.length} 건</span>
                             </div>
 
                             {/* Unread */}
-                            <div onClick={() => setActiveTab('unread')} className="flex justify-between items-center cursor-pointer hover:bg-rose-50 p-2 sm:p-3 rounded transition-colors group border-b border-gray-100 last:border-0">
-                                <span className={`text-xs sm:text-sm font-bold ${activeTab === 'unread' ? 'text-[#f82b60]' : 'text-gray-600 group-hover:text-[#f82b60]'}`}>미확인쪽지</span>
+                            <div onClick={() => setActiveTab('unread')} className="flex justify-between items-center cursor-pointer hover:bg-blue-50 p-2 sm:p-3 rounded transition-colors group border-b border-gray-100 last:border-0">
+                                <span className={`text-xs sm:text-sm font-bold ${activeTab === 'unread' ? 'text-[#1e3a5f]' : 'text-gray-600 group-hover:text-[#1e3a5f]'}`}>미확인쪽지</span>
                                 <span className="font-bold text-red-500 text-xs sm:text-sm">{unread.length} 건</span>
                             </div>
 
                             {/* Sent */}
-                            <div onClick={() => setActiveTab('sent')} className="flex justify-between items-center cursor-pointer hover:bg-rose-50 p-2 sm:p-3 rounded transition-colors group">
-                                <span className={`text-xs sm:text-sm font-bold ${activeTab === 'sent' ? 'text-[#f82b60]' : 'text-gray-600 group-hover:text-[#f82b60]'}`}>보낸쪽지</span>
-                                <span className="font-bold text-[#f82b60] text-xs sm:text-sm">{sent.length} 건</span>
+                            <div onClick={() => setActiveTab('sent')} className="flex justify-between items-center cursor-pointer hover:bg-blue-50 p-2 sm:p-3 rounded transition-colors group">
+                                <span className={`text-xs sm:text-sm font-bold ${activeTab === 'sent' ? 'text-[#1e3a5f]' : 'text-gray-600 group-hover:text-[#1e3a5f]'}`}>보낸쪽지</span>
+                                <span className="font-bold text-[#1e3a5f] text-xs sm:text-sm">{sent.length} 건</span>
                             </div>
                         </div>
                     </div>
@@ -175,11 +175,11 @@ export default function MessageModal({ isOpen, onClose, initialReceiver }: Messa
                                         value={receiver}
                                         onChange={(e) => setReceiver(e.target.value)}
                                         placeholder="[관리자]"
-                                        className="flex-1 bg-gray-50 border border-gray-200 rounded px-2 py-1 font-bold text-gray-800 focus:outline-none focus:border-[#f82b60] transition-colors"
+                                        className="flex-1 bg-gray-50 border border-gray-200 rounded px-2 py-1 font-bold text-gray-800 focus:outline-none focus:border-[#1e3a5f] transition-colors"
                                     />
                                 </div>
                                 <textarea
-                                    className="flex-1 border border-gray-300 rounded p-4 resize-none focus:outline-none focus:border-[#f82b60] text-xs sm:text-sm"
+                                    className="flex-1 border border-gray-300 rounded p-4 resize-none focus:outline-none focus:border-[#1e3a5f] text-xs sm:text-sm"
                                     placeholder="내용을 입력하세요..."
                                     value={writeContent}
                                     onChange={(e) => setWriteContent(e.target.value)}
@@ -187,7 +187,7 @@ export default function MessageModal({ isOpen, onClose, initialReceiver }: Messa
                                 <div className="mt-4 flex justify-center">
                                     <button
                                         onClick={handleSend}
-                                        className="bg-[#f82b60] text-white px-8 py-3 rounded shadow hover:bg-[#db2456] font-bold w-full sm:w-auto text-sm sm:text-base"
+                                        className="bg-[#1e3a5f] text-white px-8 py-3 rounded shadow hover:bg-[#162d4a] font-bold w-full sm:w-auto text-sm sm:text-base"
                                     >
                                         쪽지보내기
                                     </button>
@@ -212,7 +212,7 @@ export default function MessageModal({ isOpen, onClose, initialReceiver }: Messa
                                 </div>
                                 {/* Footer Buttons */}
                                 <div className="p-3 border-t border-gray-200 bg-gray-50 flex justify-end gap-2">
-                                    <button onClick={() => { setActiveTab('write'); setReceiver(selectedNote.sender); setWriteContent(`[답장]\n\n-----------------\n${selectedNote.content}\n-----------------\n`); setSelectedNote(null); }} className="px-3 py-1 bg-[#f82b60] text-white text-xs sm:text-sm rounded hover:bg-[#db2456]">답장</button>
+                                    <button onClick={() => { setActiveTab('write'); setReceiver(selectedNote.sender); setWriteContent(`[답장]\n\n-----------------\n${selectedNote.content}\n-----------------\n`); setSelectedNote(null); }} className="px-3 py-1 bg-[#1e3a5f] text-white text-xs sm:text-sm rounded hover:bg-[#162d4a]">답장</button>
                                     <button onClick={() => setSelectedNote(null)} className="px-3 py-1 bg-gray-500 text-white text-xs sm:text-sm rounded hover:bg-gray-600">목록</button>
                                 </div>
                             </div>
@@ -222,7 +222,7 @@ export default function MessageModal({ isOpen, onClose, initialReceiver }: Messa
                         {!selectedNote && activeTab !== 'write' && (
                             <table className="w-full text-sm">
                                 <thead>
-                                    <tr className="border-t-2 border-b border-[#f82b60] text-gray-700 bg-gray-50 text-xs sm:text-sm">
+                                    <tr className="border-t-2 border-b border-[#1e3a5f] text-gray-700 bg-gray-50 text-xs sm:text-sm">
                                         <th className="py-3 text-center w-full sm:w-auto">내 용</th>
                                         <th className="py-3 w-20 text-center hidden sm:table-cell">보낸사람</th>
                                         <th className="py-3 w-32 text-center hidden sm:table-cell">받은시간</th>
@@ -231,12 +231,12 @@ export default function MessageModal({ isOpen, onClose, initialReceiver }: Messa
                                 </thead>
                                 <tbody>
                                     {(activeTab === 'inbox' ? inbox : activeTab === 'unread' ? unread : sent).map(note => (
-                                        <tr key={note.id} className="border-b border-gray-200 hover:bg-rose-50 cursor-pointer transition-colors" onClick={() => handleView(note)}>
+                                        <tr key={note.id} className="border-b border-gray-200 hover:bg-blue-50 cursor-pointer transition-colors" onClick={() => handleView(note)}>
                                             <td className="py-3 px-2 sm:px-4 text-gray-600 truncate max-w-[200px] sm:max-w-[300px] flex items-center gap-2 text-xs sm:text-sm">
                                                 {!note.isRead && activeTab !== 'sent' && <span className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0 animate-pulse"></span>}
                                                 {note.content}
                                             </td>
-                                            <td className={`py-3 text-center hidden sm:table-cell ${note.isAdmin ? 'text-[#f82b60] font-bold' : 'text-gray-600'}`}>{note.sender}</td>
+                                            <td className={`py-3 text-center hidden sm:table-cell ${note.isAdmin ? 'text-[#1e3a5f] font-bold' : 'text-gray-600'}`}>{note.sender}</td>
                                             <td className="py-3 text-center text-[10px] sm:text-xs text-gray-400 hidden sm:table-cell whitespace-nowrap px-2">
                                                 {note.date}
                                             </td>

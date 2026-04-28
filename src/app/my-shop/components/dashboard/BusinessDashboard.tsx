@@ -81,7 +81,7 @@ export const BusinessDashboard: React.FC<BusinessDashboardProps> = ({
                             <button onClick={() => setShowDesignModal(true)} className={`flex-1 md:flex-none py-3 px-5 rounded-xl text-sm font-bold border transition ${brand.theme === 'dark' ? 'border-gray-700 text-gray-300 hover:bg-gray-800' : 'border-gray-200 text-gray-600 hover:bg-gray-50'} `}>
                                 디자인 의뢰
                             </button>
-                            <button onClick={() => handleAdClick(true)} className="flex-1 md:flex-none py-3 px-6 rounded-xl bg-[#f82b60] text-white text-sm font-black hover:bg-[#db2456] shadow-lg shadow-[#f82b60]/30 transition flex items-center justify-center gap-2 whitespace-nowrap">
+                            <button onClick={() => handleAdClick(true)} className="flex-1 md:flex-none py-3 px-6 rounded-xl bg-[#1e3a5f] text-white text-sm font-black hover:bg-[#162d4a] shadow-lg shadow-[#1e3a5f]/30 transition flex items-center justify-center gap-2 whitespace-nowrap">
                                 <Plus size={18} /> 광고 등록
                             </button>
                         </div>

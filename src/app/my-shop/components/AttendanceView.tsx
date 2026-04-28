@@ -163,8 +163,8 @@ export function AttendanceView({ userId }: { userId: string }) {
             {/* 헤더 카드 */}
             <div className={`p-6 md:p-8 rounded-[32px] border shadow-sm ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-blue-50'}`}>
                 <div className="flex items-center gap-4 mb-6">
-                    <div className="w-12 h-12 bg-rose-50 rounded-2xl flex items-center justify-center shrink-0">
-                        <CalendarDays size={24} className="text-[#f82b60]" />
+                    <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center shrink-0">
+                        <CalendarDays size={24} className="text-[#1e3a5f]" />
                     </div>
                     <div>
                         <h2 className="text-xl md:text-2xl font-black">출석체크</h2>
@@ -176,7 +176,7 @@ export function AttendanceView({ userId }: { userId: string }) {
 
                 {/* 통계 배지 */}
                 <div className="grid grid-cols-2 gap-3 mb-6">
-                    <div className={`p-4 rounded-2xl flex items-center gap-3 ${isDark ? 'bg-gray-800' : 'bg-rose-50'}`}>
+                    <div className={`p-4 rounded-2xl flex items-center gap-3 ${isDark ? 'bg-gray-800' : 'bg-blue-50'}`}>
                         <Flame size={20} className="text-orange-500" />
                         <div>
                             <p className="text-xs font-bold text-gray-500">연속 출석</p>
@@ -200,7 +200,7 @@ export function AttendanceView({ userId }: { userId: string }) {
                         className={`w-full py-5 rounded-[24px] font-black text-lg transition-all ${
                             todayChecked
                                 ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                : 'bg-gradient-to-r from-[#f82b60] to-pink-400 text-white shadow-xl shadow-rose-200 hover:brightness-110 active:scale-[0.98]'
+                                : 'bg-gradient-to-r from-[#1e3a5f] to-pink-400 text-white shadow-xl shadow-blue-200 hover:brightness-110 active:scale-[0.98]'
                         }`}
                     >
                         {todayChecked
@@ -238,7 +238,7 @@ export function AttendanceView({ userId }: { userId: string }) {
                         <div
                             key={d}
                             className={`text-center text-[11px] font-black py-1 ${
-                                i === 0 ? 'text-rose-400' : i === 6 ? 'text-blue-400' : 'text-gray-400'
+                                i === 0 ? 'text-blue-400' : i === 6 ? 'text-blue-400' : 'text-gray-400'
                             }`}
                         >
                             {d}
@@ -249,7 +249,7 @@ export function AttendanceView({ userId }: { userId: string }) {
                 {/* 날짜 그리드 */}
                 {isLoading ? (
                     <div className="flex items-center justify-center py-16">
-                        <div className="w-8 h-8 border-4 border-rose-200 border-t-[#f82b60] rounded-full animate-spin" />
+                        <div className="w-8 h-8 border-4 border-blue-200 border-t-[#1e3a5f] rounded-full animate-spin" />
                     </div>
                 ) : (
                     <div className="space-y-1">
@@ -266,10 +266,10 @@ export function AttendanceView({ userId }: { userId: string }) {
                                         <div
                                             key={di}
                                             className={`relative flex flex-col items-center justify-center aspect-square rounded-xl mx-0.5 my-0.5 transition-all text-sm font-black
-                                                ${isAttended ? 'bg-rose-500 text-white shadow-md shadow-rose-200' : ''}
-                                                ${isToday && !isAttended ? 'ring-2 ring-[#f82b60] ring-offset-1' : ''}
+                                                ${isAttended ? 'bg-blue-500 text-white shadow-md shadow-blue-200' : ''}
+                                                ${isToday && !isAttended ? 'ring-2 ring-[#1e3a5f] ring-offset-1' : ''}
                                                 ${isFuture ? 'opacity-30' : ''}
-                                                ${di === 0 && !isAttended ? 'text-rose-400' : ''}
+                                                ${di === 0 && !isAttended ? 'text-blue-400' : ''}
                                                 ${di === 6 && !isAttended ? 'text-blue-400' : ''}
                                             `}
                                         >
@@ -279,7 +279,7 @@ export function AttendanceView({ userId }: { userId: string }) {
                                                 <span>{day}</span>
                                             )}
                                             {isToday && !isAttended && (
-                                                <div className="absolute bottom-1 w-1 h-1 rounded-full bg-[#f82b60]" />
+                                                <div className="absolute bottom-1 w-1 h-1 rounded-full bg-[#1e3a5f]" />
                                             )}
                                         </div>
                                     );
@@ -292,13 +292,13 @@ export function AttendanceView({ userId }: { userId: string }) {
                 {/* 범례 */}
                 <div className="flex items-center gap-4 mt-5 pt-4 border-t border-gray-100 dark:border-gray-800">
                     <div className="flex items-center gap-1.5 text-xs font-bold text-gray-400">
-                        <div className="w-4 h-4 rounded-md bg-rose-500 flex items-center justify-center">
+                        <div className="w-4 h-4 rounded-md bg-blue-500 flex items-center justify-center">
                             <CheckCircle2 size={10} className="text-white" />
                         </div>
                         출석 완료
                     </div>
                     <div className="flex items-center gap-1.5 text-xs font-bold text-gray-400">
-                        <div className="w-4 h-4 rounded-md border-2 border-[#f82b60]" />
+                        <div className="w-4 h-4 rounded-md border-2 border-[#1e3a5f]" />
                         오늘
                     </div>
                 </div>

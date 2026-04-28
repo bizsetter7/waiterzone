@@ -33,7 +33,7 @@ export const ResumeDetailModal = ({ resume, onClose }: { resume: any, onClose: (
                 onClick={e => e.stopPropagation()}
             >
                 {/* Header */}
-                <div className="p-6 md:p-8 bg-gradient-to-r from-blue-500 to-rose-600 relative text-white">
+                <div className="p-6 md:p-8 bg-[#1e3a5f] relative text-white">
                     <button onClick={onClose} className="absolute top-5 right-6 p-2 hover:bg-white/20 rounded-full transition">
                         <X size={24} />
                     </button>

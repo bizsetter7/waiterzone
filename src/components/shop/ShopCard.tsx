@@ -33,7 +33,7 @@ interface ShopCardProps {
 const getBorderClass = (opt?: string, period?: number): string => {
     if (!opt || opt === 'none' || !period || period <= 0) return '';
     switch (opt) {
-        case 'color':   return 'border-2 border-blue-400 shadow-md shadow-blue-100';
+        case 'color':   return 'border-2 border-blue-400 shadow-md shadow-sm';
         case 'glow':    return 'border-2 border-yellow-400 shadow-md shadow-yellow-100';
         case 'sparkle': return 'border-2 border-pink-400 shadow-md shadow-pink-100';
         case 'rainbow': return 'border-2 animate-rainbow-border shadow-lg';

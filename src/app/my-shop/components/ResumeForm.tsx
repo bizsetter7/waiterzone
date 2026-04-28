@@ -434,7 +434,7 @@ export const ResumeForm = ({ setView, onOpenMenu, authUser, editData }: { setVie
                 {/* Form Actions */}
                 <div className="mt-8 flex justify-center gap-3">
                     <button onClick={() => setView('dashboard')} className="px-6 py-3 rounded-xl bg-gray-100 text-gray-500 font-bold hover:bg-gray-200 transition whitespace-nowrap shrink-0">취소</button>
-                    <button onClick={handleSaveResume} className="px-8 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-rose-600 text-white font-black hover:brightness-110 transition shadow-lg active:scale-95 whitespace-nowrap">이력서 등록완료</button>
+                    <button onClick={handleSaveResume} className="px-8 py-3 rounded-xl bg-[#1e3a5f] text-white font-black hover:bg-[#162d4a] transition shadow-lg active:scale-95 whitespace-nowrap">이력서 등록완료</button>
                 </div>
             </div>
         </div>

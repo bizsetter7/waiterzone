@@ -36,7 +36,7 @@ export const WarningModal: React.FC<WarningModalProps> = ({ brand, onClose, onCo
                 </div>
                 <div className="grid grid-cols-2 gap-3 pt-2">
                     <button onClick={onClose} className={`py-4 rounded-xl border-2 font-bold transition-colors ${brand.theme === 'dark' ? 'border-gray-800 text-gray-500 hover:bg-gray-800' : 'border-gray-100 text-gray-500 hover:bg-gray-50'}`}>취소</button>
-                    <button onClick={onConfirm} className="py-4 rounded-xl bg-[#ff3399] text-white font-bold hover:opacity-90 transition-opacity shadow-lg shadow-blue-100/10">확인 후 작성</button>
+                    <button onClick={onConfirm} className="py-4 rounded-xl bg-[#ff3399] text-white font-bold hover:opacity-90 transition-opacity shadow-lg shadow-gray-100/10">확인 후 작성</button>
                 </div>
             </div>
         </div>,

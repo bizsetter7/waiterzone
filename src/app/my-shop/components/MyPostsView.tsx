@@ -28,7 +28,7 @@ interface InquiryPost {
 
 const CATEGORY_COLORS: Record<string, string> = {
     '웨이터 소통방': 'bg-blue-50 text-blue-500',
-    '웨이터 썰': 'bg-rose-50 text-rose-500',
+    '웨이터 썰': 'bg-blue-50 text-[#1e3a5f]',
     '웨이터 팁': 'bg-amber-50 text-amber-500',
     '지역방': 'bg-teal-50 text-teal-500',
     '같이일할단짝': 'bg-violet-50 text-violet-500',
@@ -146,7 +146,7 @@ export function MyPostsView({ setView }: { setView: (v: any) => void }) {
             {/* 헤더 */}
             <div className="flex items-center justify-between mb-2">
                 <h2 className={`text-xl font-black flex items-center gap-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                    <FileText size={20} className="text-[#f82b60]" />
+                    <FileText size={20} className="text-[#1e3a5f]" />
                     내가 작성한 게시글
                 </h2>
                 <button
@@ -163,14 +163,14 @@ export function MyPostsView({ setView }: { setView: (v: any) => void }) {
                 <button
                     onClick={() => setActiveTab('community')}
                     className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-black transition-all ${activeTab === 'community'
-                            ? 'bg-[#f82b60] text-white shadow-md shadow-rose-200'
+                            ? 'bg-[#1e3a5f] text-white shadow-md shadow-blue-200'
                             : isDark ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700'
                         }`}
                 >
                     <FileText size={15} />
                     커뮤니티 게시글
                     {communityLoaded && communityPosts.length > 0 && (
-                        <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-black ${activeTab === 'community' ? 'bg-white/30 text-white' : 'bg-rose-100 text-[#f82b60]'}`}>
+                        <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-black ${activeTab === 'community' ? 'bg-white/30 text-white' : 'bg-blue-100 text-[#1e3a5f]'}`}>
                             {communityPosts.length}
                         </span>
                     )}
@@ -178,14 +178,14 @@ export function MyPostsView({ setView }: { setView: (v: any) => void }) {
                 <button
                     onClick={() => setActiveTab('inquiry')}
                     className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-black transition-all ${activeTab === 'inquiry'
-                            ? 'bg-[#f82b60] text-white shadow-md shadow-rose-200'
+                            ? 'bg-[#1e3a5f] text-white shadow-md shadow-blue-200'
                             : isDark ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700'
                         }`}
                 >
                     <MessageSquare size={15} />
                     1:1 문의
                     {inquiryLoaded && inquiryPosts.length > 0 && (
-                        <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-black ${activeTab === 'inquiry' ? 'bg-white/30 text-white' : 'bg-rose-100 text-[#f82b60]'}`}>
+                        <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-black ${activeTab === 'inquiry' ? 'bg-white/30 text-white' : 'bg-blue-100 text-[#1e3a5f]'}`}>
                             {inquiryPosts.length}
                         </span>
                     )}

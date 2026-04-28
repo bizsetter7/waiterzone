@@ -145,7 +145,7 @@ export const MobilePreviewContent: React.FC<MobilePreviewContentProps> = ({ form
     // [표준 규정] 광고 등급별 스타일 맵 (T1~T7 지원)
     const TIER_STYLE_MAP: Record<string, { header: string, accent: string, badge: string }> = {
         'p1': { header: "from-amber-400 via-orange-500 to-amber-600", accent: "text-amber-600", badge: "bg-amber-100" }, // Grand (Gold)
-        'p2': { header: "from-red-500 to-rose-700", accent: "text-red-600", badge: "bg-red-100" },               // Premium (Red)
+        'p2': { header: "from-red-500 to-blue-700", accent: "text-red-600", badge: "bg-red-100" },               // Premium (Red)
         'p3': { header: "from-blue-500 to-indigo-600", accent: "text-blue-600", badge: "bg-blue-100" },               // Deluxe (Blue)
         'p4': { header: "from-emerald-400 to-teal-600", accent: "text-emerald-600", badge: "bg-emerald-100" },          // Special (Green)
         'p5': { header: "from-purple-500 to-violet-600", accent: "text-purple-600", badge: "bg-purple-100" },          // Urgent/Rec (Purple)
@@ -342,7 +342,7 @@ export const MobilePreviewContent: React.FC<MobilePreviewContentProps> = ({ form
                     <MessageCircle size={18} fill="currentColor" className="group-hover:scale-110 transition-transform" />
                     <span className="text-[10px]">카톡문의</span>
                 </button>
-                <button className="col-span-2 py-3 bg-[#f82b60] text-white rounded-2xl flex items-center justify-center gap-2 hover:bg-[#db2456] transition shadow-lg shadow-[#f82b60]/30 group">
+                <button className="col-span-2 py-3 bg-[#1e3a5f] text-white rounded-2xl flex items-center justify-center gap-2 hover:bg-[#162d4a] transition shadow-lg shadow-[#1e3a5f]/30 group">
                     <Phone size={17} fill="currentColor" className="group-hover:animate-bounce shrink-0" />
                     <span className="text-[13px] font-black">전화/문자문의</span>
                 </button>

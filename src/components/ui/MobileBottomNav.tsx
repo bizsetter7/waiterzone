@@ -150,7 +150,7 @@ const MobileBottomNavContent = () => {
             {!isExpanded && userType === 'corporate' && (
                 <button
                     onClick={() => setIsExpanded(true)}
-                    className={`absolute bottom-4 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-gradient-to-r from-blue-500 to-rose-500 shadow-lg shadow-blue-500/30 flex items-center justify-center pointer-events-auto hover:scale-105 transition-transform`}
+                    className={`absolute bottom-4 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-gradient-to-r from-blue-700 to-blue-500 shadow-lg shadow-blue-500/30 flex items-center justify-center pointer-events-auto hover:scale-105 transition-transform`}
                     style={{ zIndex: UI_Z_INDEX.NAV_BOTTOM + 11 }}
                 >
                     <ChevronUp size={32} className="text-white" />
@@ -180,7 +180,7 @@ const MobileBottomNavContent = () => {
                                         onClick={handleMainBtnClick}
                                         className="relative -top-5 flex flex-col items-center justify-center cursor-pointer"
                                     >
-                                        <div className="w-14 h-14 rounded-full bg-gradient-to-r from-blue-500 to-rose-500 shadow-lg shadow-blue-500/30 flex items-center justify-center hover:scale-105 transition-transform">
+                                        <div className="w-14 h-14 rounded-full bg-gradient-to-r from-blue-700 to-blue-500 shadow-lg shadow-blue-500/30 flex items-center justify-center hover:scale-105 transition-transform">
                                             {item.icon}
                                         </div>
                                         <span className={`text-[10px] font-bold mt-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
@@ -232,7 +232,7 @@ const MobileBottomNavContent = () => {
                                         }}
                                         className={`flex flex-col items-center justify-center gap-1 py-1 ${isActive ? (isDark ? 'text-white' : 'text-gray-900') : (isDark ? 'text-gray-500' : 'text-gray-400')}`}
                                     >
-                                        <div className={isActive ? 'text-[#f82b60]' : ''}>
+                                        <div className={isActive ? 'text-[#1e3a5f]' : ''}>
                                             {item.icon}
                                         </div>
                                         <span className={`text-[10px] ${isActive ? 'font-bold' : 'font-medium'}`}>
@@ -248,7 +248,7 @@ const MobileBottomNavContent = () => {
                                     href={item.href || '#'}
                                     className={`flex flex-col items-center justify-center gap-1 py-1 ${isActive ? (isDark ? 'text-white' : 'text-gray-900') : (isDark ? 'text-gray-500' : 'text-gray-400')}`}
                                 >
-                                    <div className={isActive ? 'text-[#f82b60]' : ''}>
+                                    <div className={isActive ? 'text-[#1e3a5f]' : ''}>
                                         {item.icon}
                                     </div>
                                     <span className={`text-[10px] ${isActive ? 'font-bold' : 'font-medium'}`}>

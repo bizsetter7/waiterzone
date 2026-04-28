@@ -76,7 +76,7 @@ export const AuditLanding = () => {
                                     className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-bold focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-400"
                                 />
                             </div>
-                            <button className="w-full py-4 bg-blue-600 text-white font-black rounded-2xl shadow-lg shadow-blue-100 hover:bg-blue-700 transition-all transform active:scale-[0.98]">
+                            <button className="w-full py-4 bg-blue-600 text-white font-black rounded-2xl shadow-lg shadow-sm hover:bg-blue-700 transition-all transform active:scale-[0.98]">
                                 로그인하기
                             </button>
                             <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 px-1 pt-2">
@@ -278,7 +278,7 @@ export const AuditLanding = () => {
                                     <h4 className="text-xl font-bold">휴대폰 본인 확인</h4>
                                     <p className="text-sm text-slate-500 leading-relaxed font-medium">통신사 인증을 통해 실명을 확인하고<br />보안 인증 과정을 진행합니다.</p>
                                     <div className="pt-4 space-y-3">
-                                        <button onClick={() => setVerifyStep('success')} className="w-full py-4 bg-blue-600 text-white font-black rounded-2xl shadow-lg shadow-blue-100 hover:bg-blue-700 transition-all">
+                                        <button onClick={() => setVerifyStep('success')} className="w-full py-4 bg-blue-600 text-white font-black rounded-2xl shadow-lg shadow-sm hover:bg-blue-700 transition-all">
                                             인증 요청 (시뮬레이션)
                                         </button>
                                         <button onClick={() => setVerifyStep('select')} className="w-full py-4 bg-slate-100 text-slate-500 font-bold rounded-2xl hover:bg-slate-200 transition-all">

@@ -51,14 +51,14 @@ export const Footer = () => {
                                     <Link
                                         key={region.href}
                                         href={region.href}
-                                        className="text-[11.5px] md:text-[12.5px] text-gray-500 hover:text-[#f82b60] hover:font-bold transition-all whitespace-nowrap"
+                                        className="text-[11.5px] md:text-[12.5px] text-gray-500 hover:text-[#1e3a5f] hover:font-bold transition-all whitespace-nowrap"
                                     >
                                         {region.label}
                                     </Link>
                                 ))}
                                 <Link
                                     href="/region/all"
-                                    className="text-[11.5px] md:text-[12.5px] font-black text-[#f82b60] hover:underline flex items-center justify-center"
+                                    className="text-[11.5px] md:text-[12.5px] font-black text-[#1e3a5f] hover:underline flex items-center justify-center"
                                 >
                                     더보기 +
                                 </Link>

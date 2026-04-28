@@ -205,7 +205,7 @@ export default function WritePostPage() {
             <main className="max-w-4xl mx-auto pb-32">
                 {/* 1. Category Section */}
                 <section className="p-6 border-b border-gray-100 bg-white">
-                    <label className="block text-[11px] font-black text-[#f82b60] uppercase tracking-widest mb-4">카테고리 선택</label>
+                    <label className="block text-[11px] font-black text-[#1e3a5f] uppercase tracking-widest mb-4">카테고리 선택</label>
 
                     {/* Desktop: Buttons */}
                     <div className="hidden md:flex flex-wrap gap-2">
@@ -214,7 +214,7 @@ export default function WritePostPage() {
                                 key={cat}
                                 onClick={() => setCategory(cat)}
                                 className={`px-4 py-2.5 rounded-2xl text-[13px] font-black border transition-all ${category === cat
-                                    ? 'border-[#f82b60] bg-[#f82b60] text-white shadow-lg shadow-rose-100'
+                                    ? 'border-[#1e3a5f] bg-[#1e3a5f] text-white shadow-lg shadow-sm'
                                     : 'border-gray-100 text-gray-500 bg-gray-50 hover:bg-gray-100'
                                     }`}
                             >
@@ -228,7 +228,7 @@ export default function WritePostPage() {
                         <select
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
-                            className={`w-full border-2 rounded-2xl px-5 py-4 text-sm font-black outline-none transition-all appearance-none cursor-pointer ${category === '' ? 'border-[#f82b60] text-[#f82b60] bg-rose-50' : 'bg-gray-50 border-gray-100 focus:border-[#f82b60]'}`}
+                            className={`w-full border-2 rounded-2xl px-5 py-4 text-sm font-black outline-none transition-all appearance-none cursor-pointer ${category === '' ? 'border-[#1e3a5f] text-[#1e3a5f] bg-blue-50' : 'bg-gray-50 border-gray-100 focus:border-[#1e3a5f]'}`}
                         >
                             <option value="" disabled>카테고리를 선택해주세요</option>
                             {CATEGORIES.map(cat => (
@@ -249,7 +249,7 @@ export default function WritePostPage() {
                                     checked={isSecret}
                                     onChange={(e) => setIsSecret(e.target.checked)}
                                 />
-                                <div className="w-6 h-6 rounded-lg border-2 border-gray-300 flex items-center justify-center transition-all peer-checked:bg-[#f82b60] peer-checked:border-[#f82b60] group-hover:border-rose-400 bg-white">
+                                <div className="w-6 h-6 rounded-lg border-2 border-gray-300 flex items-center justify-center transition-all peer-checked:bg-[#1e3a5f] peer-checked:border-[#1e3a5f] group-hover:border-[#1e3a5f] bg-white">
                                     {isSecret && <Sparkles size={14} className="text-white" />}
                                 </div>
                                 <span className="text-sm font-black text-gray-800">비밀글로 등록</span>
@@ -265,7 +265,7 @@ export default function WritePostPage() {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="비밀번호 (4자리 이상)"
-                                    className="w-full bg-white border border-gray-200 rounded-2xl pl-11 pr-12 py-3 text-sm font-black outline-none focus:border-[#f82b60] transition-all shadow-sm placeholder-gray-400"
+                                    className="w-full bg-white border border-gray-200 rounded-2xl pl-11 pr-12 py-3 text-sm font-black outline-none focus:border-[#1e3a5f] transition-all shadow-sm placeholder-gray-400"
                                     maxLength={20}
                                 />
                                 <button
@@ -305,7 +305,7 @@ export default function WritePostPage() {
                 <section className="px-6 py-5 bg-gray-50/50">
                     <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">사진 첨부 (최대 3장)</label>
                     <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-                        <label className="w-24 h-24 bg-white border-2 border-dashed border-gray-200 rounded-[28px] flex flex-col items-center justify-center text-gray-400 cursor-pointer shrink-0 hover:border-rose-200 hover:text-[#f82b60] transition-all active:scale-95 shadow-sm">
+                        <label className="w-24 h-24 bg-white border-2 border-dashed border-gray-200 rounded-[28px] flex flex-col items-center justify-center text-gray-400 cursor-pointer shrink-0 hover:border-blue-200 hover:text-[#1e3a5f] transition-all active:scale-95 shadow-sm">
                             <ImageIcon size={28} className="mb-1" />
                             <span className="text-[11px] font-black">{images.length}/3</span>
                             <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
@@ -337,7 +337,7 @@ export default function WritePostPage() {
                     <div className="flex flex-col gap-1 max-w-full overflow-hidden">
                         <p className="whitespace-nowrap overflow-hidden text-ellipsis">• 부적절한 게시글은 관리자에 의해 제재를 받을 수 있습니다.</p>
                         <p className="whitespace-nowrap overflow-hidden text-ellipsis">• 타인의 권리를 침해하거나 명예를 훼손하는 내용은 금지됩니다.</p>
-                        <p className="text-[#f82b60] whitespace-nowrap md:whitespace-normal">
+                        <p className="text-[#1e3a5f] whitespace-nowrap md:whitespace-normal">
                             • 설정하신 비밀번호는 글 수정 및 삭제 시 본인확인을 위해 꼭 필요합니다.
                         </p>
                     </div>
@@ -355,7 +355,7 @@ export default function WritePostPage() {
                     </button>
                     <button
                         onClick={isEditMode ? handleEditSubmit : handleSubmit}
-                        className="flex-[2] py-4 bg-[#f82b60] text-white rounded-2xl font-black text-base shadow-xl shadow-rose-200 hover:bg-[#db2456] transition-all active:scale-[0.98] disabled:opacity-50 disabled:shadow-none"
+                        className="flex-[2] py-4 bg-[#1e3a5f] text-white rounded-2xl font-black text-base shadow-xl shadow-blue-200 hover:bg-[#162d4a] transition-all active:scale-[0.98] disabled:opacity-50 disabled:shadow-none"
                         disabled={isSubmitting || !title.trim() || !content.trim() || (!isEditMode && (isSecret || !isLoggedIn) && !password.trim())}
                     >
                         {isSubmitting ? '처리 중...' : isEditMode ? '수정 완료' : '게시글 등록하기'}

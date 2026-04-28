@@ -137,7 +137,7 @@ export const ApplicantsView = ({ setView, userName = '', userId = '', onOpenMenu
                         )}
                         <div className="grid grid-cols-2 gap-2">
                             <a href={`tel:${selected.applicant_phone}`}
-                                className="py-3 rounded-xl bg-[#f82b60] text-white text-xs font-black flex items-center justify-center gap-1.5 hover:opacity-90 transition">
+                                className="py-3 rounded-xl bg-[#1e3a5f] text-white text-xs font-black flex items-center justify-center gap-1.5 hover:opacity-90 transition">
                                 <Phone size={14} /> 전화하기
                             </a>
                             <button onClick={() => { window.dispatchEvent(new CustomEvent('open-note-modal', { detail: { receiver: selected.applicant_name } })); }}

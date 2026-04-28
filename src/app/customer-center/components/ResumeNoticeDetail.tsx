@@ -9,14 +9,14 @@ export const ResumeNoticeDetail = () => {
             {/* Main Header */}
             <div className="text-center space-y-2">
                 <p className="text-gray-900 font-black text-xl md:text-2xl tracking-tighter">이력서 등록 시</p>
-                <h4 className="text-4xl md:text-5xl font-black text-[#f82b60] tracking-tighter break-keep">구직자 주의사항!</h4>
+                <h4 className="text-4xl md:text-5xl font-black text-[#1e3a5f] tracking-tighter break-keep">구직자 주의사항!</h4>
             </div>
 
             {/* Warning Box */}
-            <div className="w-full bg-[#f82b60] rounded-[30px] md:rounded-[40px] p-6 md:p-12 text-center text-white relative shadow-xl shadow-rose-100/50">
-                <div className="absolute -top-8 md:-top-10 left-1/2 -translate-x-1/2 w-16 h-16 md:w-20 md:h-20 bg-white rounded-2xl md:rounded-3xl rotate-12 flex items-center justify-center shadow-lg border-4 border-[#f82b60]">
+            <div className="w-full bg-[#1e3a5f] rounded-[30px] md:rounded-[40px] p-6 md:p-12 text-center text-white relative shadow-xl shadow-sm/50">
+                <div className="absolute -top-8 md:-top-10 left-1/2 -translate-x-1/2 w-16 h-16 md:w-20 md:h-20 bg-white rounded-2xl md:rounded-3xl rotate-12 flex items-center justify-center shadow-lg border-4 border-[#1e3a5f]">
                     <div className="animate-pulse">
-                        <Zap size={32} className="md:size-[40px] text-[#f82b60] fill-current" />
+                        <Zap size={32} className="md:size-[40px] text-[#1e3a5f] fill-current" />
                     </div>
                 </div>
                 <div className="pt-6 space-y-4">
@@ -25,7 +25,7 @@ export const ResumeNoticeDetail = () => {
                         이력서 등록 시 반드시 주의하세요.
                     </h5>
                     <div className="h-px bg-white/20 w-full"></div>
-                    <div className="space-y-2 text-sm md:text-base font-bold text-rose-50 leading-relaxed opacity-90 break-keep">
+                    <div className="space-y-2 text-sm md:text-base font-bold text-blue-50 leading-relaxed opacity-90 break-keep">
                         <p>최근 불법 성매매 업소 및 보이스 피싱 등으로 인한<br className="hidden md:block" /> 피해 사례가 발생하고 있습니다.</p>
                         <p className="mt-4 pt-4 border-t border-white/10">회원님들의 피해 방지와 투명한 구인 활동을 위해<br className="hidden md:block" /> 주의 사항 및 대처 방법을 안내 드립니다.</p>
                     </div>
@@ -46,7 +46,7 @@ export const ResumeNoticeDetail = () => {
                 <div className="text-center space-y-4 px-4 py-8 bg-slate-50 rounded-[40px] border-2 border-dashed border-slate-200">
                     <p className="text-lg md:text-xl font-black text-gray-900 break-keep">
                         구직자분들께서는 기업에서 먼저 연락이 올 시<br className="hidden md:block" />
-                        <span className="text-[#f82b60] underline decoration-rose-200 underline-offset-4">진행중인 채용공고를 요청하시어</span><br className="hidden md:block" />
+                        <span className="text-[#1e3a5f] underline decoration-blue-200 underline-offset-4">진행중인 채용공고를 요청하시어</span><br className="hidden md:block" />
                         정보와 공고의 기업정보를 반드시 확인해 주세요.
                     </p>
                     <p className="text-sm font-bold text-gray-500 break-keep">대면과 유선 상담에 대해서는<br className="hidden md:block" /> 신중히 주의를 기울여 주시기 바랍니다.</p>
@@ -63,8 +63,8 @@ export const ResumeNoticeDetail = () => {
                     "고수익 알바 미끼로 기만을 제의하는 경우 (보이스 피싱 및 성매매 등 불법 유입 주의)",
                     "그 외 채용공고의 내용과 다른 직무를 제안하거나 유도하는 경우"
                 ].map((item, i) => (
-                    <div key={i} className="group relative flex items-center bg-[#f82b60] text-white p-5 md:p-6 rounded-full shadow-md transition-transform hover:-translate-y-1">
-                        <div className="w-10 h-10 md:w-12 md:h-12 bg-white text-[#f82b60] rounded-full flex items-center justify-center text-lg md:text-xl font-black shrink-0 shadow-sm">
+                    <div key={i} className="group relative flex items-center bg-[#1e3a5f] text-white p-5 md:p-6 rounded-full shadow-md transition-transform hover:-translate-y-1">
+                        <div className="w-10 h-10 md:w-12 md:h-12 bg-white text-[#1e3a5f] rounded-full flex items-center justify-center text-lg md:text-xl font-black shrink-0 shadow-sm">
                             {i + 1}
                         </div>
                         <p className="flex-1 ml-4 md:ml-6 text-sm md:text-[17px] font-black leading-tight break-keep">
@@ -76,8 +76,8 @@ export const ResumeNoticeDetail = () => {
 
             {/* Important Warning Boxes */}
             <div className="w-full space-y-4 md:space-y-6">
-                <div className="bg-[#f82b60]/90 text-white p-6 md:p-8 rounded-[30px] md:rounded-[40px] flex items-start gap-4 md:gap-6 shadow-lg border-2 border-white/20">
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-xl md:rounded-2xl flex items-center justify-center text-rose-600 shrink-0 shadow-sm">
+                <div className="bg-[#1e3a5f]/90 text-white p-6 md:p-8 rounded-[30px] md:rounded-[40px] flex items-start gap-4 md:gap-6 shadow-lg border-2 border-white/20">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-xl md:rounded-2xl flex items-center justify-center text-[#1e3a5f] shrink-0 shadow-sm">
                         <X size={24} className="md:size-[32px]" />
                     </div>
                     <p className="text-[15px] md:text-lg font-black leading-normal pt-0.5 md:pt-1 break-keep">
@@ -86,8 +86,8 @@ export const ResumeNoticeDetail = () => {
                     </p>
                 </div>
 
-                <div className="bg-[#f82b60]/80 text-white p-6 md:p-8 rounded-[30px] md:rounded-[40px] flex items-start gap-4 md:gap-6 shadow-lg border-2 border-white/20">
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-xl md:rounded-2xl flex items-center justify-center text-rose-600 shrink-0 shadow-sm">
+                <div className="bg-[#1e3a5f]/80 text-white p-6 md:p-8 rounded-[30px] md:rounded-[40px] flex items-start gap-4 md:gap-6 shadow-lg border-2 border-white/20">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-xl md:rounded-2xl flex items-center justify-center text-[#1e3a5f] shrink-0 shadow-sm">
                         <Zap size={24} className="md:size-[32px]" />
                     </div>
                     <p className="text-[15px] md:text-lg font-black leading-normal pt-0.5 md:pt-1 break-keep">
@@ -98,8 +98,8 @@ export const ResumeNoticeDetail = () => {
             </div>
 
             {/* Call Center Text */}
-            <div className="w-full text-center space-y-2 py-6 border-y border-rose-50">
-                <p className="text-[#f82b60] text-sm md:text-base font-black break-keep">
+            <div className="w-full text-center space-y-2 py-6 border-y border-blue-50">
+                <p className="text-[#1e3a5f] text-sm md:text-base font-black break-keep">
                     저희 웨이터존 브랜드 통합 시스템은 불법 행위 예방을 위해 최선을 다하고 있으며,<br className="hidden md:block" />
                     회원분들의 안전하고 건강한 구인활동을 위해 지속적인 상시모니터링을 진행하고 있습니다.
                 </p>
@@ -115,11 +115,11 @@ export const ResumeNoticeDetail = () => {
                         <span className="inline-block px-4 py-1.5 bg-slate-900 text-white rounded-full text-xs font-black uppercase tracking-widest">Guide (PC버전)</span>
                         <div className="relative group overflow-hidden rounded-[30px] md:rounded-[40px] border-4 border-slate-100 shadow-xl bg-white p-8 md:p-10 space-y-6">
                             <div className="flex items-center justify-center gap-4">
-                                <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 group-hover:text-[#f82b60] transition-colors">
+                                <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 group-hover:text-[#1e3a5f] transition-colors">
                                     <Monitor size={28} className="md:size-[32px]" />
                                 </div>
                                 <ArrowRight size={20} className="text-slate-200 md:size-[24px]" />
-                                <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-[#f82b60] text-white flex items-center justify-center shadow-lg shadow-rose-100 scale-110">
+                                <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-[#1e3a5f] text-white flex items-center justify-center shadow-lg shadow-sm scale-110">
                                     <UserCheck size={28} className="md:size-[32px]" />
                                 </div>
                             </div>
@@ -140,13 +140,13 @@ export const ResumeNoticeDetail = () => {
 
                     {/* Mobile Guide */}
                     <div className="space-y-6 text-center">
-                        <span className="inline-block px-4 py-1.5 bg-[#f82b60] text-white rounded-full text-xs font-black uppercase tracking-widest">Guide (모바일버전)</span>
-                        <div className="relative group overflow-hidden rounded-[30px] md:rounded-[40px] border-4 border-rose-50 shadow-xl bg-white p-8 md:p-10 space-y-6">
+                        <span className="inline-block px-4 py-1.5 bg-[#1e3a5f] text-white rounded-full text-xs font-black uppercase tracking-widest">Guide (모바일버전)</span>
+                        <div className="relative group overflow-hidden rounded-[30px] md:rounded-[40px] border-4 border-blue-50 shadow-xl bg-white p-8 md:p-10 space-y-6">
                             <div className="flex items-center justify-center gap-4">
-                                <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-300 group-hover:text-[#f82b60] transition-colors">
+                                <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-300 group-hover:text-[#1e3a5f] transition-colors">
                                     <Smartphone size={28} className="md:size-[32px]" />
                                 </div>
-                                <ArrowRight size={20} className="text-rose-100 md:size-[24px]" />
+                                <ArrowRight size={20} className="text-gray-200 md:size-[24px]" />
                                 <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-slate-900 text-white flex items-center justify-center shadow-lg shadow-slate-200 scale-110">
                                     <Info size={28} className="md:size-[32px]" />
                                 </div>
@@ -156,8 +156,8 @@ export const ResumeNoticeDetail = () => {
                                     하단 바 메뉴 {'>'} MY<br />
                                     {'>'} 개인정보 관리 {'>'} 수동 노출
                                 </p>
-                                <div className="p-4 bg-rose-50/30 rounded-2xl border border-rose-50">
-                                    <p className="text-[11px] md:text-xs font-bold text-[#f82b60]/60 leading-relaxed">
+                                <div className="p-4 bg-gray-50/50 rounded-2xl border border-blue-50">
+                                    <p className="text-[11px] md:text-xs font-bold text-[#1e3a5f]/60 leading-relaxed">
                                         모바일에서도 간편하게 실시간으로<br />
                                         내 연락처 노출 여부를 제어하세요.
                                     </p>
@@ -175,7 +175,7 @@ export const ResumeNoticeDetail = () => {
                 </div>
                 <div className="relative z-10 space-y-8">
                     <div className="space-y-2">
-                        <p className="text-[10px] md:text-sm font-bold text-rose-400 tracking-widest uppercase">Safe Recruitment Policy</p>
+                        <p className="text-[10px] md:text-sm font-bold text-blue-400 tracking-widest uppercase">Safe Recruitment Policy</p>
                         <h5 className="text-xl md:text-3xl font-black leading-tight break-keep">
                             건강한 구인·구직 서비스,<br className="hidden md:block" />
                             우리가 함께 만들어 갑니다.
@@ -199,12 +199,12 @@ export const ResumeNoticeDetail = () => {
             </div>
 
             {/* Call Center Info */}
-            <div className="w-full pt-10 border-t border-rose-100 flex flex-col items-center gap-2">
+            <div className="w-full pt-10 border-t border-blue-100 flex flex-col items-center gap-2">
                 <p className="text-2xl md:text-4xl font-black text-gray-900 flex items-center gap-3">
-                    고객센터 <span className="text-[#f82b60]">1877-1442</span>
+                    고객센터 <span className="text-[#1e3a5f]">1877-1442</span>
                 </p>
                 <div className="text-center">
-                    <p className="text-sm font-black text-[#f82b60] mb-1">고객센터 운영시간</p>
+                    <p className="text-sm font-black text-[#1e3a5f] mb-1">고객센터 운영시간</p>
                     <p className="text-xs font-bold text-gray-500">(평일 10:00~18:00 / 점심시간 12:00~13:00)</p>
                     <p className="text-[10px] font-bold text-gray-400 mt-1">* 주말 및 공휴일은 고객센터 휴무입니다.</p>
                 </div>

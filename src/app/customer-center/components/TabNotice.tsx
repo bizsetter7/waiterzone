@@ -108,12 +108,12 @@ export const TabNotice = () => {
 
     return (
         <div className="space-y-2 md:space-y-3">
-            <div className="flex items-center gap-3 mb-6 bg-slate-50/10 dark:bg-white/5 p-2 rounded-xl md:bg-white/40 md:p-4 md:rounded-2xl md:border md:border-gray-100/50 md:dark:border-gray-800/50">
-                <div className="w-2 h-8 bg-[#f82b60] rounded-full"></div>
-                <div className="flex items-center justify-between flex-1">
+            <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-100">
+                <div className="flex items-center gap-3">
+                    <div className="w-1 h-7 bg-[#1e3a5f] rounded-full shrink-0" />
                     <h3 className={`text-2xl font-black ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>공지사항</h3>
-                    <span className={`text-xs px-3 py-1 rounded-full font-black ${brand.theme === 'dark' ? 'bg-gray-700 text-gray-100' : 'bg-gray-200 text-gray-900'}`}>총 {NOTICES.length}건</span>
                 </div>
+                <span className={`text-xs px-3 py-1 rounded-full font-black ${brand.theme === 'dark' ? 'bg-gray-700 text-gray-100' : 'bg-gray-100 text-gray-600'}`}>총 {NOTICES.length}건</span>
             </div>
             {NOTICES.map((notice, idx) => (
                 <div key={notice.id} className={`${idx !== NOTICES.length - 1 ? (brand.theme === 'dark' ? 'border-b border-gray-700' : 'border-b border-gray-100') : ''}`}>
@@ -122,7 +122,7 @@ export const TabNotice = () => {
                         className={`p-3 md:p-4 px-4 md:px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer transition-colors ${brand.theme === 'dark' ? 'hover:bg-gray-700/50' : 'hover:bg-gray-50'} ${expandedNotice === notice.id ? (brand.theme === 'dark' ? 'bg-gray-700/30' : 'bg-gray-50/50') : ''}`}
                     >
                         <div className="flex items-center gap-3 min-w-0 flex-1">
-                            <span className={`w-12 h-6 flex items-center justify-center shrink-0 rounded text-[10px] font-black ${notice.category === '필독' ? 'bg-red-600 text-white' : notice.category === '공지' ? 'bg-gray-900 text-white' : notice.category === '점검' ? 'bg-gray-400 text-white' : 'bg-[#f82b60] text-white'}`}>
+                            <span className={`w-12 h-6 flex items-center justify-center shrink-0 rounded text-[10px] font-black ${notice.category === '필독' ? 'bg-red-600 text-white' : notice.category === '공지' ? 'bg-gray-900 text-white' : notice.category === '점검' ? 'bg-gray-400 text-white' : 'bg-[#1e3a5f] text-white'}`}>
                                 {notice.category}
                             </span>
                             <div className="flex items-center gap-2 min-w-0 flex-1">
@@ -136,7 +136,7 @@ export const TabNotice = () => {
                             <span className="text-xs text-gray-600 font-bold flex items-center gap-1.5">
                                 <Clock size={16} /> {notice.date}
                             </span>
-                            <div className={`transition-transform duration-300 ${expandedNotice === notice.id ? 'rotate-180 text-[#f82b60]' : 'text-gray-300'}`}>
+                            <div className={`transition-transform duration-300 ${expandedNotice === notice.id ? 'rotate-180 text-[#1e3a5f]' : 'text-gray-300'}`}>
                                 <ChevronDown size={20} />
                             </div>
                         </div>

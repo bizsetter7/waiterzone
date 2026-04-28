@@ -199,7 +199,7 @@ export default function ShopDetailView({
         <h1 className="flex-1 text-[15px] font-black text-gray-900 truncate">{shop.name}</h1>
         <div className="flex gap-1.5 shrink-0">
           <button onClick={onToggleFavorite} className="p-1.5 rounded-full hover:bg-gray-100 transition-colors">
-            <Heart size={18} className={isFavorite ? 'fill-rose-500 text-rose-500' : 'text-gray-400'} />
+            <Heart size={18} className={isFavorite ? 'fill-[#1e3a5f] text-[#1e3a5f]' : 'text-gray-400'} />
           </button>
           <button className="p-1.5 rounded-full hover:bg-gray-100 transition-colors">
             <Share2 size={18} className="text-gray-400" />
@@ -213,7 +213,7 @@ export default function ShopDetailView({
         {/* 등급 배지 바 */}
         {tier && tier !== 'basic' && tier !== 'free' && (
           <div className={`text-white text-center py-1.5 text-[11px] font-black tracking-widest uppercase ${
-            tier.includes('premium-extra') || tier === 'premium_extra' ? 'bg-rose-500' :
+            tier.includes('premium-extra') || tier === 'premium_extra' ? 'bg-blue-500' :
             tier.includes('premium') ? 'bg-amber-500' :
             tier.includes('standard') ? 'bg-blue-500' :
             'bg-slate-800'
@@ -308,7 +308,7 @@ export default function ShopDetailView({
         {/* 업체 기본정보 2열 */}
         <div className="mx-4 mb-4 grid grid-cols-2 gap-2">
           {[
-            { icon: <MapPin size={13} className="text-rose-500" />, label: '지역', value: regionFull || shop.region },
+            { icon: <MapPin size={13} className="text-[#1e3a5f]" />, label: '지역', value: regionFull || shop.region },
             { icon: <Briefcase size={13} className="text-blue-500" />, label: '업종', value: catLabel },
             { icon: <Clock size={13} className="text-amber-500" />, label: '근무시간', value: shop.workTime || '협의' },
             { icon: <span className="text-purple-500 text-[11px] font-black">나이</span>, label: '연령', value: ageLabel },
@@ -466,7 +466,7 @@ export default function ShopDetailView({
           </div>
           <div className="px-4 py-3">
             <div className="flex items-start gap-2 mb-3">
-              <MapPin size={14} className="text-rose-500 shrink-0 mt-0.5" />
+              <MapPin size={14} className="text-[#1e3a5f] shrink-0 mt-0.5" />
               <span className="text-[13px] font-bold text-gray-800 leading-snug break-keep flex-1">
                 {shop.businessAddress || '문의 시 상세 주소 안내'}
               </span>
@@ -596,7 +596,7 @@ export default function ShopDetailView({
         </button>
         <button
           onClick={() => requireVerification(() => { window.location.href = `tel:${managerPhone || shop.phone}`; })}
-          className="flex-[2.5] py-3.5 bg-[#f82b60] text-white rounded-2xl flex items-center justify-center gap-2 hover:bg-[#db2456] transition shadow-lg shadow-rose-200 active:scale-95"
+          className="flex-[2.5] py-3.5 bg-[#1e3a5f] text-white rounded-2xl flex items-center justify-center gap-2 hover:bg-[#162d4a] transition shadow-lg shadow-blue-200 active:scale-95"
         >
           <Phone size={17} fill="currentColor" />
           <span className="text-[13px] font-black tracking-tight">전화/문자 상담하기</span>

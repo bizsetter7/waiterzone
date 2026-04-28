@@ -11,7 +11,7 @@ export const CardPaymentNoticeDetail = () => {
             {/* Visual Header */}
             <div className="text-center space-y-4">
                 <div
-                    className="w-16 h-16 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-rose-100"
+                    className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-blue-100"
                     style={{ color: pinkColor }}
                 >
                     <CreditCard size={32} />
@@ -66,7 +66,7 @@ export const CardPaymentNoticeDetail = () => {
                 </p>
             </div>
 
-            <div className="py-6 px-6 rounded-[28px] flex flex-col items-center justify-center text-white shadow-xl shadow-rose-100" style={{ backgroundColor: pinkColor }}>
+            <div className="py-6 px-6 rounded-[28px] flex flex-col items-center justify-center text-white shadow-xl shadow-sm" style={{ backgroundColor: pinkColor }}>
                 <div className="flex items-center gap-2 mb-2">
                     <Phone size={22} fill="white" className="animate-pulse" />
                     <span className="text-xl md:text-2xl font-black">웨이터존 고객센터 1877-1442</span>

@@ -133,10 +133,10 @@ export function CustomerCenterContent() {
                                             key={tab.id}
                                             onClick={() => handleTabChange(tab.id)}
                                             className={`w-full flex items-center justify-start gap-3 md:gap-4 px-4 py-3 md:px-6 md:py-5 text-[13px] md:text-sm font-black whitespace-nowrap rounded-lg md:rounded-none md:border-l-4 ${activeTab === tab.id
-                                                ? `bg-rose-50 md:bg-gradient-to-br md:border-[#f82b60] shadow-sm md:shadow-none ${brand.theme === 'dark' ? 'from-rose-900/20 to-gray-800 text-rose-400 bg-gray-700' : 'from-rose-50 to-white text-[#f82b60]'}`
+                                                ? `bg-blue-50 md:bg-gradient-to-br md:border-[#1e3a5f] shadow-sm md:shadow-none ${brand.theme === 'dark' ? 'from-blue-900/20 to-gray-800 text-blue-400 bg-gray-700' : 'bg-white text-[#1e3a5f]'}`
                                                 : `${brand.theme === 'dark' ? 'bg-transparent text-gray-400 hover:text-white' : 'bg-transparent text-gray-500 hover:text-gray-900'} border-transparent`}`}
                                         >
-                                            <div className={` ${activeTab === tab.id ? 'text-[#f82b60]' : 'text-gray-300'}`}>
+                                            <div className={` ${activeTab === tab.id ? 'text-[#1e3a5f]' : 'text-gray-300'}`}>
                                                 {tab.icon}
                                             </div>
                                             <span>{tab.id}</span>
@@ -146,9 +146,9 @@ export function CustomerCenterContent() {
                             </div>
 
                             {/* Customer Service Box (Desktop Only) */}
-                            <div className={`hidden md:block mt-1 p-5 rounded-[32px] border ${brand.theme === 'dark' ? 'bg-gray-800 border-gray-700 shadow-rose-900/10' : 'bg-white border-gray-100 shadow-rose-100/10'} shadow-xl`}>
+                            <div className={`hidden md:block mt-1 p-5 rounded-[32px] border ${brand.theme === 'dark' ? 'bg-gray-800 border-gray-700 shadow-blue-900/10' : 'bg-white border-gray-100 shadow-gray-100/10'} shadow-xl`}>
                                 <div className="flex items-center gap-3 mb-5">
-                                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-white shadow-lg bg-[#f82b60]">
+                                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-white shadow-lg bg-[#1e3a5f]">
                                         <PhoneCall size={20} />
                                     </div>
                                     <span className={`font-black text-lg ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>고객센터</span>
@@ -157,7 +157,7 @@ export function CustomerCenterContent() {
                                 <p className={`text-[13px] leading-relaxed font-black ${brand.theme === 'dark' ? 'text-gray-200' : 'text-gray-500'}`}>
                                     평일 10:00 ~ 18:00<br />
                                     점심 12:00 ~ 13:00<br />
-                                    <span className="text-[#f82b60] font-black mt-1 block">공휴일 / 주말 휴무</span>
+                                    <span className="text-[#1e3a5f] font-black mt-1 block">공휴일 / 주말 휴무</span>
                                 </p>
                                 <a href="https://t.me/waiterzone_cs_bot" className="mt-6 flex items-center justify-center gap-2 w-full py-4 bg-gray-900 text-white rounded-2xl text-sm font-black hover:bg-black transition shadow-lg">
                                     <MessageCircle size={18} /> 텔레그램 실시간 상담
@@ -211,9 +211,9 @@ export function CustomerCenterContent() {
                         }
 
                         {/* Customer Service Box (Mobile Lower Position) */}
-                        <div className={`md:hidden mt-6 p-5 rounded-[30px] border shadow-xl shadow-rose-100/10 ${brand.theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gradient-to-br from-white to-rose-50/30 border-rose-100'}`}>
+                        <div className={`md:hidden mt-6 p-5 rounded-2xl border ${brand.theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'}`}>
                             <div className="flex items-center gap-3 mb-4">
-                                <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-white shadow-lg bg-[#f82b60]">
+                                <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-white shadow-lg bg-[#1e3a5f]">
                                     <PhoneCall size={20} />
                                 </div>
                                 <span className={`font-black text-lg ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>고객센터</span>
@@ -221,9 +221,9 @@ export function CustomerCenterContent() {
                             <p className={`text-3xl font-black mb-2 tracking-tighter ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>1877-1442</p>
                             <p className={`text-[12px] leading-relaxed font-black ${brand.theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>
                                 평일 10:00 ~ 18:00 / 점심 12:00 ~ 13:00<br />
-                                <span className="text-[#f82b60] font-black mt-1 block">공휴일 / 주말 휴무 (텔레그램 상시 대기)</span>
+                                <span className="text-[#1e3a5f] font-black mt-1 block">공휴일 / 주말 휴무 (텔레그램 상시 대기)</span>
                             </p>
-                            <a href="https://t.me/waiterzone_cs_bot" className="mt-6 flex items-center justify-center gap-3 w-full py-4 bg-[#f82b60] text-white rounded-[20px] text-sm font-black hover:bg-[#db2456] transition shadow-xl shadow-rose-100">
+                            <a href="https://t.me/waiterzone_cs_bot" className="mt-6 flex items-center justify-center gap-3 w-full py-4 bg-[#1e3a5f] text-white rounded-[20px] text-sm font-black hover:bg-[#162d4a] transition shadow-xl shadow-sm">
                                 <MessageCircle size={18} /> 텔레그램 실시간 상담
                             </a>
                         </div>

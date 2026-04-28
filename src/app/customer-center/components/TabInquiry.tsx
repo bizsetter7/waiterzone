@@ -251,18 +251,15 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
 
     return (
             <div className="space-y-8">
-                {/* Dashboard Info Card */}
-                <div className="bg-gradient-to-br from-[#f82b60] to-[#db2456] p-8 md:p-10 rounded-[40px] text-white shadow-xl shadow-rose-100 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 p-10 opacity-10">
-                        <MessageCircle size={150} />
+                {/* Page Header — minimal */}
+                <div className="pb-6 border-b border-gray-100">
+                    <div className="flex items-center gap-3 mb-2">
+                        <div className="w-1 h-7 bg-[#1e3a5f] rounded-full shrink-0" />
+                        <h3 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tighter">1:1 맞춤 상담 게시판</h3>
                     </div>
-                    <div className="relative z-10">
-                        <h3 className="text-2xl md:text-3xl font-black mb-2 tracking-tighter">1:1 맞춤 상담 게시판</h3>
-                        <p className="text-rose-50 text-sm font-bold opacity-90 leading-relaxed">
-                            광고, 채용, 이벤트, 허위광고신고 등<br />
-                            회원분들의 소중한 의견을 남겨주세요!
-                        </p>
-                    </div>
+                    <p className="text-gray-500 text-sm font-bold leading-relaxed ml-4">
+                        광고, 채용, 이벤트, 허위광고신고 등 회원분들의 소중한 의견을 남겨주세요!
+                    </p>
                 </div>
 
                 {inquiryMode === 'list' && (
@@ -270,8 +267,8 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
 
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-6">
                             <div className="flex items-center gap-3">
-                                <div className="w-1.5 h-6 bg-[#f82b60] rounded-full"></div>
-                                <h4 className={`text-xl font-black ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{activeCategory === '전체' ? '1:1 맞춤 상담 내역' : activeCategory} <span className="text-[#f82b60] ml-1">{totalCount}</span></h4>
+                                <div className="w-1.5 h-6 bg-[#1e3a5f] rounded-full"></div>
+                                <h4 className={`text-xl font-black ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{activeCategory === '전체' ? '1:1 맞춤 상담 내역' : activeCategory} <span className="text-[#1e3a5f] ml-1">{totalCount}</span></h4>
                             </div>
                             <div className="flex items-center justify-center md:justify-end gap-2 w-full md:w-auto">
                                 <button
@@ -368,10 +365,10 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                                                             window.scrollTo({ top: 0, behavior: 'instant' });
                                                         }
                                                     }}
-                                                    className={`group cursor-pointer border-b last:border-0 transition-colors ${brand.theme === 'dark' ? 'hover:bg-gray-700/30' : 'hover:bg-rose-50/30'}`}
+                                                    className={`group cursor-pointer border-b last:border-0 transition-colors ${brand.theme === 'dark' ? 'hover:bg-gray-700/30' : 'hover:bg-gray-50/50'}`}
                                                 >
                                                     <td className="px-1 py-1.5 md:py-3.5 text-center text-[9px] md:text-[10px] font-bold text-gray-400 italic">
-                                                        {isNotice ? <Megaphone size={11} className="text-[#f82b60] mx-auto" /> : (totalCount - ((currentPage - 1) * itemsPerPage + idx))}
+                                                        {isNotice ? <Megaphone size={11} className="text-[#1e3a5f] mx-auto" /> : (totalCount - ((currentPage - 1) * itemsPerPage + idx))}
                                                     </td>
                                                     <td className="px-2 py-1.5 md:py-3.5">
                                                         <div className="flex items-center gap-1 overflow-hidden">
@@ -380,8 +377,8 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                                                                     <span className="text-[12px] font-thin leading-none opacity-50">↳</span>
                                                                 </div>
                                                             )}
-                                                            {inq.file_url && <Paperclip size={10} className="text-[#f82b60]/60 flex-shrink-0" />}
-                                                            <span className={`text-[11px] md:text-[12.5px] tracking-tight truncate ${isNotice ? 'font-black text-[#f82b60] underline underline-offset-4 decoration-pink-200' : isReply ? 'text-gray-500 font-medium' : 'text-gray-900 font-bold'}`}>
+                                                            {inq.file_url && <Paperclip size={10} className="text-[#1e3a5f]/60 flex-shrink-0" />}
+                                                            <span className={`text-[11px] md:text-[12.5px] tracking-tight truncate ${isNotice ? 'font-black text-[#1e3a5f] underline underline-offset-4 decoration-pink-200' : isReply ? 'text-gray-500 font-medium' : 'text-gray-900 font-bold'}`}>
                                                                 {inq.title.replace(/^[↳\s]+/, '')}
                                                             </span>
                                                             {inq.is_secret && <Lock size={8} className="text-gray-300 ml-0.5 flex-shrink-0" />}
@@ -389,7 +386,7 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                                                             <div className="flex items-center gap-1 ml-1.5 shrink-0">
                                                                 {!isNotice && inq.writer_name !== '운영팀' && (
                                                                     inq.status === 'completed' ? (
-                                                                        <span className="px-1 py-0.5 bg-rose-100 text-[#f82b60] text-[8px] md:text-[9px] rounded font-black whitespace-nowrap">답변완료</span>
+                                                                        <span className="px-1 py-0.5 bg-blue-100 text-[#1e3a5f] text-[8px] md:text-[9px] rounded font-black whitespace-nowrap">답변완료</span>
                                                                     ) : (
                                                                         <span className="px-1 py-0.5 bg-gray-100 text-gray-400 text-[8px] md:text-[9px] rounded font-black whitespace-nowrap">답변대기</span>
                                                                     )
@@ -427,7 +424,7 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                                         })) : (
                                             <tr>
                                                 <td colSpan={4} className="px-6 py-20 text-center text-gray-400 font-bold">
-                                                    {isSearching ? <RefreshCw className="animate-spin mx-auto text-[#f82b60]" size={24} /> : '등록된 문의 내역이 없습니다.'}
+                                                    {isSearching ? <RefreshCw className="animate-spin mx-auto text-[#1e3a5f]" size={24} /> : '등록된 문의 내역이 없습니다.'}
                                                 </td>
                                             </tr>
                                         )}
@@ -467,15 +464,15 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                                             window.scrollTo({ top: 0, behavior: 'instant' });
                                         }}
                                         className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-black transition-all ${currentPage === pageNum
-                                            ? 'bg-[#f82b60] text-white shadow-lg shadow-rose-200'
-                                            : 'bg-white border border-gray-100 text-gray-400 hover:border-rose-200 hover:text-[#f82b60]'
+                                            ? 'bg-[#1e3a5f] text-white shadow-lg shadow-blue-200'
+                                            : 'bg-white border border-gray-100 text-gray-400 hover:border-blue-200 hover:text-[#1e3a5f]'
                                             }`}
                                     >
                                         {pageNum}
                                     </button>
                                 ))}
                                 {totalCount > itemsPerPage * currentPage && (
-                                    <button className="px-4 h-10 bg-white border border-gray-100 rounded-lg text-sm font-black text-gray-400 hover:border-rose-200 hover:text-[#f82b60]">다음</button>
+                                    <button className="px-4 h-10 bg-white border border-gray-100 rounded-lg text-sm font-black text-gray-400 hover:border-blue-200 hover:text-[#1e3a5f]">다음</button>
                                 )}
                             </div>
 
@@ -484,7 +481,7 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                                 <select
                                     value={searchType}
                                     onChange={(e) => setSearchType(e.target.value)}
-                                    className="px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-black outline-none focus:border-[#f82b60]"
+                                    className="px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-black outline-none focus:border-[#1e3a5f]"
                                 >
                                     <option value="title">제목</option>
                                     <option value="content">내용</option>
@@ -496,12 +493,12 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
                                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                                        className="w-full px-5 py-3 pr-12 bg-white border border-gray-200 rounded-xl text-sm font-black outline-none focus:border-[#f82b60]"
+                                        className="w-full px-5 py-3 pr-12 bg-white border border-gray-200 rounded-xl text-sm font-black outline-none focus:border-[#1e3a5f]"
                                         placeholder="검색어를 입력해 주세요"
                                     />
                                     <button
                                         onClick={handleSearch}
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#f82b60] transition"
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#1e3a5f] transition"
                                     >
                                         <Search size={20} />
                                     </button>
@@ -523,9 +520,9 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                         <div className={`p-6 md:p-10 rounded-[45px] border shadow-sm space-y-6 md:space-y-8 ${brand.theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                                 <div>
-                                    <label className="block text-xs font-black mb-2 ml-2 text-gray-400 uppercase tracking-widest">문의 유형 <span className="text-[#f82b60]">*</span></label>
+                                    <label className="block text-xs font-black mb-2 ml-2 text-gray-400 uppercase tracking-widest">문의 유형 <span className="text-[#1e3a5f]">*</span></label>
                                     <select
-                                        className={`w-full border-2 rounded-2xl p-4 text-sm font-black focus:ring-4 focus:ring-[#f82b60]/10 outline-none appearance-none cursor-pointer ${brand.theme === 'dark' ? 'border-gray-700 bg-gray-900 text-white' : 'border-gray-100 bg-gray-50 text-gray-900'}`}
+                                        className={`w-full border-2 rounded-2xl p-4 text-sm font-black focus:ring-4 focus:ring-[#1e3a5f]/10 outline-none appearance-none cursor-pointer ${brand.theme === 'dark' ? 'border-gray-700 bg-gray-900 text-white' : 'border-gray-100 bg-gray-50 text-gray-900'}`}
                                         value={inquiryTitle.match(/^\[(.*?)\]/) ? inquiryTitle.match(/^\[(.*?)\]/)![1] : ''}
                                         onChange={(e) => {
                                             const type = e.target.value;
@@ -572,7 +569,7 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                                             checked={isSecretInquiry}
                                             onChange={(e) => setIsSecretInquiry(e.target.checked)}
                                         />
-                                        <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${isSecretInquiry ? 'bg-[#f82b60] border-[#f82b60]' : 'bg-white border-gray-200'} group-hover:border-rose-200`}>
+                                        <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${isSecretInquiry ? 'bg-[#1e3a5f] border-[#1e3a5f]' : 'bg-white border-gray-200'} group-hover:border-blue-200`}>
                                             {isSecretInquiry && <Zap size={14} className="text-white fill-white" />}
                                         </div>
                                         <span className="text-sm font-black text-gray-700">비밀글 설정</span>
@@ -588,7 +585,7 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                                             value={passwordInput}
                                             onChange={(e) => setPasswordInput(e.target.value)}
                                             placeholder="비밀번호 (4자리 이상)"
-                                            className={`w-full border-2 rounded-2xl pl-12 pr-6 py-4 text-sm font-black outline-none focus:ring-4 focus:ring-[#f82b60]/10 ${brand.theme === 'dark' ? 'border-gray-700 bg-gray-900 text-white' : 'border-gray-100 bg-white text-gray-900 shadow-sm'}`}
+                                            className={`w-full border-2 rounded-2xl pl-12 pr-6 py-4 text-sm font-black outline-none focus:ring-4 focus:ring-[#1e3a5f]/10 ${brand.theme === 'dark' ? 'border-gray-700 bg-gray-900 text-white' : 'border-gray-100 bg-white text-gray-900 shadow-sm'}`}
                                             maxLength={20}
                                         />
                                     </div>
@@ -597,19 +594,19 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
 
                             <div className="grid grid-cols-1 gap-4 md:gap-6">
                                 <div>
-                                    <label className="block text-xs font-black mb-2 ml-2 text-gray-400 uppercase tracking-widest">연락처/회신처 <span className="text-[#f82b60]">*</span></label>
+                                    <label className="block text-xs font-black mb-2 ml-2 text-gray-400 uppercase tracking-widest">연락처/회신처 <span className="text-[#1e3a5f]">*</span></label>
                                     <input
                                         type="text"
                                         value={inquiryContact.split('|')[0]}
                                         onChange={(e) => setInquiryContact(prev => `${e.target.value}|${prev.split('|')[1] || ''}`)}
                                         placeholder="회신 받을 번호 또는 이메일"
-                                        className={`w-full border-2 rounded-2xl p-4 text-sm font-black focus:ring-4 focus:ring-[#f82b60]/10 outline-none placeholder-gray-400 ${brand.theme === 'dark' ? 'border-gray-700 bg-gray-900 text-white' : 'border-gray-100 bg-gray-50 text-gray-900'}`}
+                                        className={`w-full border-2 rounded-2xl p-4 text-sm font-black focus:ring-4 focus:ring-[#1e3a5f]/10 outline-none placeholder-gray-400 ${brand.theme === 'dark' ? 'border-gray-700 bg-gray-900 text-white' : 'border-gray-100 bg-gray-50 text-gray-900'}`}
                                     />
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-xs font-black mb-2 ml-2 text-gray-400 uppercase tracking-widest">문의 제목 <span className="text-[#f82b60]">*</span></label>
+                                <label className="block text-xs font-black mb-2 ml-2 text-gray-400 uppercase tracking-widest">문의 제목 <span className="text-[#1e3a5f]">*</span></label>
                                 <input
                                     type="text"
                                     value={inquiryTitle.replace(/^\[.*?\]\s*/, '')}
@@ -619,17 +616,17 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                                         setInquiryTitle(`${typePrefix}${e.target.value}`);
                                     }}
                                     placeholder="핵심 내용을 요약해주세요"
-                                    className={`w-full border-2 rounded-2xl p-4 text-sm font-black focus:ring-4 focus:ring-[#f82b60]/10 outline-none placeholder-gray-400 ${brand.theme === 'dark' ? 'border-gray-700 bg-gray-900 text-white' : 'border-gray-100 bg-gray-50 text-gray-900'}`}
+                                    className={`w-full border-2 rounded-2xl p-4 text-sm font-black focus:ring-4 focus:ring-[#1e3a5f]/10 outline-none placeholder-gray-400 ${brand.theme === 'dark' ? 'border-gray-700 bg-gray-900 text-white' : 'border-gray-100 bg-gray-50 text-gray-900'}`}
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-xs font-black mb-2 ml-2 text-gray-400 uppercase tracking-widest">상세 내용 <span className="text-[#f82b60]">*</span></label>
+                                <label className="block text-xs font-black mb-2 ml-2 text-gray-400 uppercase tracking-widest">상세 내용 <span className="text-[#1e3a5f]">*</span></label>
                                 <textarea
                                     value={inquiryContent}
                                     onChange={(e) => setInquiryContent(e.target.value)}
                                     placeholder={contentPlaceholder}
-                                    className={`w-full border-2 rounded-[35px] p-6 md:p-8 text-sm font-black h-56 md:h-64 resize-none focus:ring-4 focus:ring-[#f82b60]/10 outline-none placeholder-gray-400 ${brand.theme === 'dark' ? 'border-gray-700 bg-gray-900 text-white' : 'border-gray-100 bg-gray-50 text-gray-900'}`}
+                                    className={`w-full border-2 rounded-[35px] p-6 md:p-8 text-sm font-black h-56 md:h-64 resize-none focus:ring-4 focus:ring-[#1e3a5f]/10 outline-none placeholder-gray-400 ${brand.theme === 'dark' ? 'border-gray-700 bg-gray-900 text-white' : 'border-gray-100 bg-gray-50 text-gray-900'}`}
                                 />
                             </div>
 
@@ -641,7 +638,7 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                                             <input
                                                 type="file"
                                                 id={`inquiry_file_${num}`}
-                                                className={`w-full border-2 rounded-2xl p-4 text-xs font-black focus:ring-4 focus:ring-[#f82b60]/10 outline-none text-transparent file:hidden ${brand.theme === 'dark' ? 'border-gray-700 bg-gray-900' : 'border-gray-100 bg-gray-50'}`}
+                                                className={`w-full border-2 rounded-2xl p-4 text-xs font-black focus:ring-4 focus:ring-[#1e3a5f]/10 outline-none text-transparent file:hidden ${brand.theme === 'dark' ? 'border-gray-700 bg-gray-900' : 'border-gray-100 bg-gray-50'}`}
                                                 onChange={(e) => {
                                                     const fileName = e.target.files?.[0]?.name || '선택된 파일없음';
                                                     const displayEl = document.getElementById(`inquiry_file_name_${num}`);
@@ -743,7 +740,7 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                                             setIsInquirySubmitting(false);
                                         }
                                     }}
-                                    className="flex-[2] py-5 bg-[#f82b60] text-white rounded-2xl text-base font-black shadow-lg shadow-rose-100 hover:bg-[#db2456] transition flex items-center justify-center gap-2"
+                                    className="flex-[2] py-5 bg-[#1e3a5f] text-white rounded-2xl text-base font-black shadow-lg shadow-sm hover:bg-[#162d4a] transition flex items-center justify-center gap-2"
                                 >
                                     {isInquirySubmitting ? <RefreshCw className="animate-spin" size={20} /> : '문의 등록하기'}
                                 </button>
@@ -776,7 +773,7 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
 
                         {!isPasswordVerified ? (
                             <div className={`p-10 md:p-16 rounded-[45px] border text-center space-y-8 ${brand.theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-                                <div className="w-16 h-16 bg-rose-50 text-[#f82b60] rounded-3xl flex items-center justify-center mx-auto shadow-inner">
+                                <div className="w-16 h-16 bg-blue-50 text-[#1e3a5f] rounded-3xl flex items-center justify-center mx-auto shadow-inner">
                                     <Zap size={32} />
                                 </div>
                                 <div className="space-y-2">
@@ -789,7 +786,7 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                                         value={passwordInput}
                                         onChange={(e) => setPasswordInput(e.target.value)}
                                         placeholder="비밀번호 입력"
-                                        className={`w-full border-2 rounded-2xl p-4 text-center text-lg font-black focus:ring-4 focus:ring-[#f82b60]/10 outline-none ${brand.theme === 'dark' ? 'border-gray-700 bg-gray-900 text-white' : 'border-gray-100 bg-gray-50 text-gray-900'}`}
+                                        className={`w-full border-2 rounded-2xl p-4 text-center text-lg font-black focus:ring-4 focus:ring-[#1e3a5f]/10 outline-none ${brand.theme === 'dark' ? 'border-gray-700 bg-gray-900 text-white' : 'border-gray-100 bg-gray-50 text-gray-900'}`}
                                     />
                                     <button
                                         onClick={() => {
@@ -816,12 +813,12 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                                         <div className="flex flex-col gap-3">
                                             <div className="flex items-center gap-2">
                                                 <span className={`px-2.5 py-1 rounded-lg text-[11px] font-black ${viewingInquiry.status === 'completed'
-                                                    ? 'bg-rose-100 text-[#f82b60]'
+                                                    ? 'bg-blue-100 text-[#1e3a5f]'
                                                     : 'bg-gray-100 text-gray-500'
                                                     }`}>
                                                     {viewingInquiry.status === 'completed' ? '답변완료' : '답변대기'}
                                                 </span>
-                                                <span className="text-[13px] font-bold text-[#f82b60]">[{viewingInquiry.type}]</span>
+                                                <span className="text-[13px] font-bold text-[#1e3a5f]">[{viewingInquiry.type}]</span>
                                             </div>
                                             <h4 className={`text-xl md:text-2xl font-black leading-snug ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                                                 {viewingInquiry.title}
@@ -871,7 +868,7 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                                 {/* Comments / Answers Section */}
                                 <div className={`p-6 md:p-8 rounded-[30px] ${brand.theme === 'dark' ? 'bg-gray-800/50' : 'bg-gray-50'}`}>
                                     <h5 className={`text-lg font-black mb-6 flex items-center gap-2 ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                                        <MessageSquare size={18} className="text-[#f82b60]" />
+                                        <MessageSquare size={18} className="text-[#1e3a5f]" />
                                         답변 및 댓글 <span className="text-gray-400 font-bold text-sm">({inquiryThread.filter(t => t.id !== viewingInquiry.id).length})</span>
                                     </h5>
 
@@ -880,11 +877,11 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                                             const isAdmin = comment.writer_name === '운영팀';
                                             return (
                                                 <div key={comment.id} className={`flex gap-4 p-5 rounded-2xl ${isAdmin
-                                                    ? (brand.theme === 'dark' ? 'bg-rose-900/20 border border-[#f82b60]/30' : 'bg-white border border-rose-100 shadow-sm')
+                                                    ? (brand.theme === 'dark' ? 'bg-blue-900/20 border border-[#1e3a5f]/30' : 'bg-white border border-blue-100 shadow-sm')
                                                     : (brand.theme === 'dark' ? 'bg-gray-700 border border-gray-600' : 'bg-white border border-gray-100 shadow-sm')
                                                     }`}>
                                                     <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${isAdmin
-                                                        ? 'bg-rose-100 text-[#f82b60]'
+                                                        ? 'bg-blue-100 text-[#1e3a5f]'
                                                         : 'bg-gray-100 text-gray-500'
                                                         }`}>
                                                         {isAdmin ? <ShieldCheck size={18} /> : <UserCheck size={18} />}
@@ -892,11 +889,11 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                                                     <div className="flex-1 space-y-1">
                                                         <div className="flex items-center justify-between">
                                                             <span className={`font-black text-sm ${isAdmin
-                                                                ? (brand.theme === 'dark' ? 'text-rose-400' : 'text-[#f82b60]')
+                                                                ? (brand.theme === 'dark' ? 'text-blue-400' : 'text-[#1e3a5f]')
                                                                 : (brand.theme === 'dark' ? 'text-white' : 'text-gray-900')
                                                                 }`}>
                                                                 {comment.writer_name}
-                                                                {isAdmin && <span className="ml-2 text-[10px] bg-[#f82b60] text-white px-1.5 py-0.5 rounded-md">ADMIN</span>}
+                                                                {isAdmin && <span className="ml-2 text-[10px] bg-[#1e3a5f] text-white px-1.5 py-0.5 rounded-md">ADMIN</span>}
                                                             </span>
                                                             <span className="text-[11px] font-bold text-gray-400">
                                                                 {new Date(comment.created_at).toLocaleString('ko-KR', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}
@@ -923,7 +920,7 @@ export const TabInquiry = ({ isLoggedIn, authUser }: TabInquiryProps) => {
                                             value={inquiryContent}
                                             onChange={(e) => setInquiryContent(e.target.value)}
                                             placeholder="추가 문의사항이나 내용은 여기에 작성해주세요."
-                                            className={`w-full p-4 border rounded-2xl text-sm font-medium focus:ring-2 focus:ring-[#f82b60]/20 outline-none resize-none h-24 ${brand.theme === 'dark' ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-500' : 'bg-white border-gray-200 text-gray-900'}`}
+                                            className={`w-full p-4 border rounded-2xl text-sm font-medium focus:ring-2 focus:ring-[#1e3a5f]/20 outline-none resize-none h-24 ${brand.theme === 'dark' ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-500' : 'bg-white border-gray-200 text-gray-900'}`}
                                         />
                                         <div className="flex justify-end">
                                             <button

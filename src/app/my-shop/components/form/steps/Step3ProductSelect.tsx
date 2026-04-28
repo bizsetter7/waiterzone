@@ -95,7 +95,7 @@ export const Step3ProductSelect: React.FC<Step3Props> = ({
                             className={`p-3 md:p-6 rounded-[24px] border-2 transition-all duration-300 flex items-center justify-between gap-2.5 md:gap-4 ${selectedAdProduct === p.id
                                 ? (p.code === 'T1' ? 'border-amber-400 bg-white shadow-xl shadow-amber-100' :
                                     p.code === 'T2' ? 'border-red-500 bg-white shadow-xl shadow-red-100' :
-                                        p.code === 'T3' ? 'border-blue-500 bg-white shadow-xl shadow-blue-100' :
+                                        p.code === 'T3' ? 'border-blue-500 bg-white shadow-xl shadow-sm' :
                                             'border-purple-500 bg-white shadow-xl shadow-purple-100')
                                 : 'border-gray-100 md:border-gray-200 bg-white/60 hover:border-purple-400 md:hover:border-purple-400 hover:shadow-2xl hover:shadow-purple-100/50 hover:bg-white'}`}
                         >

@@ -66,7 +66,7 @@ const LoginForm = ({ id, setId, pw, setPw, loginType, setLoginType, handleLogin,
                 <input type="text" placeholder="아이디" value={id} onChange={(e) => setId(e.target.value)} className="w-full h-1/2 px-3 border-2 border-gray-100 text-[12px] font-bold focus:border-red-500 outline-none rounded-md bg-gray-50/20" />
                 <input type="password" placeholder="비밀번호" value={pw} onChange={(e) => setPw(e.target.value)} className="w-full h-1/2 px-3 border-2 border-gray-100 text-[12px] font-bold focus:border-red-500 outline-none rounded-md bg-gray-50/20" />
             </div>
-            <button type="submit" style={{ backgroundColor: primaryColor || '#f82b60' }} className="w-20 h-full text-white font-black text-xs hover:brightness-105 active:scale-95 transition-all rounded-md shadow-sm">로그인</button>
+            <button type="submit" style={{ backgroundColor: primaryColor || '#1e3a5f' }} className="w-20 h-full text-white font-black text-xs hover:brightness-105 active:scale-95 transition-all rounded-md shadow-sm">로그인</button>
         </form>
 
         <div className="flex gap-4 px-1 text-[11px] font-bold text-gray-400">
@@ -245,7 +245,7 @@ export const AdultVerificationGate = ({ onVerify, onSkip }: AdultVerificationGat
                     </div>
 
                     {/* 5. Footer */}
-                    <div className="shrink-0 bg-[#f82b60] text-white py-5 px-4 text-center select-none">
+                    <div className="shrink-0 bg-[#1e3a5f] text-white py-5 px-4 text-center select-none">
                         <p className="text-[14px] font-black leading-tight mb-1 opacity-90">
                             {brand.name || '웨이터존'} 고객센터
                         </p>

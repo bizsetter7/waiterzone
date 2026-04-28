@@ -228,7 +228,7 @@ export const MemberInfoForm = ({ brand, setView, onOpenMenu, shopName }: any) =>
                 </div>
 
                 {/* ── 담당자 정보 (본인인증 값, 수정불가) ── */}
-                <div className={`p-4 rounded-xl border ${isDark ? 'bg-gray-800/50 border-gray-700' : 'bg-blue-50/50 border-blue-100'}`}>
+                <div className={`p-4 rounded-xl border ${isDark ? 'bg-gray-800/50 border-gray-700' : 'bg-white border-gray-100'}`}>
                     <p className={`text-xs font-black mb-4 flex items-center gap-2 ${isDark ? 'text-gray-400' : 'text-blue-700'}`}>
                         <span className="w-1 h-4 bg-blue-500 rounded-full inline-block" />
                         담당자 정보 (본인인증 확인 값)

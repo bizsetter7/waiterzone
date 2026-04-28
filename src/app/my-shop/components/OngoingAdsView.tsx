@@ -139,7 +139,7 @@ const BannerUploadPanel = ({ adId, currentBannerUrl, currentBannerStatus, onSucc
     };
 
     return (
-        <div className="mt-4 p-4 rounded-2xl border-2 border-dashed border-blue-200 bg-blue-50/30 space-y-3">
+        <div className="mt-4 p-4 rounded-2xl border-2 border-dashed border-blue-200 bg-gray-50/50 space-y-3">
             <div className="flex items-center gap-2">
                 <ImageIcon size={14} className="text-blue-600" />
                 <span className="text-[11px] font-black text-blue-700 uppercase tracking-wide">배너 이미지 등록</span>
@@ -427,7 +427,7 @@ export const OngoingAdsView = ({
                             <List size={32} />
                         </div>
                         <p className="text-gray-400 font-bold">현재 진행 중인 채용정보가 없습니다.</p>
-                        <button onClick={() => setView('form')} className="px-6 py-2.5 bg-[#f82b60] text-white rounded-xl font-black text-sm hover:translate-y-[-2px] transition-transform shadow-lg shadow-rose-200">
+                        <button onClick={() => setView('form')} className="px-6 py-2.5 bg-[#1e3a5f] text-white rounded-xl font-black text-sm hover:translate-y-[-2px] transition-transform shadow-lg shadow-blue-200">
                             첫 공고 등록하기
                         </button>
                     </div>
@@ -498,7 +498,7 @@ export const OngoingAdsView = ({
                                     {/* Actions Area */}
                                     <div className="flex flex-col items-end gap-3 shrink-0">
                                         {/* Jump Status Card */}
-                                        <div className={`p-4 rounded-2xl border min-w-[200px] shadow-sm ${isExhausted ? 'bg-gray-50 border-gray-200' : 'bg-blue-50/30 border-blue-100'}`}>
+                                        <div className={`p-4 rounded-2xl border min-w-[200px] shadow-sm ${isExhausted ? 'bg-gray-50 border-gray-200' : 'bg-gray-50/50 border-blue-100'}`}>
                                             <div className="flex justify-between items-center mb-2">
                                                 <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Free Daily Jump</span>
                                                 <span className={`text-xs font-black ${isExhausted ? 'text-gray-500' : 'text-blue-600'}`}>{usedCount}/{limit}</span>
@@ -511,7 +511,7 @@ export const OngoingAdsView = ({
                                             </div>
                                             <button
                                                 onClick={() => onJumpAd?.(ad.id)}
-                                                className={`w-full py-3 rounded-xl flex items-center justify-center gap-2 text-sm font-black transition-all active:scale-95 ${isExhausted ? 'bg-gray-900 text-white hover:bg-black shadow-lg shadow-gray-200' : 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-100'}`}
+                                                className={`w-full py-3 rounded-xl flex items-center justify-center gap-2 text-sm font-black transition-all active:scale-95 ${isExhausted ? 'bg-gray-900 text-white hover:bg-black shadow-lg shadow-gray-200' : 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-sm'}`}
                                             >
                                                 <RefreshCw size={14} className={usedCount > 0 && !isExhausted ? 'animate-spin-slow' : ''} />
                                                 {isExhausted ? '유료 점프 사용' : '무료 점프 실행'}
@@ -545,7 +545,7 @@ export const OngoingAdsView = ({
                                             <button
                                                 onClick={() => setBannerPanelOpen(prev => ({ ...prev, [ad.id]: !prev[ad.id] }))}
                                                 className={`w-full flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-[11px] font-black transition-all active:scale-95 border ${isPanelOpen
-                                                    ? 'bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-100'
+                                                    ? 'bg-blue-600 text-white border-blue-600 shadow-md shadow-sm'
                                                     : bannerStatus === 'approved'
                                                         ? 'bg-green-50 text-green-600 border-green-200 hover:bg-green-100'
                                                         : bannerStatus === 'pending_banner'

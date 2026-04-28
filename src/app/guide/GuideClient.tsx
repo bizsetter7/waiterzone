@@ -25,7 +25,7 @@ export default function CocoGuidePage() {
         <div className="min-h-screen bg-white flex flex-col font-sans">
             <main className="flex-1 max-w-6xl mx-auto px-4 md:px-8 py-10 md:py-16">
                 <div className="text-center mb-10 md:mb-14">
-                    <span className="inline-block px-4 py-1.5 bg-rose-50 text-[#f82b60] rounded-full text-[10px] md:text-xs font-black uppercase tracking-[0.2em] mb-4">
+                    <span className="inline-block px-4 py-1.5 bg-blue-50 text-[#1e3a5f] rounded-full text-[10px] md:text-xs font-black uppercase tracking-[0.2em] mb-4">
                         STEP BY STEP GUIDE
                     </span>
                     <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-6 tracking-tighter leading-[1.1]">
@@ -46,17 +46,17 @@ export default function CocoGuidePage() {
                             </div>
                             <h2 className="text-xl md:text-xl font-black text-slate-900 mb-4 tracking-tight">1+1 광고 이벤트</h2>
                             <p className="text-slate-600 text-xs md:text-sm leading-relaxed break-keep font-bold opacity-90">
-                                <strong className="text-[#f82b60]">1개월 결제 시 1개월 추가 무료!</strong><br />지금 신청하면 총 2개월을 경험하세요.
+                                <strong className="text-[#1e3a5f]">1개월 결제 시 1개월 추가 무료!</strong><br />지금 신청하면 총 2개월을 경험하세요.
                                 <span className="block mt-4 text-[10px] text-slate-400 font-bold tracking-tight">골드 보더 + 상단 고정 효과와 유사한<br />프리미엄 노출을 2배로 경험하세요.</span>
                             </p>
                         </div>
                     </div>
 
                     {/* Step 2: COMMUNITY / LIST NATIVE Style */}
-                    <div className="relative group bg-rose-50/10 rounded-[28px] p-7 border-2 border-dashed border-rose-200 shadow-[0_10px_30px_-15px_rgba(248,43,96,0.08)] transition-all hover:-translate-y-1">
+                    <div className="relative group bg-blue-50/10 rounded-[28px] p-7 border-2 border-dashed border-blue-200 shadow-[0_10px_30px_-15px_rgba(248,43,96,0.08)] transition-all hover:-translate-y-1">
                         <div className="flex flex-col items-center text-center">
-                            <span className="text-[10px] md:text-[11px] font-[900] text-[#f82b60] uppercase tracking-[0.1em] mb-4">Community / List Native</span>
-                            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-[#f82b60] mb-5 shadow-lg shadow-rose-500/5 ring-4 ring-rose-50">
+                            <span className="text-[10px] md:text-[11px] font-[900] text-[#1e3a5f] uppercase tracking-[0.1em] mb-4">Community / List Native</span>
+                            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-[#1e3a5f] mb-5 shadow-lg shadow-blue-900/5 ring-4 ring-blue-50">
                                 <Sparkles size={28} fill="currentColor" />
                             </div>
                             <h2 className="text-xl md:text-xl font-black text-slate-900 mb-4 tracking-tight">통합 커뮤니티 활용</h2>
@@ -64,7 +64,7 @@ export default function CocoGuidePage() {
                                 파트너스크레딧과 연동된 통합<br />
                                 <span className="md:block md:whitespace-nowrap">커뮤니티에서 브랜드 신뢰도를 높이세요.</span>
                                 <div className="mt-4">
-                                    <span className="text-[9px] text-[#f82b60] font-black uppercase tracking-widest bg-rose-100/50 py-1.5 px-3 rounded-full inline-block">Recommended Ad System</span>
+                                    <span className="text-[9px] text-[#1e3a5f] font-black uppercase tracking-widest bg-blue-100/50 py-1.5 px-3 rounded-full inline-block">Recommended Ad System</span>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +94,7 @@ export default function CocoGuidePage() {
                     </h3>
                     <button
                         onClick={handleStart}
-                        className="group flex items-center gap-3 bg-[#f82b60] hover:bg-[#db2456] text-white font-black px-10 md:px-14 py-4 md:py-5 rounded-full text-lg md:text-xl transition-all hover:-translate-y-1 active:scale-95 shadow-xl shadow-rose-500/20"
+                        className="group flex items-center gap-3 bg-[#1e3a5f] hover:bg-[#162d4a] text-white font-black px-10 md:px-14 py-4 md:py-5 rounded-full text-lg md:text-xl transition-all hover:-translate-y-1 active:scale-95 shadow-xl shadow-blue-900/20"
                     >
                         시작하기 <ChevronRight size={24} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" />
                     </button>

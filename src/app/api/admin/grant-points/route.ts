@@ -20,10 +20,10 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ success: false, message: '올바르지 않은 요청입니다.' }, { status: 400 });
         }
 
-        // 1. 현재 포인트 조회
+        // 1. 사용자 존재 확인
         const { data: profile, error: profileError } = await supabaseAdmin
             .from('profiles')
-            .select('points')
+            .select('id')
             .eq('id', userId)
             .single();
 
@@ -31,13 +31,23 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ success: false, message: '회원을 찾을 수 없습니다.' }, { status: 404 });
         }
 
-        const newTotal = (profile.points || 0) + amount;
+        // 2. 플랫폼 포인트 조회 (platform_points)
+        const { data: ppRow } = await supabaseAdmin
+            .from('platform_points')
+            .select('balance')
+            .eq('user_id', userId)
+            .eq('platform', 'waiterzone') // [Phase 5] 웨이터존 포인트
+            .maybeSingle();
 
-        // 2. profiles.points 업데이트
+        const newTotal = Math.max(0, (ppRow?.balance || 0) + amount);
+
+        // 3. platform_points 업데이트 (upsert — 최초 지급 시 행 생성)
         const { error: updateError } = await supabaseAdmin
-            .from('profiles')
-            .update({ points: newTotal, updated_at: new Date().toISOString() })
-            .eq('id', userId);
+            .from('platform_points')
+            .upsert(
+                { user_id: userId, platform: 'waiterzone', balance: newTotal, updated_at: new Date().toISOString() },
+                { onConflict: 'user_id,platform' }
+            );
 
         if (updateError) throw updateError;
 

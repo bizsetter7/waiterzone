@@ -79,27 +79,31 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: '포인트 기록 저장에 실패했습니다.' }, { status: 500 });
         }
 
-        // 2. 현재 포인트 조회 및 업데이트
-        const { data: profile, error: profileError } = await supabaseAdmin
-            .from('profiles')
-            .select('points')
-            .eq('id', userId)
+        // 2. 플랫폼 포인트 조회 및 업데이트 (platform_points 테이블 사용)
+        const { data: ppRow, error: ppFetchError } = await supabaseAdmin
+            .from('platform_points')
+            .select('balance')
+            .eq('user_id', userId)
+            .eq('platform', 'waiterzone') // [Phase 5] 웨이터존 포인트
             .maybeSingle();
 
-        if (profileError) {
-            console.error('[award-points] Profile fetch error:', profileError.message);
-            return NextResponse.json({ error: profileError.message }, { status: 500 });
+        if (ppFetchError) {
+            console.error('[award-points] platform_points fetch error:', ppFetchError.message);
+            return NextResponse.json({ error: ppFetchError.message }, { status: 500 });
         }
 
-        const newTotal = (profile?.points || 0) + amount;
+        // balance >= 0 CHECK 제약 준수 (차감 시 최소 0)
+        const newTotal = Math.max(0, (ppRow?.balance || 0) + amount);
 
         const { error: updateError } = await supabaseAdmin
-            .from('profiles')
-            .update({ points: newTotal, updated_at: new Date().toISOString() })
-            .eq('id', userId);
+            .from('platform_points')
+            .upsert(
+                { user_id: userId, platform: 'waiterzone', balance: newTotal, updated_at: new Date().toISOString() },
+                { onConflict: 'user_id,platform' }
+            );
 
         if (updateError) {
-            console.error('[award-points] Profile update error:', updateError.message);
+            console.error('[award-points] platform_points update error:', updateError.message);
             // 포인트 업데이트 실패 시 로그 롤백 (데이터 정합성 사수)
             await supabaseAdmin.from('point_logs').delete().eq('user_id', userId).eq('reason', reason).limit(1);
             return NextResponse.json({ error: updateError.message }, { status: 500 });

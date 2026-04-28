@@ -64,15 +64,16 @@ export async function updatePoints(userId: string, reason: PointReason, customAm
 }
 
 /**
- * Get current credit for a user
+ * Get current credit for a user (플랫폼별 포인트 조회)
  */
 export async function getUserPoints(userId: string) {
     const { data, error } = await supabase
-        .from('profiles')
-        .select('points') // [Fix] credit_balance가 아닌 points 컬럼 조회
-        .eq('id', userId)
-        .single();
+        .from('platform_points')
+        .select('balance')
+        .eq('user_id', userId)
+        .eq('platform', 'waiterzone') // [Phase 5] 웨이터존 플랫폼 포인트
+        .maybeSingle();
 
     if (error) return 0;
-    return data?.points || 0;
+    return data?.balance || 0;
 }

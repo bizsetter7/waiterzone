@@ -95,29 +95,30 @@ export async function POST(request: NextRequest) {
         const pointReason = getSosPointReason(recipientCount);
         const pointCost = POINT_COST_MAP[pointReason];
 
-        const { data: profile, error: profileError } = await supabaseAdmin
-            .from('profiles')
-            .select('points')
-            .eq('id', shopId)
-            .single();
+        // [Phase 5] platform_points 테이블에서 웨이터존 포인트 조회
+        const { data: ppRow, error: ppFetchError } = await supabaseAdmin
+            .from('platform_points')
+            .select('balance')
+            .eq('user_id', shopId)
+            .eq('platform', 'waiterzone')
+            .maybeSingle();
 
-        if (profileError) throw profileError;
+        if (ppFetchError) throw ppFetchError;
 
-        const currentPoints = profile?.points ?? 0;
+        const currentPoints = ppRow?.balance ?? 0;
         if (currentPoints < pointCost) {
             return NextResponse.json({
                 error: `포인트가 부족합니다. 필요: ${pointCost}P, 보유: ${currentPoints}P`
             }, { status: 402 });
         }
 
-        // 포인트 차감
+        // 포인트 차감 (platform_points upsert)
         const { error: deductError } = await supabaseAdmin
-            .from('profiles')
-            .update({
-                points: currentPoints - pointCost,
-                updated_at: new Date().toISOString()
-            })
-            .eq('id', shopId);
+            .from('platform_points')
+            .upsert(
+                { user_id: shopId, platform: 'waiterzone', balance: currentPoints - pointCost, updated_at: new Date().toISOString() },
+                { onConflict: 'user_id,platform' }
+            );
 
         if (deductError) throw deductError;
 
@@ -129,11 +130,13 @@ export async function POST(request: NextRequest) {
         });
 
         if (logError) {
-            // 로그 실패 시 포인트 롤백
+            // 로그 실패 시 포인트 롤백 (platform_points 원래 값 복원)
             await supabaseAdmin
-                .from('profiles')
-                .update({ points: currentPoints, updated_at: new Date().toISOString() })
-                .eq('id', shopId);
+                .from('platform_points')
+                .upsert(
+                    { user_id: shopId, platform: 'waiterzone', balance: currentPoints, updated_at: new Date().toISOString() },
+                    { onConflict: 'user_id,platform' }
+                );
             console.error('[sos/send] point_logs 기록 실패, 포인트 롤백:', logError.message);
             return NextResponse.json({ error: '발송 처리 중 오류가 발생했습니다. 다시 시도해주세요.' }, { status: 500 });
         }
@@ -172,11 +175,13 @@ export async function POST(request: NextRequest) {
             .single();
 
         if (alertError) {
-            // sos_alerts 저장 실패 시 포인트 및 로그 롤백
+            // sos_alerts 저장 실패 시 포인트 및 로그 롤백 (platform_points 원래 값 복원)
             await supabaseAdmin
-                .from('profiles')
-                .update({ points: currentPoints, updated_at: new Date().toISOString() })
-                .eq('id', shopId);
+                .from('platform_points')
+                .upsert(
+                    { user_id: shopId, platform: 'waiterzone', balance: currentPoints, updated_at: new Date().toISOString() },
+                    { onConflict: 'user_id,platform' }
+                );
             await supabaseAdmin
                 .from('point_logs')
                 .delete()

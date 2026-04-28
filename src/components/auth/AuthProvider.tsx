@@ -88,6 +88,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                     .eq('id', authUser.id)
                     .single();
 
+                // [Phase 5] 웨이터존 플랫폼 포인트 별도 조회
+                const { data: ppRow } = await supabase
+                    .from('platform_points')
+                    .select('balance')
+                    .eq('user_id', authUser.id)
+                    .eq('platform', 'waiterzone')
+                    .maybeSingle();
+
                 // 신규 사용자 또는 다른 사용자 로그인 시 이전 프로필 이미지 캐시 완전 초기화
                 // cachedUserId 없음(= 처음 로그인 or 신규가입) 포함하여 항상 초기화
                 if (typeof window !== 'undefined') {
@@ -120,7 +128,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                         name: profile?.full_name || authUser.email?.split('@')[0] || '회원',
                         nickname: profile?.nickname || profile?.full_name || '닉네임',
                         credit: profile?.credit_balance || 0,
-                        points: profile?.points || 0,
+                        points: ppRow?.balance || 0, // [Phase 5] platform_points 테이블에서 로드
                         jump_balance: profile?.jump_balance || 0,
                         isVerifiedPartnerVerified: profile ? (liveRole === 'corporate' ? !!profile.business_verified : !!profile.is_adult_verified) : false,
                         email: authUser.email

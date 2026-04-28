@@ -333,7 +333,7 @@ const CardImageUploadPanel = ({ adId, currentImageUrl, onSuccess }: CardImageUpl
 // ─── 메인 컴포넌트 ──────────────────────────────────────────────────────────────
 export const OngoingAdsView = ({
     setView, ads = [], userName = '', jumpBalance = 0,
-    onShowAdDetail, onOpenMenu, onEditAd, onDeleteAd, onJumpAd, userId,
+    onShowAdDetail, onOpenMenu, onEditAd, onDeleteAd, onJumpAd, userId, onNewAd,
 }: {
     setView: (v: any) => void;
     ads?: any[];
@@ -345,6 +345,7 @@ export const OngoingAdsView = ({
     onDeleteAd?: (adId: any) => void;
     onJumpAd?: (adId: any) => void;
     userId?: string;
+    onNewAd?: () => void;
 }) => {
     const brand = useBrand();
     const [isMounted, setIsMounted] = React.useState(false);
@@ -427,7 +428,7 @@ export const OngoingAdsView = ({
                             <List size={32} />
                         </div>
                         <p className="text-gray-400 font-bold">현재 진행 중인 채용정보가 없습니다.</p>
-                        <button onClick={() => setView('form')} className="px-6 py-2.5 bg-[#1e3a5f] text-white rounded-xl font-black text-sm hover:translate-y-[-2px] transition-transform shadow-lg shadow-blue-200">
+                        <button onClick={() => onNewAd ? onNewAd() : setView('form')} className="px-6 py-2.5 bg-[#1e3a5f] text-white rounded-xl font-black text-sm hover:translate-y-[-2px] transition-transform shadow-lg shadow-blue-200">
                             첫 공고 등록하기
                         </button>
                     </div>

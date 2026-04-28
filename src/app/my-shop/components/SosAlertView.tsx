@@ -46,7 +46,7 @@ const QUICK_MESSAGES = [
     '오늘 손님 많아요. 빠른 연락 주세요!',
 ];
 
-export const SosAlertView = ({ brand }: { brand: any }) => {
+export const SosAlertView = ({ brand, onNewAd }: { brand: any; onNewAd?: () => void }) => {
     const { user, userPoints: authPoints, userName } = useAuth();
     const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
     const [message, setMessage] = useState('');
@@ -202,7 +202,7 @@ export const SosAlertView = ({ brand }: { brand: any }) => {
                     업체회원만 사용할 수 있습니다.
                 </p>
                 <button
-                    onClick={() => window.dispatchEvent(new CustomEvent('setView', { detail: 'form' }))}
+                    onClick={() => onNewAd ? onNewAd() : window.dispatchEvent(new CustomEvent('setView', { detail: 'form' }))}
                     className="w-full py-3 bg-[#1e3a5f] text-white font-black rounded-2xl shadow-lg hover:bg-[#162d4a] transition"
                 >
                     유료공고 등록하러 가기

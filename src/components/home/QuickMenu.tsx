@@ -10,21 +10,21 @@ export const QuickMenu = React.memo(() => {
 
     // 퀵메뉴 순서 및 라벨 (최종 테마 반영)
     const MENU_ITEMS = [
-        { icon: Briefcase, label: '업종별채용', bg: 'bg-indigo-50', color: 'text-indigo-600', link: '/jobs' },
-        { icon: MapPin, label: '지역별채용', bg: 'bg-blue-50', color: 'text-blue-600', link: '/region' },
-        { icon: Search, label: '인재정보', bg: 'bg-teal-50', color: 'text-teal-600', link: '/talent' },
+        { icon: Briefcase, label: '업종별채용', bg: 'bg-blue-50', color: 'text-blue-700', link: '/jobs' },
+        { icon: MapPin, label: '지역별채용', bg: 'bg-indigo-50', color: 'text-indigo-700', link: '/region' },
+        { icon: Search, label: '인재정보', bg: 'bg-slate-50', color: 'text-slate-700', link: '/talent' },
         {
             icon: Crown,
             label: '프리미엄\n라운지',
-            bg: 'bg-purple-50',
-            color: 'text-purple-600',
+            bg: 'bg-blue-100',
+            color: 'text-blue-800',
             link: '/community?category=프리미엄 라운지'
         },
         {
             icon: Users,
-            label: '같이일할단짝',
-            bg: 'bg-blue-50',
-            color: 'text-blue-600',
+            label: '팀원 구인',
+            bg: 'bg-indigo-50',
+            color: 'text-indigo-600',
             link: '/community?category=같이일할단짝'
         },
         {
@@ -37,11 +37,11 @@ export const QuickMenu = React.memo(() => {
         {
             icon: Scale,
             label: '무료\n법률상담',
-            bg: 'bg-slate-50',
+            bg: 'bg-slate-100',
             color: 'text-slate-600',
             link: '/community?category=무료법률상담'
         },
-        { icon: Megaphone, label: '광고문의', bg: 'bg-orange-50', color: 'text-orange-600', link: '/customer-center?tab=ad' },
+        { icon: Megaphone, label: '광고문의', bg: 'bg-blue-100', color: 'text-blue-900', link: '/customer-center?tab=ad' },
     ];
 
     return (

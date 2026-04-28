@@ -89,9 +89,9 @@ export const HeroSection = () => {
                 </div>
             </div>
 
-            {/* Side Accents */}
+            {/* Side Accents - Premium Blue */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 blur-[120px] rounded-full -mr-64 -mt-64 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-emerald-600/10 blur-[100px] rounded-full -ml-40 -mb-40 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-slate-800/10 blur-[100px] rounded-full -ml-40 -mb-40 pointer-events-none" />
 
             <PaymentPopup
                 isOpen={isPaymentPopupOpen}

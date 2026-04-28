@@ -61,7 +61,7 @@ export function buildSalaryInfoTweet(data: SalaryInfoTweetData): string {
     const { regionSlug, regionName, workType, avgPay, maxPay, shopCount, payType } = data;
 
     const hashtags = formatHashtags(buildHashtags(regionSlug, workType));
-    const url = `${BASE_URL}/waiter/${encodeURIComponent(regionSlug)}/${encodeURIComponent(workType)}`;
+    const url = `${BASE_URL}/coco/${encodeURIComponent(regionSlug)}/${encodeURIComponent(workType)}`;
 
     const lines = [
         `📊 ${regionName} ${workType} 이번 주 시세`,
@@ -118,7 +118,7 @@ export function buildGuideTweet(data: GuideTweetData): string {
     const tip    = data.tip || tips[dayIdx];
 
     const hashtags = formatHashtags(buildHashtags(regionSlug, workType));
-    const url      = guideUrl ?? `${BASE_URL}/waiter/${encodeURIComponent(regionSlug)}/${encodeURIComponent(workType)}`;
+    const url      = guideUrl ?? `${BASE_URL}/coco/${encodeURIComponent(regionSlug)}/${encodeURIComponent(workType)}`;
 
     const lines = [
         `💡 ${regionName} ${workType} 꿀팁`,

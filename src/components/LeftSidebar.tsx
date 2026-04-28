@@ -138,7 +138,7 @@ export default function LeftSidebar({
                 clearLoginForm();
                 return;
             } else if (id === 'test_user' && pw === 'password123') {
-                authLogin('personal', id, '테스트 회원', '밤의요정');
+                authLogin('personal', id, '테스트 회원', '밤의제왕');
                 clearLoginForm();
                 return;
             }
@@ -233,7 +233,7 @@ export default function LeftSidebar({
                             </p>
                             <div className={`mb-3 p-2 rounded-lg ${brand.theme === 'dark' ? 'bg-gray-700' : 'bg-gray-50'}`}>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-[10px] text-gray-500">코코 포인트</span>
+                                    <span className="text-[10px] text-gray-500">웨이터 포인트</span>
                                     <span className={`text-sm font-bold ${brand.theme === 'dark' ? 'text-yellow-400' : 'text-blue-600'}`}>
                                         C {userPoints.toLocaleString()}
                                     </span>

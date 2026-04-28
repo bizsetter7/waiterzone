@@ -29,7 +29,7 @@ export default function HomePortalClient() {
       const { data } = await supabase
         .from('shops')
         .select('*')
-        .eq('platform', 'waiter')
+        .eq('platform', 'waiterzone')
         .eq('is_closed', false)
         .order('created_at', { ascending: false })
         .limit(300);

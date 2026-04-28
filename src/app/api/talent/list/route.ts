@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
         const { data: resumes, error: resError } = await supabaseAdmin
             .from('resumes')
             .select('*')
-            .eq('platform', 'waiter') // [Migration 07] 웨이터존 전용
+            .eq('platform', 'waiterzone') // [Migration 07] 웨이터존 전용
             .order('created_at', { ascending: false })
             .limit(50);
 

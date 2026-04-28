@@ -351,6 +351,9 @@ function MyShopContent() {
     const [exampleType, setExampleType] = useState<any>(null);
     const [selectedAdForModal, setSelectedAdForModal] = useState<any>(null);
     const [selectedResumeForModal, setSelectedResumeForModal] = useState<any>(null);
+    // 구독 게이트 모달
+    const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
+    const [subscriptionModalMsg, setSubscriptionModalMsg] = useState('');
 
     // Form State (Hook) — userId 전달로 타 계정의 sessionStorage draft 오염 방지
     const formState = useAdFormState(authUser?.id);
@@ -551,6 +554,40 @@ function MyShopContent() {
         } catch (err: any) {
             console.error('[DELETE] Failed:', err);
             alert("삭제 실패: " + err.message);
+        }
+    };
+
+    // [구독 게이트] 새 광고 등록 전 웨이터존 구독 여부 확인 (어드민 bypass)
+    const handleNewAdWithSubCheck = async () => {
+        const prepareNewAdState = () => {
+            setIsNewEntry(true);
+            setEditingAdId(null);
+            editingAdIdRef.current = null;
+            formState.resetAdStates();
+            if (bizVerified && bizShopName) formState.setShopName(bizShopName);
+        };
+
+        // 어드민은 구독 체크 없이 바로 진행
+        if (authUserType === 'admin') {
+            prepareNewAdState();
+            setShowWarningModal(true);
+            return;
+        }
+
+        try {
+            const res = await fetch(`/api/subscription/check?userId=${authUser.id}`);
+            const data = await res.json();
+            if (data.hasAccess) {
+                prepareNewAdState();
+                setShowWarningModal(true);
+            } else {
+                setSubscriptionModalMsg(data.message || '웨이터존 구독이 필요합니다. 야사장에서 구독 플랜을 선택해주세요.');
+                setShowSubscriptionModal(true);
+            }
+        } catch {
+            // 네트워크 오류 시 fail-open (UX 우선 — 차단보다 통과)
+            prepareNewAdState();
+            setShowWarningModal(true);
         }
     };
 
@@ -815,7 +852,7 @@ function MyShopContent() {
                         }
                     });
                     // [Migration 07] 플랫폼 태깅 — 웨이터존 공고임을 명시
-                    dbPayload.platform = 'waiter';
+                    dbPayload.platform = 'waiterzone';
 
                     const { data, error } = await supabase.from('shops').insert([dbPayload]).select().single();
                     if (error) throw new Error(`DB 삽입 실패: ${error.message}`);
@@ -1286,20 +1323,18 @@ function MyShopContent() {
                                                 <BusinessDashboard
                                                     brand={brand} shopName={bizShopName || formState.shopName} nickname={formState.nickname} isVerified={formState.isVerified} bizVerified={bizVerified} bizAddress={bizAddress} onGoMemberInfo={() => setView('member-info')}
                                                     handleAdClick={(isNew, ad) => {
-                                                        setIsNewEntry(isNew);
-                                                        if (!isNew && ad) {
+                                                        if (isNew) {
+                                                            // [구독 게이트] 새 광고는 구독 확인 후 진행
+                                                            handleNewAdWithSubCheck();
+                                                        } else if (ad) {
+                                                            // 기존 광고 수정은 구독 체크 불필요
+                                                            setIsNewEntry(false);
                                                             setEditingAdId(ad.id);
                                                             editingAdIdRef.current = ad.id;
                                                             formState.loadAdData(ad);
-                                                            // [Fix] 인증된 업체회원 — 프로필 상호명으로 덮어쓰기
                                                             if (bizVerified && bizShopName) formState.setShopName(bizShopName);
-                                                        } else {
-                                                            setEditingAdId(null);
-                                                            editingAdIdRef.current = null;
-                                                            formState.resetAdStates();
-                                                            if (bizVerified && bizShopName) formState.setShopName(bizShopName);
+                                                            setShowWarningModal(true);
                                                         }
-                                                        setShowWarningModal(true);
                                                     }}
                                                     setShowDesignModal={setShowDesignModal} setView={setView} router={router} ads={registeredAds || []} onOpenMenu={() => setShowMobileMenu(true)} onShowAdDetail={(ad) => setSelectedAdForModal(ad)} onDeleteAd={handleDelete} onJumpAd={handleJump} onExtendAd={(ad) => { setExtendTargetAd(ad); setShowExtendModal(true); }} onToggleAutoJump={handleToggleAutoJump}
                                                 />
@@ -1317,6 +1352,40 @@ function MyShopContent() {
                                     )}
                                 </>
                             )}
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* 구독 게이트 모달 — 웨이터존 구독 없이 광고 등록 시도 시 표시 */}
+            {showSubscriptionModal && (
+                <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-[99999] px-4">
+                    <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 animate-fade-in">
+                        <div className="text-center mb-5">
+                            <div className="w-14 h-14 bg-[#1e3a5f]/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7 text-[#1e3a5f]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                            </div>
+                            <h3 className="text-lg font-black text-gray-900 mb-2">구독이 필요합니다</h3>
+                            <p className="text-sm text-gray-600 font-medium leading-relaxed">{subscriptionModalMsg}</p>
+                        </div>
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => setShowSubscriptionModal(false)}
+                                className="flex-1 py-3 rounded-xl border border-gray-200 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-colors"
+                            >
+                                닫기
+                            </button>
+                            <a
+                                href="https://www.yasajang.kr"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex-1 py-3 rounded-xl bg-[#1e3a5f] text-white font-black text-sm text-center hover:bg-[#152d4a] transition-colors"
+                                onClick={() => setShowSubscriptionModal(false)}
+                            >
+                                야사장에서 구독하기
+                            </a>
                         </div>
                     </div>
                 </div>

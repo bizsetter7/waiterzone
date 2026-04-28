@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
                 password: body.password || '',
                 is_secret: body.is_secret || false,
                 created_at: new Date().toISOString(),
-                platform: 'waiter', // [Migration 07] 웨이터존 게시글
+                platform: 'waiterzone', // [Migration 07] 웨이터존 게시글
             }])
             .select()
             .single();

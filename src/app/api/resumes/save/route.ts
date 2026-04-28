@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
             // 신규 등록: mock ID 제거 후 insert
             const { id: _, ...insertFields } = resumeData;
             // [Migration 07] 플랫폼 태깅 — 웨이터존 이력서임을 명시
-            insertFields.platform = 'waiter';
+            insertFields.platform = 'waiterzone';
             const { data, error } = await supabaseAdmin
                 .from('resumes')
                 .insert([insertFields])

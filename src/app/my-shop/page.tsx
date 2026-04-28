@@ -121,6 +121,7 @@ function MyShopContent() {
                     .from('shops')
                     .select('*')
                     .eq('user_id', authUser.id)
+                    .eq('platform', 'waiterzone') // [플랫폼 분리] 웨이터존 공고만 조회
                     .order('created_at', { ascending: false });
                 if (error) throw error;
                 dbData = data || [];
@@ -160,6 +161,7 @@ function MyShopContent() {
                 .from('payments')
                 .select('*')
                 .eq('user_id', authUser.id)
+                .eq('platform', 'waiterzone') // [플랫폼 분리] 웨이터존 결제만 조회
                 .order('created_at', { ascending: false });
 
             const dbPayments = data || [];
@@ -359,6 +361,14 @@ function MyShopContent() {
 
     // Form State (Hook) — userId 전달로 타 계정의 sessionStorage draft 오염 방지
     const formState = useAdFormState(authUser?.id);
+
+    // [구독 모드] 실제 청구 금액 = Step4 extras만 (Step3 기본가는 구독료에 포함)
+    const effectiveTotalAmount = React.useMemo(() => {
+        if (!subscriptionTier) return formState.totalAmount;
+        const product = DETAILED_PRICING.find(p => p.id === subscriptionTier);
+        const basePrice = product ? ((product as any)[`d${formState.selectedAdPeriod}`] as number ?? 0) : 0;
+        return Math.max(0, formState.totalAmount - basePrice);
+    }, [subscriptionTier, formState.totalAmount, formState.selectedAdPeriod]);
 
     useBodyScrollLock(!!selectedAdForModal || !!selectedResumeForModal || showDesignModal || showMobileMenu || showExampleModal);
     usePreventLeave(formState.isDirty && view === 'form');
@@ -743,13 +753,14 @@ function MyShopContent() {
                 media_url: formState.mediaUrl,
                 edit_count: editCount,
                 last_edit_month: currentMonth,
-                ad_price: formState.totalAmount,
+                ad_price: effectiveTotalAmount,
                 ad_duration: Number(formState.selectedAdPeriod || 30),
                 updated_at: new Date().toISOString(),
                 status: 'pending',
                 user_id: authUser.id,
                 deadline: finalDeadline,
                 product_type: finalProductType,
+                platform: 'waiterzone', // [플랫폼 분리] P9 웨이터존 공고
 
                 // [Snapshot Bucket] - UI용 핵심 정보 보관
                 options: {
@@ -770,7 +781,7 @@ function MyShopContent() {
                     border: formState.borderOption,
                     border_period: formState.borderPeriod,
                     paySuffixes: formState.paySuffixes,  // camelCase — ShopCard/AdBannerCard 읽기 규격 통일 (2026-03-22)
-                    ad_price: formState.totalAmount,
+                    ad_price: effectiveTotalAmount,
                     ageMin: formState.ageMin,
                     ageMax: formState.ageMax,
                     addressDetail: formState.addressDetail,
@@ -877,8 +888,8 @@ function MyShopContent() {
                 }
             }
 
-            // [Fix] 무료 이벤트 광고(p7e 등 0원)도 관리자 텔레그램 알림 발송
-            if (!editingAdId && newShopId && !isTargetMock && formState.totalAmount === 0) {
+            // [Fix] 무료 이벤트 광고(p7e 등 0원) + 구독 포함 광고 → 관리자 텔레그램 알림 발송
+            if (!editingAdId && newShopId && !isTargetMock && effectiveTotalAmount === 0) {
                 fetch('/api/notify/new-payment', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -894,18 +905,23 @@ function MyShopContent() {
             if (!editingAdId && newShopId && !isTargetMock) {
                 // [CLAUDE.md 결제흐름 기준] 신규 공고 등록 시 항상 payments row 생성 (0원 포함)
                 // 어드민 승인 시 update-shop-status가 이 row를 찾아 UPDATE함
+                // [구독 모드] platform='waiterzone' 명시, amount=effectiveTotalAmount (Step4 extras만)
                 const paymentData = {
                     user_id: authUser.id,
                     shop_id: newShopId,
-                    amount: formState.totalAmount || 0,
-                    method: 'bank_transfer',
+                    amount: effectiveTotalAmount,
+                    method: subscriptionTier ? 'subscription' : 'bank_transfer',
                     status: 'pending',
-                    description: `[${formState.selectedAdProduct}] ${formState.shopName} 공고 결제`,
+                    description: subscriptionTier
+                        ? `[구독포함:${subscriptionTier}] ${formState.shopName} 공고 등록`
+                        : `[${formState.selectedAdProduct}] ${formState.shopName} 공고 결제`,
+                    platform: 'waiterzone', // [플랫폼 분리] P9 웨이터존 결제
                     metadata: {
                         nickname: cleanNickname,
                         shopName: formState.shopName,
                         adTitle: formState.title,
-                        product_type: finalProductType
+                        product_type: finalProductType,
+                        subscription_tier: subscriptionTier || null,
                     },
                     created_at: new Date().toISOString()
                 };
@@ -920,7 +936,7 @@ function MyShopContent() {
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
                                 shopName: formState.shopName,
-                                amount: formState.totalAmount,
+                                amount: effectiveTotalAmount,
                                 product: formState.selectedAdProduct,
                                 title: formState.title,
                             }),
@@ -930,9 +946,9 @@ function MyShopContent() {
                 fetchPaymentHistory();
             }
 
-            // [무통장 입금 안내] 신규 공고 등록 시 입금 안내 모달 표시, 수정 시 바로 대시보드
-            if (!editingAdId && formState.totalAmount > 0) {
-                setBankModalAmount(formState.totalAmount);
+            // [무통장 입금 안내] 신규 공고: effectiveTotalAmount > 0일 때만 (구독 포함 = 0원이므로 skip)
+            if (!editingAdId && effectiveTotalAmount > 0) {
+                setBankModalAmount(effectiveTotalAmount);
                 formState.resetAdStates();
                 window.dispatchEvent(new CustomEvent('resume-updated'));
                 isJustSaved.current = true;
@@ -1166,6 +1182,7 @@ function MyShopContent() {
             }
         }
         formState.resetAdStates();
+        setSubscriptionTier(null); // [구독 모드 해제] 뒤로가기 시 tier 리셋
         setView('dashboard');
     };
 
@@ -1340,7 +1357,8 @@ function MyShopContent() {
                                                             // [구독 게이트] 새 광고는 구독 확인 후 진행
                                                             handleNewAdWithSubCheck();
                                                         } else if (ad) {
-                                                            // 기존 광고 수정은 구독 체크 불필요
+                                                            // 기존 광고 수정은 구독 체크 불필요 + 구독 모드 해제
+                                                            setSubscriptionTier(null);
                                                             setIsNewEntry(false);
                                                             setEditingAdId(ad.id);
                                                             editingAdIdRef.current = ad.id;
@@ -1352,7 +1370,7 @@ function MyShopContent() {
                                                     setShowDesignModal={setShowDesignModal} setView={setView} router={router} ads={registeredAds || []} onOpenMenu={() => setShowMobileMenu(true)} onShowAdDetail={(ad) => setSelectedAdForModal(ad)} onDeleteAd={handleDelete} onJumpAd={handleJump} onExtendAd={(ad) => { setExtendTargetAd(ad); setShowExtendModal(true); }} onToggleAutoJump={handleToggleAutoJump}
                                                 />
                                             )}
-                                            {view === 'ongoing-ads' && <OngoingAdsView setView={setView} userName={bizShopName || formState.shopName} ads={registeredAds || []} jumpBalance={userJumpBalance || 0} onShowAdDetail={setSelectedAdForModal} onOpenMenu={() => setShowMobileMenu(true)} onDeleteAd={handleDelete} onJumpAd={handleJump} userId={authUser?.id} onNewAd={handleNewAdWithSubCheck} onEditAd={(ad) => { setIsNewEntry(false); setEditingAdId(ad.id); editingAdIdRef.current = ad.id; formState.loadAdData(ad); if (bizVerified && bizShopName) formState.setShopName(bizShopName); setShowWarningModal(true); }} />}
+                                            {view === 'ongoing-ads' && <OngoingAdsView setView={setView} userName={bizShopName || formState.shopName} ads={registeredAds || []} jumpBalance={userJumpBalance || 0} onShowAdDetail={setSelectedAdForModal} onOpenMenu={() => setShowMobileMenu(true)} onDeleteAd={handleDelete} onJumpAd={handleJump} userId={authUser?.id} onNewAd={handleNewAdWithSubCheck} onEditAd={(ad) => { setSubscriptionTier(null); setIsNewEntry(false); setEditingAdId(ad.id); editingAdIdRef.current = ad.id; formState.loadAdData(ad); if (bizVerified && bizShopName) formState.setShopName(bizShopName); setShowWarningModal(true); }} />}
                                             {view === 'payments' && <PaymentsView setView={setView} userName={bizShopName || formState.shopName} payments={syncedPaymentHistory || []} onShowAdDetail={(item) => { const adId = typeof item === 'object' ? (item.id || item.shop_id) : item; const fullAd = registeredAds.find(a => String(a.id) === String(adId)); const ad = fullAd || (typeof item === 'object' ? item : null); if (ad) setSelectedAdForModal(ad); else alert('공고 상세 정보를 찾을 수 없습니다.'); }} onOpenMenu={() => setShowMobileMenu(true)} />}
                                             {view === 'member-info' && <MemberInfoForm {...formState} brand={brand} setView={setView} onOpenMenu={() => setShowMobileMenu(true)} />}
                                             {view === 'change-password' && (userType as any) === 'admin' && <ChangePasswordView setView={setView} />}
@@ -1414,7 +1432,7 @@ function MyShopContent() {
 
             {view === 'form' && (userType === 'corporate' || userType === 'admin') && (
                 <div className="w-full">
-                    <AdForm {...formState} isSaving={isSaving} isNewEntry={isNewEntry} subscriptionTier={subscriptionTier} brand={brand} setShowDesignModal={setShowDesignModal} setShowTemplateModal={setShowTemplateModal} handleEditorInteract={formState.updateToolbarStatus} saveSelection={formState.saveSelection} execCmd={execCmd} insertEmoji={insertEmoji} handlePayTypeChange={handlePayTypeChange} handlePayAmountChange={handlePayAmountChange} togglePaySuffix={togglePaySuffix} setExampleType={setExampleType} setShowExampleModal={setShowExampleModal} onSave={handleSave} onBack={handleBack} onPreview={onPreview} setSelectedAdPeriod={(v: any) => formState.setSelectedAdPeriod(v)} setBorderOption={(v: any) => formState.setBorderOption(v)} setBorderPeriod={(v: any) => formState.setBorderPeriod(v)} setIconPeriod={(v: any) => formState.setIconPeriod(v)} setHighlighterPeriod={(v: any) => formState.setHighlighterPeriod(v)} />
+                    <AdForm {...formState} totalAmount={effectiveTotalAmount} isSaving={isSaving} isNewEntry={isNewEntry} subscriptionTier={subscriptionTier} brand={brand} setShowDesignModal={setShowDesignModal} setShowTemplateModal={setShowTemplateModal} handleEditorInteract={formState.updateToolbarStatus} saveSelection={formState.saveSelection} execCmd={execCmd} insertEmoji={insertEmoji} handlePayTypeChange={handlePayTypeChange} handlePayAmountChange={handlePayAmountChange} togglePaySuffix={togglePaySuffix} setExampleType={setExampleType} setShowExampleModal={setShowExampleModal} onSave={handleSave} onBack={handleBack} onPreview={onPreview} setSelectedAdPeriod={(v: any) => formState.setSelectedAdPeriod(v)} setBorderOption={(v: any) => formState.setBorderOption(v)} setBorderPeriod={(v: any) => formState.setBorderPeriod(v)} setIconPeriod={(v: any) => formState.setIconPeriod(v)} setHighlighterPeriod={(v: any) => formState.setHighlighterPeriod(v)} />
                 </div>
             )}
         </div>

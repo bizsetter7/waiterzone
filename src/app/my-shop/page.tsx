@@ -804,6 +804,7 @@ function MyShopContent() {
                         'work_region_sub', 'content', 'nickname', 'manager_name', 'manager_phone',
                         'edit_count', 'last_edit_month', 'ad_price', 'updated_at', 'status', 'user_id', 'deadline', 'options', 'product_type', 'media_url',
                         'banner_position', 'banner_image_url', 'banner_media_type', 'banner_status',
+                        'platform',
                     ];
                     const dbPayload: any = {};
                     validColumns.forEach(col => {
@@ -813,6 +814,8 @@ function MyShopContent() {
                             dbPayload[col] = val;
                         }
                     });
+                    // [Migration 07] 플랫폼 태깅 — 웨이터존 공고임을 명시
+                    dbPayload.platform = 'waiter';
 
                     const { data, error } = await supabase.from('shops').insert([dbPayload]).select().single();
                     if (error) throw new Error(`DB 삽입 실패: ${error.message}`);

@@ -24,9 +24,17 @@ export default function HomePortalClient() {
   const [dbShops, setDbShops] = useState<any[] | null>(null);
 
   useEffect(() => {
-    // [임시] platform 컬럼 추가 전까지 웨이터존 자체 광고 없음 → 빈 상태 표시
-    // TODO: platform 컬럼 추가 후 .eq('platform', 'waiterzone') 필터 활성화
-    setDbShops([]);
+    // [Migration 07] 웨이터존 전용 공고만 조회
+    (async () => {
+      const { data } = await supabase
+        .from('shops')
+        .select('*')
+        .eq('platform', 'waiter')
+        .eq('is_closed', false)
+        .order('created_at', { ascending: false })
+        .limit(300);
+      setDbShops(data || []);
+    })();
   }, []);
 
   const processedShops = useMemo(() => {

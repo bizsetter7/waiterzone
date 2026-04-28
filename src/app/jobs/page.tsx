@@ -42,6 +42,7 @@ export default async function JobPage() {
     const { data } = await supabase
         .from('shops')
         .select('*')
+        .eq('platform', 'waiter') // [Migration 07] 웨이터존 전용
         .eq('is_closed', false)
         .order('created_at', { ascending: false })
         .limit(500);

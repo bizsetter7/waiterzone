@@ -55,7 +55,7 @@ export default function HomePortal() {
                 {WORK_TYPE_SLUGS.map((workType) => (
                   <Link
                     key={workType}
-                    href={`/waiter/${encodeURIComponent(slug)}/${workType}`}
+                    href={`/coco/${encodeURIComponent(slug)}/${workType}`}
                     className="px-2.5 py-1 rounded-full bg-gray-50 border border-gray-200 text-[11px] text-gray-500 hover:border-blue-300 hover:text-blue-600 hover:bg-blue-50 transition-colors"
                   >
                     {name} {WORK_TYPE_INFO[workType].name.replace(/\s*\(.*\)$/, '')}

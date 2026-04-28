@@ -21,17 +21,17 @@ const NAV_LINKS = [
 ] as const;
 
 const POPULAR_REGIONS = [
-    { label: '강남 알바', href: '/waiter/서울-강남구' },
-    { label: '논현동 알바', href: '/waiter/서울-강남구-논현동' },
-    { label: '여의도 알바', href: '/waiter/서울-영등포구-여의도동' },
-    { label: '수원 인계동 야간알바', href: '/waiter/경기-수원시-인계동' },
-    { label: '부천 상동 알바', href: '/waiter/경기-부천시-상동' },
-    { label: '부산 서면 알바', href: '/waiter/부산-부산진구' },
-    { label: '해운대 알바', href: '/waiter/부산-해운대구' },
-    { label: '인천 계양구 알바', href: '/waiter/인천-계양구' },
-    { label: '대전 유성 알바', href: '/waiter/대전-유성구' },
-    { label: '대구 수성구 알바', href: '/waiter/대구-수성구' },
-    { label: '광주 상무지구 알바', href: '/waiter/광주-서구' },
+    { label: '강남 알바', href: '/coco/서울-강남구' },
+    { label: '논현동 알바', href: '/coco/서울-강남구-논현동' },
+    { label: '여의도 알바', href: '/coco/서울-영등포구-여의도동' },
+    { label: '수원 인계동 야간알바', href: '/coco/경기-수원시-인계동' },
+    { label: '부천 상동 알바', href: '/coco/경기-부천시-상동' },
+    { label: '부산 서면 알바', href: '/coco/부산-부산진구' },
+    { label: '해운대 알바', href: '/coco/부산-해운대구' },
+    { label: '인천 계양구 알바', href: '/coco/인천-계양구' },
+    { label: '대전 유성 알바', href: '/coco/대전-유성구' },
+    { label: '대구 수성구 알바', href: '/coco/대구-수성구' },
+    { label: '광주 상무지구 알바', href: '/coco/광주-서구' },
 ];
 
 export const Footer = () => {

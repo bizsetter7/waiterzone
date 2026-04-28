@@ -26,7 +26,7 @@ export const TabPolicies = () => {
                 <div className={boxClass}>
                     <div>
                         <p className={`mb-1 ${headClass}`}>제 1조 (목적)</p>
-                        <p className={bodyClass}>본 약관은 초코아이디어(이하 &quot;회사&quot;)가 운영하는 웨이터존(waiterzone.co.kr) 온라인 구인구직 플랫폼 및 관련 부가 서비스의 이용 조건과 절차, 회사와 회원 간의 권리·의무 및 책임 사항을 규정함을 목적으로 합니다.</p>
+                        <p className={bodyClass}>본 약관은 초코아이디어(이하 &quot;회사&quot;)가 운영하는 웨이터존(www.waiterzone.kr) 온라인 구인구직 플랫폼 및 관련 부가 서비스의 이용 조건과 절차, 회사와 회원 간의 권리·의무 및 책임 사항을 규정함을 목적으로 합니다.</p>
                     </div>
                     <div>
                         <p className={`mb-1 ${headClass}`}>제 2조 (정의)</p>

@@ -24,21 +24,9 @@ export default function HomePortalClient() {
   const [dbShops, setDbShops] = useState<any[] | null>(null);
 
   useEffect(() => {
-    const fetchShops = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('shops')
-          .select('*')
-          .eq('is_closed', false)
-          .order('updated_at', { ascending: false });
-
-        setDbShops(!error && data ? data : []);
-      } catch (err) {
-        console.error('Failed to fetch shops:', err);
-        setDbShops([]);
-      }
-    };
-    fetchShops();
+    // [임시] platform 컬럼 추가 전까지 웨이터존 자체 광고 없음 → 빈 상태 표시
+    // TODO: platform 컬럼 추가 후 .eq('platform', 'waiterzone') 필터 활성화
+    setDbShops([]);
   }, []);
 
   const processedShops = useMemo(() => {

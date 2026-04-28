@@ -39,7 +39,7 @@ export const HeroSection = () => {
         <div className="relative w-full h-[360px] md:h-[340px] overflow-hidden bg-slate-950 text-white shadow-2xl">
             {/* Background Layer */}
             <div className={`absolute inset-0 ${bannerInfo.bg} opacity-80`}>
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(219,39,119,0.1),transparent_70%)]" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(30,58,95,0.25),transparent_70%)]" />
             </div>
 
             {/* Overlay */}

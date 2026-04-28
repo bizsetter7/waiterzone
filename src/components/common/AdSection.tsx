@@ -76,7 +76,7 @@ export const AdSection = React.memo(({ title, icon, shops, tierId, onAdRegister,
                 </div>
                 <button
                     onClick={() => onAdRegister(tierId)}
-                    className="px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all flex items-center gap-1"
+                    className="px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-bold bg-blue-800 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all flex items-center gap-1"
                 >
                     <span>광고신청</span>
                     <ChevronRight size={14} />
@@ -125,7 +125,7 @@ export const AdSection = React.memo(({ title, icon, shops, tierId, onAdRegister,
             {/* Footer */}
             <div className="mt-6 flex justify-center">
                 <button
-                    className={`px-6 py-3 rounded-xl border-2 font-bold text-sm flex items-center gap-2 transition-all ${isDark ? 'border-gray-700 text-gray-300 hover:bg-gray-800' : 'border-gray-200 text-gray-500 hover:bg-gray-50 hover:border-gray-300'}`}
+                    className={`px-6 py-3 rounded-xl border-2 font-bold text-sm flex items-center gap-2 transition-all ${isDark ? 'border-blue-700 text-blue-300 hover:bg-blue-900/30 hover:border-blue-500' : 'border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-400'}`}
                 >
                     {title} 공고 더보기 <ChevronRight size={16} />
                 </button>

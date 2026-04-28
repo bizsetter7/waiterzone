@@ -6,7 +6,7 @@ export type WorkTypeSlug = typeof WORK_TYPE_SLUGS[number];
 
 export interface WorkTypeInfo {
     name: string;
-    slug: WorkTypeSlug;
+    slug: string;
     description: string;
     characteristics: string[];
     terminology: { term: string; desc: string }[];
@@ -16,17 +16,17 @@ export interface WorkTypeInfo {
 export interface RegionPayData {
     region: string;
     slugs: string[];  // 해당 region에 매칭되는 URL 슬러그들
-    payByWorkType: Partial<Record<WorkTypeSlug, {
+    payByWorkType: Record<string, {
         tc?: string;
         hourly?: string;
         daily?: string;
         note?: string;
-    }>>;
+    }>;
 }
 
 // ─── 업종별 설명 ────────────────────────────────────────────────────────────
 
-export const WORK_TYPE_INFO: Record<WorkTypeSlug, WorkTypeInfo> = {
+export const WORK_TYPE_INFO: Record<string, WorkTypeInfo> = {
     '룸살롱': {
         name: '룸싸롱 알바',
         slug: '룸알바',
@@ -766,7 +766,6 @@ export const REGION_PAY_DATA: RegionPayData[] = [
             '바': { hourly: '6~7만원', note: '토킹바·정바 기준' },
             '마사지': { tc: '15만원', note: '스웨디시 기준' },
             '엔터': { note: '수입 배분 방식 또는 월급 500만원+ 이상 (협의 가능)' },
-            '남성유흥알바': { tc: '10~30만원', note: '업종별 상이. 룸싸롱 10~17만원, 하이엔드 15~30만원 수준' },
             '웨이터알바': { tc: '10~30만원', hourly: '5~7만원', note: '업종 선택에 따라 급여 차이 큼. 당일지급 기본' },
             '노래방웨이터_DUP': { hourly: '5~7만원', tc: '6~12만원', note: '서울 전역. 당일지급 기본' },
             '남성알바': { tc: '10~30만원', hourly: '5~7만원', note: '서울 전역. 업종별 상이. 당일지급 기본' },
@@ -793,7 +792,6 @@ export const REGION_PAY_DATA: RegionPayData[] = [
             '바': { hourly: '5~7만원' },
             '마사지': { tc: '8~12만원', note: '아로마 마사지 기준' },
             '엔터': { note: '방송 지원 및 정산 비율 최우대' },
-            '남성유흥알바': { tc: '10~22만원', note: '수원·광명·부천 업종별 상이. 당일지급 기본' },
             '웨이터알바': { tc: '10~18만원', hourly: '4~7만원', note: '경기 전역. 업종 선택에 따라 상이' },
             '노래방웨이터_DUP': { hourly: '4~7만원', tc: '5~11만원', note: '경기 전역. 당일지급 기본' },
             '남성알바': { tc: '10~18만원', hourly: '4~7만원', note: '경기 전역. 당일지급 기본' },
@@ -816,7 +814,6 @@ export const REGION_PAY_DATA: RegionPayData[] = [
             '노래방웨이터': { hourly: '4~6만원', tc: '5~10만원', note: '인천 전역. 당일지급 기본' },
             '마사지': { tc: '8만원', note: '아로마 마사지 기준' },
             '바': { hourly: '5~6만원' },
-            '남성유흥알바': { tc: '10~14만원', hourly: '4~6만원', note: '인천 전역. 업종별 상이. 당일지급 기본' },
             '웨이터알바': { tc: '10~14만원', hourly: '4~6만원', note: '인천 전역. 당일지급 기본' },
             '노래방웨이터_DUP': { hourly: '4~6만원', tc: '5~10만원', note: '인천 전역. 당일지급 기본' },
             '남성알바': { tc: '10~14만원', hourly: '4~6만원', note: '인천 전역. 당일지급 기본' },
@@ -842,7 +839,6 @@ export const REGION_PAY_DATA: RegionPayData[] = [
             '노래방웨이터': { hourly: '3~6만원', tc: '8~12만원', note: '부산 전역. 당일지급 기본' },
             '마사지': { tc: '11만원', note: '아로마 마사지 기준' },
             '바': { hourly: '5~6만원' },
-            '남성유흥알바': { tc: '11~20만원', note: '해운대·서면 업종별 상이. 당일지급 기본' },
             '웨이터알바': { tc: '11~15만원', hourly: '3~6만원', note: '부산 전역. 당일지급 기본' },
             '노래방웨이터_DUP': { hourly: '3~6만원', tc: '7~12만원', note: '부산 전역. 당일지급 기본' },
             '남성알바': { tc: '11~15만원', hourly: '3~6만원', note: '부산 전역. 당일지급 기본' },
@@ -867,7 +863,6 @@ export const REGION_PAY_DATA: RegionPayData[] = [
             '노래주점': { hourly: '5만원', tc: '6~15만원', note: '천안·청주 포함' },
             '노래방웨이터': { hourly: '5만원', tc: '6~15만원', note: '대전·유성 전역. 당일지급 기본' },
             '바': { hourly: '5만원', tc: '6~15만원' },
-            '남성유흥알바': { tc: '14~30만원', note: '유성 기준. 전국 최고 단가 지역 중 하나' },
             '웨이터알바': { tc: '12~24만원', hourly: '5만원', note: '대전 전역. 당일지급 기본' },
             '노래방웨이터_DUP': { hourly: '5만원', tc: '6~13만원', note: '대전 전역. 당일지급 기본' },
             '남성알바': { tc: '12~24만원', hourly: '5만원', note: '대전 전역. 당일지급 기본' },
@@ -1063,7 +1058,7 @@ export function getNormalizedWorkTypeSlug(slug: string): WorkTypeSlug | undefine
 // 광고 상세 팝업 & 지역 페이지 내부 링크 자동 생성용
 // 업종 카테고리 키워드를 받아 관련 WorkTypeSlug 목록 반환
 
-const CATEGORY_SLUG_MAP: { keywords: string[]; slugs: WorkTypeSlug[] }[] = [
+const CATEGORY_SLUG_MAP: { keywords: string[]; slugs: string[] }[] = [
     {
         keywords: ['룸', '룸싸롱', '룸살롱', '룸알바'],
         slugs: ['룸알바', '유흥알바', '밤알바', '웨이터알바', '남성알바', '20대웨이터알바', '당일지급알바'],
@@ -1103,15 +1098,15 @@ const CATEGORY_SLUG_MAP: { keywords: string[]; slugs: WorkTypeSlug[] }[] = [
 ];
 
 // 항상 포함되는 공통 슬러그 (업종 무관)
-const COMMON_SLUGS: WorkTypeSlug[] = ['밤알바', '당일지급알바', '단기알바', '주말알바'];
+const COMMON_SLUGS: string[] = ['밤알바', '당일지급알바', '단기알바', '주말알바'];
 
 /**
  * 업소 카테고리 문자열로 관련 WorkTypeSlug 목록을 자동 반환.
  * 광고 상세 팝업 하단 & 지역 페이지 내부 링크 생성에 사용.
  */
-export function getCategoryWorkTypeSlugs(category: string): WorkTypeSlug[] {
+export function getCategoryWorkTypeSlugs(category: string): string[] {
     const lc = (category || '').toLowerCase();
-    const matched: WorkTypeSlug[] = [];
+    const matched: string[] = [];
 
     for (const entry of CATEGORY_SLUG_MAP) {
         if (entry.keywords.some(kw => lc.includes(kw.toLowerCase()))) {
@@ -1126,5 +1121,5 @@ export function getCategoryWorkTypeSlugs(category: string): WorkTypeSlug[] {
 
     // 공통 슬러그 추가 후 중복 제거, 최대 8개
     const all = Array.from(new Set([...matched, ...COMMON_SLUGS]));
-    return all.slice(0, 8) as WorkTypeSlug[];
+    return all.slice(0, 8);
 }

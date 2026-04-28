@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import type { Shop } from '@/types/shop';
 import shopsData from '@/lib/data/shops.json';
 import seoRegionsMaster from '@/lib/data/seo_regions_master.json';
 import shadowRegionsData from '@/lib/data/Shadow_SEO_Regions.json';
@@ -53,7 +54,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const MOCK_ID_PREFIXES = ['bait-', 'premium-extra-'];
     const isMockShop = (id: string) => MOCK_ID_PREFIXES.some(p => String(id).startsWith(p));
 
-    const shopRoutes = shopsData
+    const shopRoutes = (shopsData as Shop[])
         .filter((shop: any) => {
             if (isMockShop(shop.id)) return false; // 목업 제외
             const hasTitle = ((shop.title as string) || '').trim().length > 4;

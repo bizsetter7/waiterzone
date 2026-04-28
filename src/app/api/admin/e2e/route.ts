@@ -57,7 +57,7 @@ async function safeFetch(url: string, init?: RequestInit): Promise<Response> {
         ...init,
         headers: {
             ...(init?.headers ?? {}),
-            'User-Agent': 'CocoAlba-E2E-Runner/1.0 (internal health check)',
+            'User-Agent': 'WaiterZone-E2E-Runner/1.0 (internal health check)',
         },
         signal: AbortSignal.timeout(8000),
     });

@@ -312,7 +312,7 @@ export default function LeftSidebar({
                     </p>
                     <div className="w-8 h-0.5 bg-white/30 my-1.5 rounded-full" />
                     <p className="text-[10px] font-bold text-white/70 uppercase tracking-widest">
-                        CocoAlba Premium
+                        WaiterZone Premium
                     </p>
                 </div>
             </div>

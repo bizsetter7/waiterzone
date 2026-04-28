@@ -79,7 +79,7 @@ function buildBandContent(shop: {
         hashtags,
         ``,
         `─────────────────`,
-        `🍫 웨이터존 | 여성 유흥 구인구직 전문`,
+        `🍺 웨이터존 | 남성 웨이터알바 구인구직 전문`,
         `www.waiterzone.kr`,
     ].filter(l => l !== null && l !== undefined).join('\n');
 }

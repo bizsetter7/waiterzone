@@ -42,7 +42,7 @@ export const ResumeForm = ({ setView, onOpenMenu, authUser, editData }: { setVie
     const [selectedRegionMain, setSelectedRegionMain] = useState(editData?.region_main || '');
     const [selectedRegionSub, setSelectedRegionSub] = useState(editData?.region_sub || '');
     const [payType, setPayType] = useState(editData?.pay_type || '시급');
-    const [gender, setGender] = useState(editData?.gender || '여성');
+    const [gender, setGender] = useState(editData?.gender || '남성');
     const [birthYear, setBirthYear] = useState(editData?.birth_date?.split('-')[0] || '2000');
     const [birthMonth, setBirthMonth] = useState(editData?.birth_date?.split('-')[1]?.replace(/^0/, '') || '1');
     const [birthDay, setBirthDay] = useState(editData?.birth_date?.split('-')[2]?.replace(/^0/, '') || '1');
@@ -283,8 +283,8 @@ export const ResumeForm = ({ setView, onOpenMenu, authUser, editData }: { setVie
                             <label className="sm:col-span-3 text-xs font-bold text-gray-500">성별/생년월일 <span className="text-red-500">*</span></label>
                             <div className="sm:col-span-9 flex flex-wrap gap-2 items-center w-full">
                                 <select value={gender} onChange={(e) => setGender(e.target.value)} className="border border-gray-300 rounded p-1.5 text-xs font-bold bg-white text-gray-700 outline-none flex-shrink-0">
-                                    <option>여성</option>
                                     <option>남성</option>
+                                    <option>여성</option>
                                 </select>
                                 <div className="flex items-center gap-1 flex-1 min-w-[200px]">
                                     <input type="number" value={birthYear} onChange={(e) => setBirthYear(e.target.value)} className="w-[60px] border border-gray-300 rounded p-1.5 text-xs text-center outline-none" /> <span className="text-xs">년</span>

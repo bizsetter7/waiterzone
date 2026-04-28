@@ -29,10 +29,10 @@ export const QuickMenu = React.memo(() => {
         },
         {
             icon: Sparkles,
-            label: '그녀들의\n수다',
+            label: '웨이터\n소통방',
             bg: 'bg-blue-50',
             color: 'text-blue-600',
-            link: '/community'
+            link: '/community?category=웨이터 소통방'
         },
         {
             icon: Scale,

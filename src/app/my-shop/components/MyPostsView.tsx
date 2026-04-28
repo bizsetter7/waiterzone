@@ -27,11 +27,12 @@ interface InquiryPost {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-    '그녀들의 수다': 'bg-rose-50 text-rose-500',
-    '꿀팁 & 노하우': 'bg-amber-50 text-amber-500',
-    '뷰티·패션·이벤트': 'bg-pink-50 text-pink-500',
+    '웨이터 소통방': 'bg-blue-50 text-blue-500',
+    '웨이터 썰': 'bg-rose-50 text-rose-500',
+    '웨이터 팁': 'bg-amber-50 text-amber-500',
+    '지역방': 'bg-teal-50 text-teal-500',
     '같이일할단짝': 'bg-violet-50 text-violet-500',
-    '중고거래': 'bg-blue-50 text-blue-500',
+    '중고거래': 'bg-slate-50 text-slate-500',
     '무료법률상담': 'bg-green-50 text-green-500',
     '프리미엄 라운지': 'bg-yellow-50 text-yellow-600',
 };

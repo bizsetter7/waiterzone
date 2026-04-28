@@ -200,7 +200,7 @@ function CommunityContentInner() {
                             <ShieldAlert size={120} />
                         </div>
                         <div className="relative z-20">
-                            <h4 className="text-xl md:text-2xl font-black mb-2">그녀들만의 비밀스러운 대화 🤫</h4>
+                            <h4 className="text-xl md:text-2xl font-black mb-2">형님들만의 비밀스러운 소통공간 🤫</h4>
                             <p className="text-white/90 text-sm mb-4 leading-relaxed font-bold max-w-md">
                                 익명이 보장되는 안전한 공간에서<br />
                                 더 깊은 이야기를 나누고 싶다면 커뮤니티 게시판을 이용하세요.
@@ -405,9 +405,9 @@ function CommunityContentInner() {
                                 <div className="w-16 h-16 md:w-24 md:h-24 bg-rose-50 rounded-full flex items-center justify-center mb-6 md:mb-10 text-[#f82b60] ring-8 ring-rose-50 shadow-inner">
                                     <Lock size={32} className="md:w-12 md:h-12" strokeWidth={2.5} />
                                 </div>
-                                <h3 className={`text-xl md:text-2xl font-black mb-3 md:mb-4 tracking-tight ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>그녀들만의 비밀 커뮤니티 🤫</h3>
+                                <h3 className={`text-xl md:text-2xl font-black mb-3 md:mb-4 tracking-tight ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>형님들만의 비밀 커뮤니티 🤫</h3>
                                 <p className={`mb-8 md:mb-12 leading-relaxed font-bold text-xs md:text-sm ${brand.theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                                    이곳은 <span className="text-[#f82b60] font-black underline underline-offset-4 decoration-4">인증된 여성 회원</span>들만<br />
+                                    이곳은 <span className="text-blue-600 font-black underline underline-offset-4 decoration-4">인증된 남성 회원</span>들만<br />
                                     입장하실 수 있는 안전한 공간입니다.<br />
                                     <br />
                                     <span className={`px-4 py-2 rounded-2xl border text-[11px] md:text-xs ${brand.theme === 'dark' ? 'bg-gray-700 text-white border-gray-600' : 'bg-gray-100 text-gray-900 border-gray-200'}`}>로그인하고 실시간 핫이슈를 확인하세요! 🔥</span>

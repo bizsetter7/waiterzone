@@ -354,6 +354,8 @@ function MyShopContent() {
     // 구독 게이트 모달
     const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
     const [subscriptionModalMsg, setSubscriptionModalMsg] = useState('');
+    // [구독 모드] 구독 플랜에서 자동 결정된 tier (Step3 자동 적용용)
+    const [subscriptionTier, setSubscriptionTier] = useState<string | null>(null);
 
     // Form State (Hook) — userId 전달로 타 계정의 sessionStorage draft 오염 방지
     const formState = useAdFormState(authUser?.id);
@@ -567,8 +569,9 @@ function MyShopContent() {
             if (bizVerified && bizShopName) formState.setShopName(bizShopName);
         };
 
-        // 어드민은 구독 체크 없이 바로 진행
+        // 어드민은 구독 체크 없이 바로 진행 (구독 모드 아님)
         if (authUserType === 'admin') {
+            setSubscriptionTier(null);
             prepareNewAdState();
             setShowWarningModal(true);
             return;
@@ -579,18 +582,18 @@ function MyShopContent() {
             const data = await res.json();
             if (data.hasAccess) {
                 prepareNewAdState();
-                // [Step 3 자동화] 구독 플랜 기반 티어 자동 설정 → AdForm Step 3 skip 지원
-                if (data.tier) {
-                    formState.setSelectedAdProduct(data.tier);
-                    formState.setSelectedAdPeriod(30);
-                }
+                // [Step 3 자동화] 구독 플랜 기반 티어 저장 → WarningModal confirm 시 재적용
+                const tier = data.tier || null;
+                setSubscriptionTier(tier);
                 setShowWarningModal(true);
             } else {
+                setSubscriptionTier(null);
                 setSubscriptionModalMsg(data.message || '웨이터존 구독이 필요합니다. 야사장에서 구독 플랜을 선택해주세요.');
                 setShowSubscriptionModal(true);
             }
         } catch {
             // 네트워크 오류 시 fail-open (UX 우선 — 차단보다 통과)
+            setSubscriptionTier(null);
             prepareNewAdState();
             setShowWarningModal(true);
         }
@@ -1221,6 +1224,11 @@ function MyShopContent() {
                     onConfirm={() => {
                         if (isNewEntry) {
                             formState.resetAdStates();
+                            // [구독 모드] reset 후 구독 플랜 tier 재적용 (useEffect 충돌 방지)
+                            if (subscriptionTier) {
+                                formState.setSelectedAdProduct(subscriptionTier);
+                                formState.setSelectedAdPeriod(30);
+                            }
                             setView('form', undefined, true);
                         } else {
                             // [Critical Fix] Read from Ref to guarantee we have the ID regardless of render cycle
@@ -1406,7 +1414,7 @@ function MyShopContent() {
 
             {view === 'form' && (userType === 'corporate' || userType === 'admin') && (
                 <div className="w-full">
-                    <AdForm {...formState} isSaving={isSaving} isNewEntry={isNewEntry} brand={brand} setShowDesignModal={setShowDesignModal} setShowTemplateModal={setShowTemplateModal} handleEditorInteract={formState.updateToolbarStatus} saveSelection={formState.saveSelection} execCmd={execCmd} insertEmoji={insertEmoji} handlePayTypeChange={handlePayTypeChange} handlePayAmountChange={handlePayAmountChange} togglePaySuffix={togglePaySuffix} setExampleType={setExampleType} setShowExampleModal={setShowExampleModal} onSave={handleSave} onBack={handleBack} onPreview={onPreview} setSelectedAdPeriod={(v: any) => formState.setSelectedAdPeriod(v)} setBorderOption={(v: any) => formState.setBorderOption(v)} setBorderPeriod={(v: any) => formState.setBorderPeriod(v)} setIconPeriod={(v: any) => formState.setIconPeriod(v)} setHighlighterPeriod={(v: any) => formState.setHighlighterPeriod(v)} />
+                    <AdForm {...formState} isSaving={isSaving} isNewEntry={isNewEntry} subscriptionTier={subscriptionTier} brand={brand} setShowDesignModal={setShowDesignModal} setShowTemplateModal={setShowTemplateModal} handleEditorInteract={formState.updateToolbarStatus} saveSelection={formState.saveSelection} execCmd={execCmd} insertEmoji={insertEmoji} handlePayTypeChange={handlePayTypeChange} handlePayAmountChange={handlePayAmountChange} togglePaySuffix={togglePaySuffix} setExampleType={setExampleType} setShowExampleModal={setShowExampleModal} onSave={handleSave} onBack={handleBack} onPreview={onPreview} setSelectedAdPeriod={(v: any) => formState.setSelectedAdPeriod(v)} setBorderOption={(v: any) => formState.setBorderOption(v)} setBorderPeriod={(v: any) => formState.setBorderPeriod(v)} setIconPeriod={(v: any) => formState.setIconPeriod(v)} setHighlighterPeriod={(v: any) => formState.setHighlighterPeriod(v)} />
                 </div>
             )}
         </div>

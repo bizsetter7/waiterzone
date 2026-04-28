@@ -66,6 +66,8 @@ interface AdFormProps {
     isNewEntry?: boolean;
     isSaving?: boolean;
     mediaUrl: string; setMediaUrl: (v: string) => void;
+    // [구독 모드] 야사장 구독 플랜에서 자동 결정된 tier (null이면 일반 모드)
+    subscriptionTier?: string | null;
 }
 
 // --- Internal Components ---
@@ -146,13 +148,17 @@ export default function AdForm(props: AdFormProps) {
     );
 
     // [Fix] Force Reset Step 3/4 states on New Entry to ensure clean UI
-    // Done at render level if isNewEntry is true to prevent any flickering
+    // [구독 모드] subscriptionTier가 있으면 reset 건너뜀 — tier는 WarningModal confirm에서 이미 적용됨
     React.useEffect(() => {
         if (props.isNewEntry) {
-            props.setSelectedAdProduct(null);
-            // [New] Also reset scroll to ensure user starts at the top
+            if (!props.subscriptionTier) {
+                // 일반 신규 등록: selectedAdProduct 초기화
+                props.setSelectedAdProduct(null);
+            }
+            // 항상 스크롤 초기화
             window.scrollTo({ top: 0, behavior: 'instant' });
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.isNewEntry]);
 
     // [Safety] If in New Entry mode but somehow a product is selected without interaction, force null
@@ -223,7 +229,7 @@ export default function AdForm(props: AdFormProps) {
             <Step1BasicInfo {...props} />
             <Step2JobDetail {...props} setShowTemplateModal={props.setShowTemplateModal} />
 
-            <Step3ProductSelect {...props} isNewEntry={props.isNewEntry} />
+            <Step3ProductSelect {...props} isNewEntry={props.isNewEntry} subscriptionTier={props.subscriptionTier} />
             <Step4Extras
                 {...props}
                 isNewEntry={props.isNewEntry}
@@ -232,6 +238,7 @@ export default function AdForm(props: AdFormProps) {
                 selectedAdProduct={props.selectedAdProduct}
                 setExampleType={props.setExampleType}
                 setShowExampleModal={props.setShowExampleModal}
+                subscriptionTier={props.subscriptionTier}
             />
 
             {/* Total Amount Display (Redesigned matching Capture 1/2) */}

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Award, Zap, Gift } from 'lucide-react';
+import { Award, Zap, Gift, CheckCircle } from 'lucide-react';
 import { DETAILED_PRICING } from '../../../constants';
 
 interface Step3Props {
@@ -11,10 +11,20 @@ interface Step3Props {
     selectedAdPeriod: number;
     setSelectedAdPeriod: (v: number) => void;
     isNewEntry?: boolean;
+    // [구독 모드] 야사장 구독 플랜에서 자동 결정된 tier
+    subscriptionTier?: string | null;
 }
 
+// 구독 tier → 표시명 매핑
+const TIER_DISPLAY: Record<string, { name: string; code: string; desc: string }> = {
+    p1: { name: '프리미엄', code: 'T1 PREMIUM', desc: '최상위 노출 · 모든 기능 포함' },
+    p2: { name: '디럭스',  code: 'T2 DELUXE',  desc: '상위 노출 · 프리미엄 기능' },
+    p3: { name: '스페셜',  code: 'T3 SPECIAL',  desc: '중상위 노출 · 기본 플러스' },
+    p4: { name: '스탠다드', code: 'T4 STANDARD', desc: '기본 노출 · 필수 기능' },
+};
+
 export const Step3ProductSelect: React.FC<Step3Props> = ({
-    brand, selectedAdProduct, setSelectedAdProduct, selectedAdPeriod, setSelectedAdPeriod, isNewEntry
+    brand, selectedAdProduct, setSelectedAdProduct, selectedAdPeriod, setSelectedAdPeriod, isNewEntry, subscriptionTier
 }) => {
     // 그랜드부터 베이직까지만 필터링 (순서 보장)
     const mainProducts = DETAILED_PRICING.filter(p => p.isMain);
@@ -31,6 +41,47 @@ export const Step3ProductSelect: React.FC<Step3Props> = ({
             setSelectedAdPeriod(30);
         }
     };
+
+    // [구독 모드] subscriptionTier가 있으면 자동 적용 배너 표시
+    if (subscriptionTier && TIER_DISPLAY[subscriptionTier]) {
+        const tierInfo = TIER_DISPLAY[subscriptionTier];
+        const tierProduct = DETAILED_PRICING.find(p => p.id === subscriptionTier);
+        return (
+            <section id="myshop-step-3" className={`p-1.5 md:p-5 rounded-[32px] shadow-lg border-2 overflow-hidden ${brand.theme === 'dark' ? 'bg-gradient-to-br from-green-950 via-gray-900 to-gray-950 border-green-900/50' : 'bg-gradient-to-br from-green-50 via-white to-emerald-50 border-green-200'}`}>
+                <div className="bg-gradient-to-r from-green-600 via-emerald-500 to-green-600 text-white p-3 md:p-5 rounded-2xl mb-3 shadow-xl text-center md:text-left">
+                    <h2 className="font-black text-base md:text-xl flex flex-col md:flex-row md:items-center justify-center md:justify-start gap-1 md:gap-2">
+                        <div className="flex items-center justify-center gap-1.5">
+                            <CheckCircle size={22} className="text-white shrink-0" />
+                            <span>STEP 3: 광고 타입</span>
+                        </div>
+                        <span className="text-[12px] md:text-lg opacity-80 font-bold">(구독 플랜 자동 적용)</span>
+                    </h2>
+                    <p className="text-[11px] md:text-[13px] font-bold opacity-90 mt-2 break-keep leading-tight">
+                        야사장 구독 플랜에 따라 광고 타입이 자동으로 결정되었습니다.
+                    </p>
+                </div>
+                {/* 자동 적용된 광고 타입 카드 */}
+                <div className={`mx-0.5 p-4 md:p-6 rounded-2xl border-2 border-green-400 flex items-center gap-4 ${brand.theme === 'dark' ? 'bg-green-950/30' : 'bg-green-50'}`}>
+                    <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-green-500 flex items-center justify-center shrink-0">
+                        <CheckCircle size={28} className="text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1 flex-wrap">
+                            <span className="text-[9px] md:text-[11px] font-black bg-green-500 text-white px-2 py-0.5 rounded-full">구독 포함</span>
+                            <span className="text-[9px] md:text-[11px] font-black text-green-600">{tierInfo.code}</span>
+                        </div>
+                        <h3 className="text-[20px] md:text-[26px] font-black text-green-700 leading-tight">{tierInfo.name}</h3>
+                        <p className="text-[11px] md:text-[13px] text-gray-500 font-bold mt-0.5">{tierInfo.desc}</p>
+                        {tierProduct && (
+                            <p className="text-[10px] md:text-[12px] text-green-600 font-black mt-1.5">
+                                야사장 구독료에 포함 · 별도 광고비 없음
+                            </p>
+                        )}
+                    </div>
+                </div>
+            </section>
+        );
+    }
 
     return (
         <section id="myshop-step-3" className={`p-1.5 md:p-5 rounded-[32px] shadow-lg border-2 overflow-hidden ${brand.theme === 'dark' ? 'bg-gradient-to-br from-purple-950 via-gray-900 to-gray-950 border-purple-900/50' : 'bg-gradient-to-br from-purple-50 via-white to-fuchsia-50 border-purple-200'}`}>

@@ -363,9 +363,9 @@ const JobListView: React.FC<JobListViewProps> = ({
         <div id="latest-job-info-region" className="w-full clear-both mt-0 px-4 md:px-0">
             <div className="flex items-center justify-between mb-5 w-full">
                 <h2 className={`text-xl md:text-2xl font-black flex items-center gap-2 ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'} `}>
-                    <Flame size={24} className="text-blue-600 animate-pulse" />
+                    <Flame size={24} className="text-blue-400 animate-pulse" />
                     <span>최신 구인정보</span>
-                    <span className="bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-full font-black animate-pulse uppercase font-sans shadow-md">LIVE</span>
+                    <span className="bg-blue-800 text-white text-[10px] px-2 py-0.5 rounded-full font-black animate-pulse uppercase font-sans shadow-md">LIVE</span>
                 </h2>
                 <div className="flex items-center gap-2">
                     <button

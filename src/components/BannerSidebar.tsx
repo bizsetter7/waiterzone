@@ -256,9 +256,9 @@ export const BannerSidebar = React.memo(({ side, shops }: BannerSidebarProps) =>
 
                     <div
                         onClick={() => router.push('/customer-center?tab=inquiry')}
-                        className={`p-2 border rounded-[18px] shadow-md text-center mx-1 border-b-2 border-b-pink-500/20 active:scale-95 transition-transform cursor-pointer ${contactBoxClass}`}
+                        className={`p-2 border rounded-[18px] shadow-md text-center mx-1 border-b-2 border-b-blue-800/20 active:scale-95 transition-transform cursor-pointer ${contactBoxClass}`}
                     >
-                        <p className="text-[10px] text-blue-600 font-extrabold mb-0.5">광고입점상담</p>
+                        <p className="text-[10px] text-blue-300 font-extrabold mb-0.5">광고입점상담</p>
                         <p className={`text-[13px] font-black tracking-tighter ${brand.theme === 'dark' ? 'text-gray-100' : 'text-gray-900'}`}>{"<1:1문의>"}</p>
                     </div>
                 </div>

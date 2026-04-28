@@ -175,7 +175,7 @@ export const PaymentPopup: React.FC<PaymentPopupProps> = ({ isOpen, onClose }) =
                                     onClick={() => setSelectedPlan(plan.id)}
                                     className={`relative flex-shrink-0 px-3 py-2 rounded-xl text-xs font-black transition-all border ${
                                         selectedPlan === plan.id
-                                            ? 'bg-pink-600 text-white border-pink-600 shadow-md'
+                                            ? 'bg-blue-800 text-white border-blue-800 shadow-md'
                                             : isDark
                                                 ? 'bg-gray-800 text-gray-300 border-gray-700 hover:border-gray-500'
                                                 : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'
@@ -219,7 +219,7 @@ export const PaymentPopup: React.FC<PaymentPopupProps> = ({ isOpen, onClose }) =
                                     <div key={f.label} className="flex items-center gap-2.5">
                                         <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${
                                             f.included
-                                                ? 'bg-pink-500'
+                                                ? 'bg-blue-700'
                                                 : isDark ? 'bg-gray-700' : 'bg-gray-100'
                                         }`}>
                                             {f.included

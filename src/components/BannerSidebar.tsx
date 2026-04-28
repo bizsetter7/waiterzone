@@ -159,19 +159,9 @@ export const BannerSidebar = React.memo(({ side, shops }: BannerSidebarProps) =>
     // [Optimization] 모바일에서는 사이드바 미사용 → DB 조회 완전 차단 (불필요 리소스 제거)
     const [dbShops, setDbShops] = useState<any[]>([]);
     useEffect(() => {
-        if (isMobile) return; // 모바일 fetch 차단
-        supabase
-            .from('shops')
-            .select('*')
-            .eq('is_closed', false)
-            .in('tier', ['grand', 'p1', 'premium', 'p2'])
-            .order('updated_at', { ascending: false })
-            .then(({ data }) => {
-                if (data && data.length > 0) {
-                    // enrichAdData로 정규화 — JobDetailModal 팝업에서 필드 동기화 보장
-                    setDbShops(data.map(shop => enrichAdData(shop, [])));
-                }
-            });
+        // [임시] platform 컬럼 추가 전까지 웨이터존 자체 광고 없음 → 빈 상태
+        // TODO: platform 컬럼 추가 후 .eq('platform', 'waiterzone') 필터 활성화
+        setDbShops([]);
     }, [isMobile]);
 
     const toggleFavorite = (e: React.MouseEvent, id: string) => {

@@ -369,18 +369,18 @@ const JobListView: React.FC<JobListViewProps> = ({
                 </h2>
                 <div className="flex items-center gap-2">
                     <button
-                        className="hidden md:flex items-center px-4 py-2 rounded-xl text-xs font-bold border border-gray-200 text-gray-500 hover:bg-gray-50 transition shadow-sm"
+                        className="hidden md:flex items-center px-4 py-2 rounded-xl text-xs font-bold border border-gray-600 text-gray-300 hover:bg-gray-700 transition shadow-sm"
                     >
                         <Star size={14} className="mr-1 text-amber-400" fill="currentColor" /> 내 보관함
                     </button>
                     <button
-                        className="hidden md:flex items-center px-4 py-2 rounded-xl text-xs font-bold border border-gray-200 text-gray-500 hover:bg-gray-50 transition shadow-sm"
+                        className="hidden md:flex items-center px-4 py-2 rounded-xl text-xs font-bold border border-gray-600 text-gray-300 hover:bg-gray-700 transition shadow-sm"
                     >
                         더보기 +
                     </button>
                     <button
                         onClick={() => onAdRegister ? onAdRegister('basic') : router.push('/?page=payment')}
-                        className="px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white hover:bg-blue-700 transition shadow-md hover:shadow-lg active:scale-95"
+                        className="px-4 py-2 rounded-xl text-xs font-bold bg-blue-800 text-white hover:bg-blue-700 transition shadow-md hover:shadow-lg active:scale-95"
                     >
                         광고신청
                     </button>

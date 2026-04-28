@@ -241,7 +241,7 @@ function MainHeaderContent({ showBackButton, title: propTitle }: MainHeaderProps
                                                     </div>
                                                     <div className="flex flex-col -space-y-0.5">
                                                         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">System Master</span>
-                                                        <span className="text-xs font-black text-slate-900 group-hover:text-white">
+                                                        <span className="text-xs font-black text-slate-200 group-hover:text-white">
                                                             {isSimulated ? '어드민 복귀' : '시스템 관리자'}
                                                         </span>
                                                     </div>
@@ -255,7 +255,7 @@ function MainHeaderContent({ showBackButton, title: propTitle }: MainHeaderProps
                                                     </div>
                                                     <div className="flex flex-col -space-y-0.5">
                                                         <span className="text-[10px] font-bold text-gray-400">사장님</span>
-                                                        <span className="text-xs font-black text-gray-900">마이샵</span>
+                                                        <span className="text-xs font-black text-gray-100">마이샵</span>
                                                     </div>
                                                 </div>
                                             )}
@@ -264,19 +264,19 @@ function MainHeaderContent({ showBackButton, title: propTitle }: MainHeaderProps
                                                 <>
                                                     <div onClick={() => router.push('/my-shop?view=scrap-jobs')} className="flex items-center gap-1.5 cursor-pointer p-1.5 rounded-xl hover:bg-amber-50 border border-transparent hover:border-amber-100 transition-all group">
                                                         <Star size={16} className="text-gray-400 group-hover:text-amber-400" />
-                                                        <span className="text-xs font-black text-gray-900">채용정보</span>
+                                                        <span className="text-xs font-black text-gray-100">채용정보</span>
                                                     </div>
                                                     <div onClick={() => router.push('/my-shop?view=member-info')} className="flex items-center gap-1.5 cursor-pointer p-1.5 rounded-xl hover:bg-blue-50 border border-transparent hover:border-blue-100 transition-all group">
                                                         <div className="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 group-hover:scale-105 transition-transform">
                                                             <span className="text-[10px] font-black">P</span>
                                                         </div>
-                                                        <span className="text-xs font-black text-gray-900">마이페이지</span>
+                                                        <span className="text-xs font-black text-gray-100">마이페이지</span>
                                                     </div>
                                                 </>
                                             )}
 
                                             <div className="w-px h-3 bg-gray-300" />
-                                            <button onClick={handleLogout} className="text-xs font-bold text-gray-500 hover:text-red-600">로그아웃</button>
+                                            <button onClick={handleLogout} className="text-xs font-bold text-gray-300 hover:text-red-400">로그아웃</button>
                                         </div>
                                     )}
                                 </>

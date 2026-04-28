@@ -362,19 +362,19 @@ const JobListView: React.FC<JobListViewProps> = ({
     return (
         <div id="latest-job-info-region" className="w-full clear-both mt-0 px-4 md:px-0">
             <div className="flex items-center justify-between mb-5 w-full">
-                <h2 className={`text-xl md:text-2xl font-black flex items-center gap-2 ${brand.theme === 'dark' ? 'text-white' : 'text-gray-900'} `}>
+                <h2 className="text-xl md:text-2xl font-black flex items-center gap-2 text-gray-900">
                     <Flame size={24} className="text-blue-400 animate-pulse" />
                     <span>최신 구인정보</span>
                     <span className="bg-blue-800 text-white text-[10px] px-2 py-0.5 rounded-full font-black animate-pulse uppercase font-sans shadow-md">LIVE</span>
                 </h2>
                 <div className="flex items-center gap-2">
                     <button
-                        className="hidden md:flex items-center px-4 py-2 rounded-xl text-xs font-bold border border-gray-600 text-gray-300 hover:bg-gray-700 transition shadow-sm"
+                        className="hidden md:flex items-center px-4 py-2 rounded-xl text-xs font-bold border border-gray-300 text-gray-600 hover:bg-gray-50 transition shadow-sm"
                     >
                         <Star size={14} className="mr-1 text-amber-400" fill="currentColor" /> 내 보관함
                     </button>
                     <button
-                        className="hidden md:flex items-center px-4 py-2 rounded-xl text-xs font-bold border border-gray-600 text-gray-300 hover:bg-gray-700 transition shadow-sm"
+                        className="hidden md:flex items-center px-4 py-2 rounded-xl text-xs font-bold border border-gray-300 text-gray-600 hover:bg-gray-50 transition shadow-sm"
                     >
                         더보기 +
                     </button>

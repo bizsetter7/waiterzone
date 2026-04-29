@@ -96,6 +96,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                     .eq('platform', 'waiterzone')
                     .maybeSingle();
 
+                // [Migration 10, 2026-04-30] user_jumps 통합 잔액 (subscription + package + auto)
+                const { data: userJump } = await supabase
+                    .from('user_jumps')
+                    .select('subscription_balance, package_balance, auto_remaining_today')
+                    .eq('user_id', authUser.id)
+                    .maybeSingle();
+                const totalJumpBalance =
+                    (userJump?.subscription_balance ?? 0) +
+                    (userJump?.package_balance ?? 0) +
+                    (userJump?.auto_remaining_today ?? 0);
+
                 // 신규 사용자 또는 다른 사용자 로그인 시 이전 프로필 이미지 캐시 완전 초기화
                 // cachedUserId 없음(= 처음 로그인 or 신규가입) 포함하여 항상 초기화
                 if (typeof window !== 'undefined') {
@@ -129,7 +140,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                         nickname: profile?.nickname || profile?.full_name || '닉네임',
                         credit: profile?.credit_balance || 0,
                         points: ppRow?.balance || 0, // [Phase 5] platform_points 테이블에서 로드
-                        jump_balance: profile?.jump_balance || 0,
+                        jump_balance: totalJumpBalance, // user_jumps 통합 (Migration 10)
                         isVerifiedPartnerVerified: profile ? (liveRole === 'corporate' ? !!profile.business_verified : !!profile.is_adult_verified) : false,
                         email: authUser.email
                     };

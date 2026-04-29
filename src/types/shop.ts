@@ -124,4 +124,6 @@ export interface Shop {
     banner_image_url?: string | null;
     banner_media_type?: 'image' | 'gif' | 'video';
     banner_status?: 'pending_banner' | 'approved' | 'rejected' | null;
+    // 점프 시스템 (migration 10) — "🚀 방금 점프" 배지 (5분 윈도우)
+    last_jumped_at?: string | null;
 }

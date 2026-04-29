@@ -87,6 +87,11 @@ export function middleware(request: NextRequest) {
     const ua = (request.headers.get('user-agent') || '').toLowerCase();
     const ip = getClientIp(request);
 
+    // [최우선] Cron 경로는 봇 차단/Rate Limit 우회 — CRON_SECRET 검증으로 보안 보장
+    if (pathname.startsWith('/api/cron/')) {
+        return NextResponse.next();
+    }
+
     // 0. 도메인 정규화 중단 (Vercel 도메인 설정과 충돌 방지)
     // 인프라 설정을 따르도록 리다이렉트 로직을 제거합니다.
 

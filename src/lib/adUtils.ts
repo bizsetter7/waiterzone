@@ -85,7 +85,7 @@ export function enrichAdData(ad: any, userData: any[] = []): Shop {
         },
         // 상세 팝업 바인딩용 필드 추가
         // [Fix] options.businessAddress 폴백 추가 — 등록 시 JSONB에 저장된 주소 우선 활용
-        businessAddress: ad?.business_address || profile?.business_address || ad?.businessAddress || ad?.options?.businessAddress || '',
+        businessAddress: ad?.business_address || profile?.business_address || ad?.businessAddress || ad?.options?.businessAddress || ad?.options?.address || '',
         managerName: ad?.manager_name || profile?.full_name || ad?.managerName || '',
         managerPhone: ad?.manager_phone || profile?.phone || ad?.managerPhone || ad?.phone || '',
         // 어드민 회원ID 표시용 — username 우선, 없으면 이메일 앞자리, 없으면 빈값
@@ -149,6 +149,6 @@ export function anyAdToShop(ad: any): Shop {
         },
         managerName: ad?.managerName || ad?.manager_name || opt?.managerName || '',
         managerPhone: ad?.managerPhone || ad?.manager_phone || opt?.managerPhone || ad?.phone || '',
-        businessAddress: ad?.businessAddress || ad?.business_address || opt?.businessAddress || '',
+        businessAddress: ad?.businessAddress || ad?.business_address || opt?.businessAddress || opt?.address || '',
     } as Shop;
 }

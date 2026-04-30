@@ -152,7 +152,9 @@ export function InnerSidebarCarousel({ onAdSelect }: InnerSidebarCarouselProps) 
                     const innerAds = data.filter((s: any) => {
                         const pos = s.banner_position;
                         const bStatus = s.banner_status;
-                        if (pos === null || pos === undefined) return true; // migration 06 이전 호환
+                        // P5 야사장 게시 shop은 내부사이드바 자동 노출 금지 (배너 별도 신청 필요)
+                        if (bStatus === 'none') return false;
+                        if (pos === null || pos === undefined) return true; // migration 06 이전 P2 자체 등록 shop
                         return pos === 'inner' && (bStatus === 'approved' || bStatus === null);
                     });
                     // normalizeAd로 camelCase/snake_case 불일치 완전 해소

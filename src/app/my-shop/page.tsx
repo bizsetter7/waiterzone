@@ -241,10 +241,15 @@ function MyShopContent() {
                         formState.setShopName('');
                         setBizShopName('');
                     }
-                    // 사업장 주소 로드
+                    // 사업장 주소 로드 + 근무지역 자동 반영
                     const addr = (profile as any).business_address || '';
                     const detail = (profile as any).business_address_detail || '';
-                    if (addr) setBizAddress(detail ? `${addr} ${detail}` : addr);
+                    if (addr) {
+                        setBizAddress(detail ? `${addr} ${detail}` : addr);
+                        const parts = addr.trim().split(/\s+/);
+                        if (parts[0] && !formState.regionCity) formState.setRegionCity(parts[0]);
+                        if (parts[1] && !formState.regionGu)   formState.setRegionGu(parts[1]);
+                    }
                 }
             } finally {
                 setBizDataLoaded(true); // [Fix] 성공/실패 무관하게 로드 완료 표시
@@ -730,6 +735,9 @@ function MyShopContent() {
                 finalPayType = '협의';
             }
 
+            const isYasajangAd = !!(originalAd?.options?.yasajang_business_id);
+            const finalStatus = (isYasajangAd && originalAd?.status === 'active') ? 'active' : 'pending';
+
             const adData: any = {
                 // [Standard Root Columns] - V4 DB 컬럼명 100% 준수
                 name: formState.shopName,
@@ -756,7 +764,7 @@ function MyShopContent() {
                 ad_price: effectiveTotalAmount,
                 ad_duration: Number(formState.selectedAdPeriod || 30),
                 updated_at: new Date().toISOString(),
-                status: 'pending',
+                status: finalStatus,
                 user_id: authUser.id,
                 deadline: finalDeadline,
                 product_type: finalProductType,
@@ -771,7 +779,7 @@ function MyShopContent() {
                     payAmount: parseInt(String(formState.payAmount).replace(/,/g, '') || '0'),
                     product_type: finalProductType,
                     product_period: originalAd ? (originalAd.options?.product_period || originalAd.productPeriod) : formState.selectedAdPeriod,
-                    status: 'pending',
+                    status: finalStatus,
                     deadline: finalDeadline,
                     keywords: formState.selectedKeywords,
                     icon: formState.selectedIcon,

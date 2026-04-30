@@ -50,7 +50,7 @@ export const Step1BasicInfo: React.FC<Step1Props> = ({
         const loadBizProfile = async () => {
             const { data } = await supabase
                 .from('profiles')
-                .select('business_name, business_number, business_type, business_address, manager_phone, manager_kakao, manager_line, manager_telegram, business_verified, business_verify_status, full_name')
+                .select('business_name, business_number, business_type, business_address, business_address_detail, manager_phone, manager_kakao, manager_line, manager_telegram, business_verified, business_verify_status, full_name')
                 .eq('id', user.id)
                 .single();
 
@@ -62,7 +62,12 @@ export const Step1BasicInfo: React.FC<Step1Props> = ({
                 // [Fix] 상호명은 프로필 값으로 항상 덮어쓰기
                 if (p.business_name) setShopName(p.business_name);
                 // [Fix] 업종(business_type)은 Step1에 표시만 (bizProfile에 보관) — industryMain(공고 직종)과 분리
-                if (!shopAddress && p.business_address && setShopAddress) setShopAddress(p.business_address);
+                if (!shopAddress && p.business_address && setShopAddress) {
+                    const fullAddr = p.business_address_detail
+                        ? `${p.business_address} ${p.business_address_detail}`
+                        : p.business_address;
+                    setShopAddress(fullAddr);
+                }
                 if (!managerName && p.full_name) setManagerName(p.full_name);
                 if (!managerPhone && p.manager_phone) setManagerPhone(p.manager_phone);
                 if ((!messengers.kakao && !messengers.line && !messengers.telegram) &&

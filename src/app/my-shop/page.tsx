@@ -210,6 +210,8 @@ function MyShopContent() {
     const [bizAddress, setBizAddress] = React.useState('');
     // [Fix] bizShopName은 formState.resetAdStates()에 영향 안 받는 별도 state (상호명 깜빡임 방지)
     const [bizShopName, setBizShopName] = React.useState('');
+    const [profileRegionCity, setProfileRegionCity] = React.useState('');
+    const [profileRegionGu, setProfileRegionGu] = React.useState('');
 
     useEffect(() => {
         if (!authUser?.id || authUser.id === 'guest' || authUser.id.startsWith('mock_')) {
@@ -247,6 +249,8 @@ function MyShopContent() {
                     if (addr) {
                         setBizAddress(detail ? `${addr} ${detail}` : addr);
                         const parts = addr.trim().split(/\s+/);
+                        if (parts[0]) setProfileRegionCity(parts[0]);
+                        if (parts[1]) setProfileRegionGu(parts[1]);
                         if (parts[0] && !formState.regionCity) formState.setRegionCity(parts[0]);
                         if (parts[1] && !formState.regionGu)   formState.setRegionGu(parts[1]);
                     }
@@ -259,6 +263,17 @@ function MyShopContent() {
         loadShopName();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [authUser?.id, authUserType]);
+
+    // [Fix] resetAdStates() 후 근무지역 복원 — view=form 진입 시 profileRegion 값으로 세팅
+    useEffect(() => {
+        if (view === 'form' && profileRegionCity && !formState.regionCity) {
+            formState.setRegionCity(profileRegionCity);
+        }
+        if (view === 'form' && profileRegionGu && !formState.regionGu) {
+            formState.setRegionGu(profileRegionGu);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [view, profileRegionCity, profileRegionGu]);
 
     useEffect(() => {
         if (!authUser?.id || authUser.id === 'guest') return;

@@ -249,9 +249,15 @@ function MyShopContent() {
                     if (addr) {
                         setBizAddress(detail ? `${addr} ${detail}` : addr);
                         const parts = addr.trim().split(/\s+/);
-                        if (parts[0]) setProfileRegionCity(parts[0]);
+                        const REGION_ALIAS: Record<string, string> = {
+                            '경기': '경기도', '강원': '강원도', '경남': '경상남도', '경북': '경상북도',
+                            '전남': '전라남도', '전북': '전라북도', '충남': '충청남도', '충북': '충청북도',
+                            '제주': '제주도',
+                        };
+                        const city = REGION_ALIAS[parts[0]] || parts[0] || '';
+                        if (city) setProfileRegionCity(city);
                         if (parts[1]) setProfileRegionGu(parts[1]);
-                        if (parts[0] && !formState.regionCity) formState.setRegionCity(parts[0]);
+                        if (city && !formState.regionCity) formState.setRegionCity(city);
                         if (parts[1] && !formState.regionGu)   formState.setRegionGu(parts[1]);
                     }
                 }

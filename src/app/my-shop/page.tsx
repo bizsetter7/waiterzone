@@ -596,6 +596,8 @@ function MyShopContent() {
             setEditingAdId(null);
             editingAdIdRef.current = null;
             formState.resetAdStates();
+            if (profileRegionCity) formState.setRegionCity(profileRegionCity);
+            if (profileRegionGu) formState.setRegionGu(profileRegionGu);
             if (bizVerified && bizShopName) formState.setShopName(bizShopName);
         };
 
@@ -1264,6 +1266,9 @@ function MyShopContent() {
                     onConfirm={() => {
                         if (isNewEntry) {
                             formState.resetAdStates();
+                            if (profileRegionCity) formState.setRegionCity(profileRegionCity);
+                            if (profileRegionGu) formState.setRegionGu(profileRegionGu);
+                            if (bizVerified && bizShopName) formState.setShopName(bizShopName);
                             // [구독 모드] reset 후 구독 플랜 tier 재적용 (useEffect 충돌 방지)
                             if (subscriptionTier) {
                                 formState.setSelectedAdProduct(subscriptionTier);

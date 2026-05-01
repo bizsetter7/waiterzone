@@ -30,12 +30,12 @@ const PLANS = [
         id: 'basic',
         name: '베이직',
         price: 22000,
-        description: '첫 시작을 위한 기본 플랜',
-        platforms: ['밤길', '웨이터존'],
+        description: '밤길 기본 노출 (웨이터존 미포함)',
+        platforms: ['밤길'],
         waiterzone: false,
         features: [
             '밤길 지도 기본 핀 노출',
-            '웨이터존 리스트 노출',
+            '※ 웨이터존 노출은 스탠다드 이상부터',
         ],
         icon: <FileText className="text-gray-400" />,
         highlight: false,
@@ -44,13 +44,13 @@ const PLANS = [
         id: 'standard',
         name: '스탠다드',
         price: 66000,
-        description: '웨이터존 또는 선수존 선택 노출',
-        platforms: ['밤길', '웨이터존 또는 선수존'],
+        description: '야사장에서 웨이터존 선택 시 일반 리스트 노출',
+        platforms: ['밤길', '웨이터존'],
         waiterzone: true,
         features: [
             '밤길 지도 기본 핀 노출',
-            '웨이터존 업체정보 리스트 노출',
-            '선수존 리스트 노출 (택 1)',
+            '웨이터존 일반 리스트 노출',
+            '※ 야사장에서 코코알바·선수존 중 1개 선택도 가능',
         ],
         icon: <Star className="text-blue-400" />,
         highlight: false,
@@ -59,14 +59,13 @@ const PLANS = [
         id: 'special',
         name: '스페셜',
         price: 88000,
-        description: '3개 플랫폼 동시 노출',
-        platforms: ['밤길', '웨이터존', '웨이터존 또는 선수존'],
+        description: '웨이터존 업체정보 강화 노출',
+        platforms: ['밤길', '웨이터존'],
         waiterzone: true,
         features: [
             '밤길 지도 기본 핀 노출',
-            '웨이터존 리스트 노출',
-            '웨이터존 업체정보 리스트 노출',
-            '선수존 리스트 노출 (택 1)',
+            '웨이터존 일반 리스트 노출',
+            '웨이터존 업체정보 강화 노출',
         ],
         icon: <Zap className="text-[#1e3a5f]" />,
         highlight: true,
@@ -75,12 +74,13 @@ const PLANS = [
         id: 'deluxe',
         name: '디럭스',
         price: 199000,
-        description: '강조 효과로 경쟁 업소 압도',
-        platforms: ['밤길', '웨이터존', '웨이터존 또는 선수존'],
+        description: '강조 효과 + PC 사이드바 노출',
+        platforms: ['밤길', '웨이터존'],
         waiterzone: true,
         features: [
             '스페셜의 모든 기능 포함',
             '인기 업소 아이콘 강조 표시',
+            'PC 사이드바 노출',
             '밤길 대형 핀 노출',
         ],
         icon: <Crown className="text-purple-400" />,
@@ -91,13 +91,12 @@ const PLANS = [
         name: '프리미엄',
         price: 399000,
         description: 'PC·모바일 상위노출 최강 패키지',
-        platforms: ['밤길', '웨이터존', '웨이터존 또는 선수존'],
+        platforms: ['밤길', '웨이터존'],
         waiterzone: true,
         features: [
-            '스페셜의 모든 기능 포함',
+            '디럭스의 모든 기능 포함',
             '웨이터존 프리미엄 채용 섹션 노출',
             'PC·모바일 최상단 고정 노출',
-            '인기 업소 아이콘 강조 표시',
         ],
         icon: <Sparkles className="text-amber-400" />,
         highlight: false,
@@ -297,11 +296,11 @@ export function TabAdGuide({ onTabChange }: TabAdGuideProps) {
                             {[
                                 { label: '밤길 기본 핀', plans: ['basic', 'standard', 'special', 'deluxe', 'premium'] },
                                 { label: '밤길 대형 핀', plans: ['deluxe', 'premium'] },
-                                { label: '웨이터존 리스트', plans: ['basic', 'special', 'deluxe', 'premium'] },
-                                { label: '웨이터존 업체정보', plans: ['standard', 'special', 'deluxe'] },
-                                { label: '웨이터존 프리미엄 채용', plans: ['premium'] },
-                                { label: '선수존 리스트', plans: ['standard', 'special', 'deluxe', 'premium'] },
+                                { label: '웨이터존 일반 리스트', plans: ['standard', 'special', 'deluxe', 'premium'] },
+                                { label: '웨이터존 업체정보 강화', plans: ['special', 'deluxe', 'premium'] },
+                                { label: 'PC 사이드바 노출', plans: ['deluxe', 'premium'] },
                                 { label: '강조 아이콘', plans: ['deluxe', 'premium'] },
+                                { label: '웨이터존 프리미엄 채용', plans: ['premium'] },
                                 { label: '최상단 고정 노출', plans: ['premium'] },
                             ].map((row) => (
                                 <tr key={row.label} className="hover:bg-blue-50/10 transition-colors">
@@ -320,8 +319,62 @@ export function TabAdGuide({ onTabChange }: TabAdGuideProps) {
                     </table>
                 </div>
                 <p className={`text-[11px] font-bold ${dark ? 'text-gray-500' : 'text-gray-400'}`}>
-                    ※ 웨이터존와 선수존은 플랜당 1개 선택. 스탠다드·스페셜·디럭스는 업체정보 리스트, 프리미엄은 프리미엄 채용 섹션에 노출됩니다.
+                    ※ 야사장 가입 후 코코알바·웨이터존·선수존 중 1개를 선택해 노출됩니다. 웨이터존을 선택하면 위 표대로 노출되며, 다른 플랫폼 선택 시에는 해당 플랫폼 기준으로 노출됩니다.
                 </p>
+            </div>
+
+            {/* 광고 점프(JUMP) 시스템 안내 */}
+            <div className={`rounded-[32px] md:rounded-[40px] border p-5 md:p-8 shadow-sm space-y-6 ${dark ? 'bg-gray-800 border-gray-800' : 'bg-white border-gray-100'}`}>
+                <div className="flex items-center gap-3">
+                    <div className="w-2 h-8 bg-[#1e3a5f] rounded-full" />
+                    <h3 className={`text-2xl font-black tracking-tighter ${dark ? 'text-white' : 'text-gray-900'}`}>광고 점프(JUMP) 시스템</h3>
+                </div>
+                <p className={`text-[13px] leading-relaxed ${dark ? 'text-gray-300' : 'text-gray-600'}`}>
+                    점프는 내 광고를 리스트 최상단으로 끌어올리는 기능입니다. 매일 자정(KST)마다 <b>점프 +1회가 자동 적립</b>되며, 별도 충전 없이 누적된 잔액으로 사용할 수 있습니다.
+                </p>
+
+                {/* 구독 시 무료 점프 즉시 지급 */}
+                <div className="space-y-2">
+                    <h4 className={`text-[14px] font-black ${dark ? 'text-white' : 'text-gray-900'}`}>① 구독 활성화 시 무료 점프 즉시 지급</h4>
+                    <div className="grid grid-cols-3 gap-2">
+                        <div className={`rounded-xl p-3 text-center ${dark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                            <div className="text-[11px] text-gray-400 font-bold mb-1">스페셜</div>
+                            <div className={`text-[20px] font-black ${dark ? 'text-white' : 'text-gray-900'}`}>10회</div>
+                        </div>
+                        <div className={`rounded-xl p-3 text-center ${dark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                            <div className="text-[11px] text-gray-400 font-bold mb-1">디럭스</div>
+                            <div className={`text-[20px] font-black ${dark ? 'text-white' : 'text-gray-900'}`}>30회</div>
+                        </div>
+                        <div className={`rounded-xl p-3 text-center ${dark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                            <div className="text-[11px] text-gray-400 font-bold mb-1">프리미엄</div>
+                            <div className={`text-[20px] font-black ${dark ? 'text-white' : 'text-gray-900'}`}>30회</div>
+                        </div>
+                    </div>
+                    <p className="text-[11px] text-gray-400 font-bold">※ 베이직·스탠다드는 무료 점프 미지급. 자정 +1회 자동 적립만 받습니다.</p>
+                </div>
+
+                {/* 매일 자정 자동 적립 */}
+                <div className={`rounded-2xl p-4 ${dark ? 'bg-gray-700/50' : 'bg-blue-50'}`}>
+                    <div className="flex items-start gap-3">
+                        <Zap size={20} className="text-[#1e3a5f] shrink-0 mt-0.5" />
+                        <div>
+                            <h4 className={`text-[14px] font-black mb-1 ${dark ? 'text-white' : 'text-gray-900'}`}>② 매일 자정 +1회 자동 적립</h4>
+                            <p className={`text-[12px] leading-relaxed ${dark ? 'text-gray-300' : 'text-gray-600'}`}>
+                                구독 활성(active) 회원에게 자정(KST)마다 점프 1회가 자동 적립됩니다. 사용하지 않으면 다음 결제일까지 누적되며, 결제일 갱신 시 30일 단위로 리셋됩니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* 사용법 */}
+                <div className="space-y-2">
+                    <h4 className={`text-[14px] font-black ${dark ? 'text-white' : 'text-gray-900'}`}>③ 사용 방법</h4>
+                    <ol className={`space-y-1.5 text-[13px] ${dark ? 'text-gray-300' : 'text-gray-700'}`}>
+                        <li className="flex gap-2"><span className="text-[#1e3a5f] font-black shrink-0">1.</span><span>마이샵에서 점프 가능 광고를 확인합니다.</span></li>
+                        <li className="flex gap-2"><span className="text-[#1e3a5f] font-black shrink-0">2.</span><span>「점프하기」 버튼을 클릭합니다.</span></li>
+                        <li className="flex gap-2"><span className="text-[#1e3a5f] font-black shrink-0">3.</span><span>선택 광고가 즉시 동일 등급 리스트 최상단으로 이동합니다.</span></li>
+                    </ol>
+                </div>
             </div>
 
             {/* 노출 상세 가이드 아코디언 */}

@@ -66,7 +66,7 @@ const PLANS = [
             '밤길 지도 기본 핀 노출',
             '웨이터존 일반 리스트 노출',
             '웨이터존 업체정보 강화 노출',
-            '⚡ 광고 점프: 무료 10회 + 자동 3회/일',
+            '광고 점프:\n무료 10회 + 자동 3회/일',
         ],
         icon: <Zap className="text-[#1e3a5f]" />,
         highlight: true,
@@ -83,7 +83,7 @@ const PLANS = [
             '인기 업소 아이콘 강조 표시',
             'PC 사이드바 노출',
             '밤길 대형 핀 노출',
-            '⚡ 광고 점프: 무료 30회 + 자동 6회/일',
+            '광고 점프:\n무료 30회 + 자동 6회/일',
         ],
         icon: <Crown className="text-purple-400" />,
         highlight: false,
@@ -99,7 +99,7 @@ const PLANS = [
             '디럭스의 모든 기능 포함',
             '웨이터존 프리미엄 채용 섹션 노출',
             'PC·모바일 최상단 고정 노출',
-            '⚡ 광고 점프: 무료 30회 + 매일 +1회 추가 + 자동 8회/일',
+            '광고 점프:\n무료 30회 +\n매일 +1회 추가 + 자동 8회/일',
         ],
         icon: <Sparkles className="text-amber-400" />,
         highlight: false,
@@ -180,7 +180,7 @@ export function TabAdGuide({ onTabChange }: TabAdGuideProps) {
                             {plan.features.map((f, i) => (
                                 <p key={i} className={`text-[11px] flex items-start gap-2 font-bold ${dark ? 'text-gray-300' : 'text-gray-500'}`}>
                                     <CheckCircle2 size={13} className="text-[#1e3a5f] shrink-0 mt-0.5" />
-                                    <span className="leading-tight break-keep">{f}</span>
+                                    <span className="leading-tight break-keep whitespace-pre-line">{f}</span>
                                 </p>
                             ))}
                         </div>

@@ -96,16 +96,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                     .eq('platform', 'waiterzone')
                     .maybeSingle();
 
-                // [Migration 10, 2026-04-30] user_jumps 통합 잔액 (subscription + package + auto)
+                // 점프 잔액 표시 — subscription_balance 단독 사용
+                // 자정 cron(daily-jump-tasks)이 subscription_balance +1/일 적립
                 const { data: userJump } = await supabase
                     .from('user_jumps')
-                    .select('subscription_balance, package_balance, auto_remaining_today')
+                    .select('subscription_balance')
                     .eq('user_id', authUser.id)
                     .maybeSingle();
-                const totalJumpBalance =
-                    (userJump?.subscription_balance ?? 0) +
-                    (userJump?.package_balance ?? 0) +
-                    (userJump?.auto_remaining_today ?? 0);
+                const totalJumpBalance = userJump?.subscription_balance ?? 0;
 
                 // 신규 사용자 또는 다른 사용자 로그인 시 이전 프로필 이미지 캐시 완전 초기화
                 // cachedUserId 없음(= 처음 로그인 or 신규가입) 포함하여 항상 초기화

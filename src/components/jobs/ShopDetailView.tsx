@@ -341,11 +341,11 @@ export default function ShopDetailView({
         </div>
 
         {/* 복지혜택 */}
-        {(shop.options?.icons || []).length > 0 && (
+        {(shop.options?.icons || []).filter((item: string) => !item.endsWith('합니다')).length > 0 && (
           <div className="mx-4 mb-4 bg-white rounded-2xl border border-gray-100 p-4">
             <h3 className="text-[14px] font-black text-gray-900 mb-3">복지혜택</h3>
             <div className="flex flex-wrap gap-2">
-              {(shop.options?.icons || []).map((item: string, i: number) => (
+              {(shop.options?.icons || []).filter((item: string) => !item.endsWith('합니다')).map((item: string, i: number) => (
                 <div key={i} className="flex items-center gap-1.5 px-3 py-2 bg-blue-50 rounded-xl border border-blue-100">
                   <Gift size={12} className="text-blue-500 shrink-0" />
                   <span className="text-[11px] font-black text-blue-700">{item}</span>

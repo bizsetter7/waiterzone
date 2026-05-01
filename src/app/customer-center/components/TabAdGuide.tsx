@@ -66,6 +66,7 @@ const PLANS = [
             '밤길 지도 기본 핀 노출',
             '웨이터존 일반 리스트 노출',
             '웨이터존 업체정보 강화 노출',
+            '⚡ 광고 점프: 무료 10회 + 자동 3회/일',
         ],
         icon: <Zap className="text-[#1e3a5f]" />,
         highlight: true,
@@ -82,6 +83,7 @@ const PLANS = [
             '인기 업소 아이콘 강조 표시',
             'PC 사이드바 노출',
             '밤길 대형 핀 노출',
+            '⚡ 광고 점프: 무료 30회 + 자동 6회/일',
         ],
         icon: <Crown className="text-purple-400" />,
         highlight: false,
@@ -97,6 +99,7 @@ const PLANS = [
             '디럭스의 모든 기능 포함',
             '웨이터존 프리미엄 채용 섹션 노출',
             'PC·모바일 최상단 고정 노출',
+            '⚡ 광고 점프: 무료 30회 + 매일 +1회 추가 + 자동 8회/일',
         ],
         icon: <Sparkles className="text-amber-400" />,
         highlight: false,
@@ -353,22 +356,44 @@ export function TabAdGuide({ onTabChange }: TabAdGuideProps) {
                     <p className="text-[11px] text-gray-400 font-bold">※ 베이직·스탠다드는 무료 점프 미지급. 자정 +1회 자동 적립만 받습니다.</p>
                 </div>
 
-                {/* 매일 자정 자동 적립 */}
+                {/* 프리미엄 매일 +1 자동 적립 */}
                 <div className={`rounded-2xl p-4 ${dark ? 'bg-gray-700/50' : 'bg-blue-50'}`}>
                     <div className="flex items-start gap-3">
                         <Zap size={20} className="text-[#1e3a5f] shrink-0 mt-0.5" />
                         <div>
-                            <h4 className={`text-[14px] font-black mb-1 ${dark ? 'text-white' : 'text-gray-900'}`}>② 매일 자정 +1회 자동 적립</h4>
+                            <h4 className={`text-[14px] font-black mb-1 ${dark ? 'text-white' : 'text-gray-900'}`}>② 프리미엄 매일 +1회 추가 적립</h4>
                             <p className={`text-[12px] leading-relaxed ${dark ? 'text-gray-300' : 'text-gray-600'}`}>
-                                구독 활성(active) 회원에게 자정(KST)마다 점프 1회가 자동 적립됩니다. 사용하지 않으면 다음 결제일까지 누적되며, 결제일 갱신 시 30일 단위로 리셋됩니다.
+                                <b>프리미엄 구독자</b>에게만 매일 자정(KST) 점프 1회가 자동으로 추가 적립됩니다. 다른 플랜(스페셜·디럭스)은 결제일 기준 30일 단위로 무료 점프 횟수가 리셋됩니다.
                             </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* 자동 점프 (cron 매일 set) */}
+                <div className="space-y-2">
+                    <h4 className={`text-[14px] font-black ${dark ? 'text-white' : 'text-gray-900'}`}>③ 자동 점프 (매일 자정 자동 실행)</h4>
+                    <p className={`text-[12px] leading-relaxed ${dark ? 'text-gray-300' : 'text-gray-600'}`}>
+                        자동 점프를 활성화하면 매일 자정 광고가 자동으로 리스트 최상단으로 이동합니다. 플랜별 1일 자동 점프 횟수가 다릅니다.
+                    </p>
+                    <div className="grid grid-cols-3 gap-2">
+                        <div className={`rounded-xl p-3 text-center ${dark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                            <div className="text-[11px] text-gray-400 font-bold mb-1">스페셜</div>
+                            <div className={`text-[18px] font-black ${dark ? 'text-white' : 'text-gray-900'}`}>3회<span className="text-[11px] font-bold text-gray-400">/일</span></div>
+                        </div>
+                        <div className={`rounded-xl p-3 text-center ${dark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                            <div className="text-[11px] text-gray-400 font-bold mb-1">디럭스</div>
+                            <div className={`text-[18px] font-black ${dark ? 'text-white' : 'text-gray-900'}`}>6회<span className="text-[11px] font-bold text-gray-400">/일</span></div>
+                        </div>
+                        <div className={`rounded-xl p-3 text-center ${dark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                            <div className="text-[11px] text-gray-400 font-bold mb-1">프리미엄</div>
+                            <div className={`text-[18px] font-black ${dark ? 'text-white' : 'text-gray-900'}`}>8회<span className="text-[11px] font-bold text-gray-400">/일</span></div>
                         </div>
                     </div>
                 </div>
 
                 {/* 사용법 */}
                 <div className="space-y-2">
-                    <h4 className={`text-[14px] font-black ${dark ? 'text-white' : 'text-gray-900'}`}>③ 사용 방법</h4>
+                    <h4 className={`text-[14px] font-black ${dark ? 'text-white' : 'text-gray-900'}`}>④ 수동 점프 사용 방법</h4>
                     <ol className={`space-y-1.5 text-[13px] ${dark ? 'text-gray-300' : 'text-gray-700'}`}>
                         <li className="flex gap-2"><span className="text-[#1e3a5f] font-black shrink-0">1.</span><span>마이샵에서 점프 가능 광고를 확인합니다.</span></li>
                         <li className="flex gap-2"><span className="text-[#1e3a5f] font-black shrink-0">2.</span><span>「점프하기」 버튼을 클릭합니다.</span></li>

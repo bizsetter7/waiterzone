@@ -94,6 +94,7 @@ export default function ShopDetailView({
     is_verified: boolean;
     manager_name: string | null;
     manager_phone: string | null;
+    manager_role: string | null;
     name: string | null;
     room_count: number | null;
     floor_area: number | null;
@@ -109,7 +110,7 @@ export default function ShopDetailView({
     if (!shop.user_id) return;
     supabase
       .from('businesses')
-      .select('waiterzone_tier, verified_at, is_verified, manager_name, manager_phone, name, room_count, floor_area, opened_at, license_url, description')
+      .select('waiterzone_tier, verified_at, is_verified, manager_name, manager_phone, manager_role, name, room_count, floor_area, opened_at, license_url, description')
       .eq('owner_id', shop.user_id)
       .single()
       .then(({ data }) => { if (data) setBizInfo(data as any); });
@@ -165,6 +166,7 @@ export default function ShopDetailView({
   // 파생 값
   const managerName = bizInfo?.manager_name || (shop as any).manager_name || shop.managerName || '';
   const managerPhone = bizInfo?.manager_phone || (shop as any).manager_phone || shop.phone || '';
+  const managerRole = bizInfo?.manager_role || '사장';
   const verifiedAt = formatDate(bizInfo?.verified_at);
   const tier = bizInfo?.waiterzone_tier || shop.tier || null;
   const openedAt = formatDate(bizInfo?.opened_at);
@@ -270,7 +272,7 @@ export default function ShopDetailView({
           <h2 className="text-xl font-black text-gray-900 break-keep mb-2 leading-tight">{shop.name}</h2>
           {(managerName || managerPhone) && (
             <div className="flex items-center gap-2 flex-wrap">
-              {managerName && <span className="text-[13px] text-gray-600 font-medium">{maskName(managerName)} 사장</span>}
+              {managerName && <span className="text-[13px] text-gray-600 font-medium">{maskName(managerName)} {managerRole}</span>}
               {managerPhone && (
                 <>
                   <span className="text-[13px] text-gray-500">{formatPhone(managerPhone)}</span>
@@ -305,6 +307,28 @@ export default function ShopDetailView({
           <div className="text-[10px] text-gray-500 mt-1">협의 가능</div>
         </div>
 
+        {/* 안심하고 지원하세요 */}
+        {bizInfo?.is_verified && (
+          <div className="mx-4 mb-4 bg-emerald-50 rounded-2xl border border-emerald-100 p-4">
+            <h3 className="text-[13px] font-black text-emerald-800 mb-2.5">✅ 안심하고 지원하세요!</h3>
+            <div className="flex flex-wrap gap-2">
+              <span className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-emerald-200 rounded-full text-[11px] font-black text-emerald-700">
+                <CheckCircle2 size={11} className="text-emerald-500" />
+                사업자 인증 완료
+              </span>
+              <span className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-emerald-200 rounded-full text-[11px] font-black text-emerald-700">
+                <CheckCircle2 size={11} className="text-emerald-500" />
+                영업허가증 확인
+              </span>
+              {verifiedAt && (
+                <span className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-emerald-200 rounded-full text-[11px] font-bold text-emerald-600">
+                  {verifiedAt} 인증
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* 업체 기본정보 2열 */}
         <div className="mx-4 mb-4 grid grid-cols-2 gap-2">
           {[
@@ -331,6 +355,8 @@ export default function ShopDetailView({
               { label: '모집 나이', value: ageLabel },
               { label: '근무 시간', value: shop.workTime || '협의' },
               { label: '고용 형태', value: shop.payType || '파트타임' },
+              ...(shop.options?.workClothes ? [{ label: '근무 복장', value: String(shop.options.workClothes) }] : []),
+              ...(shop.options?.workCareer ? [{ label: '경력 조건', value: shop.options.workCareer }] : []),
             ].map((row, i) => (
               <div key={i} className="flex items-start gap-3 px-4 py-3">
                 <span className="text-[11px] text-gray-400 font-bold w-18 shrink-0 pt-0.5">{row.label}</span>

@@ -27,6 +27,21 @@ import {
 // 야사장 구독 플랜 확정 v2 (2026-04-25)
 const PLANS = [
     {
+        id: 'free',
+        name: '무료',
+        price: 0,
+        description: '밤길 3개월 무료 체험',
+        platforms: ['밤길'],
+        waiterzone: false,
+        features: [
+            '밤길 지도 기본 핀 노출',
+            '3개월 무료 체험',
+            '※ 웨이터존 미노출',
+        ],
+        icon: <FileText className="text-gray-400" />,
+        highlight: false,
+    },
+    {
         id: 'basic',
         name: '베이직',
         price: 22000,
@@ -152,7 +167,7 @@ export function TabAdGuide({ onTabChange }: TabAdGuideProps) {
             </div>
 
             {/* 플랜 카드 5개 */}
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3 md:gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                 {PLANS.map((plan) => (
                     <div
                         key={plan.id}
@@ -173,7 +188,11 @@ export function TabAdGuide({ onTabChange }: TabAdGuideProps) {
                         </div>
                         <h3 className={`text-lg font-black mb-0.5 ${dark ? 'text-white' : 'text-gray-900'}`}>{plan.name}</h3>
                         <p className="text-[#1e3a5f] font-black text-lg leading-none mb-1">
-                            {plan.price.toLocaleString()}원<span className="text-[11px] font-bold opacity-70">/월</span>
+                            {plan.price === 0 ? (
+                                <>무료<span className="text-[11px] font-bold opacity-70">/3개월</span></>
+                            ) : (
+                                <>{plan.price.toLocaleString()}원<span className="text-[11px] font-bold opacity-70">/월</span></>
+                            )}
                         </p>
                         <p className={`text-[11px] font-bold mb-4 ${dark ? 'text-gray-400' : 'text-gray-500'}`}>{plan.description}</p>
                         <div className="flex-1 space-y-2 mb-4">
@@ -224,7 +243,7 @@ export function TabAdGuide({ onTabChange }: TabAdGuideProps) {
                             </tr>
                         </thead>
                         <tbody className={`divide-y ${dark ? 'divide-gray-700' : 'divide-gray-50'}`}>
-                            {PLANS.map((plan) => (
+                            {PLANS.filter(p => p.id !== 'free').map((plan) => (
                                 <tr key={plan.id} className="hover:bg-blue-50/20 transition-colors group">
                                     <td className={`py-3 text-[14px] font-black group-hover:text-[#1e3a5f] transition-colors ${dark ? 'text-white' : 'text-gray-900'}`}>
                                         {plan.name}
@@ -249,7 +268,7 @@ export function TabAdGuide({ onTabChange }: TabAdGuideProps) {
 
                 {/* 모바일 카드 */}
                 <div className="md:hidden grid grid-cols-1 gap-3">
-                    {PLANS.map((plan) => (
+                    {PLANS.filter(p => p.id !== 'free').map((plan) => (
                         <div key={plan.id} className={`p-4 rounded-[24px] border ${dark ? 'bg-gray-900 border-gray-700' : 'bg-gray-50 border-gray-100'}`}>
                             <div className="flex items-center justify-between mb-3">
                                 <span className={`text-[15px] font-black ${dark ? 'text-white' : 'text-gray-900'}`}>{plan.name}</span>
@@ -290,7 +309,7 @@ export function TabAdGuide({ onTabChange }: TabAdGuideProps) {
                         <thead>
                             <tr className={`border-b ${dark ? 'border-gray-700' : 'border-gray-100'}`}>
                                 <th className="py-3 text-left font-black text-gray-400 w-40">노출 위치</th>
-                                {PLANS.map(p => (
+                                {PLANS.filter(p => p.id !== 'free').map(p => (
                                     <th key={p.id} className={`py-3 text-center font-black ${dark ? 'text-white' : 'text-gray-900'}`}>{p.name}</th>
                                 ))}
                             </tr>
@@ -308,7 +327,7 @@ export function TabAdGuide({ onTabChange }: TabAdGuideProps) {
                             ].map((row) => (
                                 <tr key={row.label} className="hover:bg-blue-50/10 transition-colors">
                                     <td className={`py-3 text-[12px] font-bold ${dark ? 'text-gray-400' : 'text-gray-500'}`}>{row.label}</td>
-                                    {PLANS.map(p => (
+                                    {PLANS.filter(p => p.id !== 'free').map(p => (
                                         <td key={p.id} className="py-3 text-center">
                                             {row.plans.includes(p.id)
                                                 ? <CheckCircle2 size={16} className="text-[#1e3a5f] mx-auto" />

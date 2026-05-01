@@ -586,6 +586,35 @@ export function TabAdGuide({ onTabChange }: TabAdGuideProps) {
                 </div>
             </section>
 
+            {/* 야사장 통합 가입 흐름 안내 */}
+            <section className={`p-8 md:p-10 rounded-[32px] border space-y-6 ${dark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'}`}>
+                <div className="text-center">
+                    <h3 className={`text-2xl font-black ${dark ? 'text-white' : 'text-gray-900'}`}>야사장 통합 가입 흐름</h3>
+                    <p className={`text-[13px] font-bold mt-1 ${dark ? 'text-gray-400' : 'text-gray-500'}`}>4단계로 {brand.name} · 밤길 · 웨이터존 · 선수존 동시 운영 시작</p>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {[
+                        { step: '1', title: '야사장 가입', desc: '카카오 / 구글 / 이메일로 30초 가입', icon: '🔑' },
+                        { step: '2', title: '업소 등록', desc: '사업자등록증 + 영업허가증 업로드 (OCR 자동 입력)', icon: '📋' },
+                        { step: '3', title: '플랜 선택', desc: '심사 완료 후 베이직~프리미엄 중 선택 · 무통장 입금', icon: '💳' },
+                        { step: '4', title: '플랫폼 자동 연동', desc: `${brand.name} · 밤길 · 웨이터존 · 선수존 광고 즉시 게시`, icon: '🚀' },
+                    ].map(({ step, title, desc, icon }) => (
+                        <div key={step} className={`relative p-5 rounded-2xl border flex flex-col gap-2 ${dark ? 'bg-gray-700 border-gray-600' : 'bg-gray-50 border-gray-100'}`}>
+                            <div className="flex items-center gap-2">
+                                <span className="w-6 h-6 rounded-full bg-[#1e3a5f] text-white text-[11px] font-black flex items-center justify-center shrink-0">{step}</span>
+                                <span className="text-lg">{icon}</span>
+                            </div>
+                            <p className={`text-[14px] font-black ${dark ? 'text-white' : 'text-gray-900'}`}>{title}</p>
+                            <p className={`text-[12px] leading-relaxed ${dark ? 'text-gray-400' : 'text-gray-500'}`}>{desc}</p>
+                        </div>
+                    ))}
+                </div>
+                <div className={`rounded-xl p-4 text-[12px] font-bold flex items-start gap-2 ${dark ? 'bg-amber-500/10 text-amber-400' : 'bg-amber-50 text-amber-700'}`}>
+                    <Info size={14} className="shrink-0 mt-0.5" />
+                    <span>심사는 평일 기준 1~2 영업일 내 완료됩니다. 이후 플랜을 선택하면 해당 플랫폼에 광고가 즉시 노출됩니다.</span>
+                </div>
+            </section>
+
             {/* 야사장 입점 CTA */}
             <section className={`p-8 md:p-10 rounded-[32px] border text-center space-y-4 ${dark ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-100'}`}>
                 <h3 className={`text-2xl font-black ${dark ? 'text-white' : 'text-gray-900'}`}>지금 바로 시작하세요</h3>

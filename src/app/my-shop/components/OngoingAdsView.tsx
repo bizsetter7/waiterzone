@@ -1,201 +1,9 @@
 import React from 'react';
-import { List, RefreshCw, Calendar, ChevronLeft, Zap, Image as ImageIcon, Loader2, CheckCircle2, Clock, XCircle } from 'lucide-react';
+import { List, RefreshCw, Calendar, ChevronLeft, Zap, Image as ImageIcon, Loader2 } from 'lucide-react';
 import { useBrand } from '@/components/BrandProvider';
 import { getHighlighterStyle } from '@/utils/highlighter';
 import { IconBadge } from '@/components/common/IconBadge';
 import { supabase } from '@/lib/supabase';
-
-// ─── 배너 등록 가능 등급 ────────────────────────────────────────────────────────
-const BANNER_ELIGIBLE_TIERS = ['grand', 'premium', 'deluxe', 'special', 'p1', 'p2', 'p3', 'p4'];
-const TIER_LABEL_MAP: Record<string, string> = {
-    grand: '그랜드(T1)', premium: '프리미엄(T2)', deluxe: '디럭스(T3)', special: '스페셜(T4)',
-    p1: '그랜드(T1)', p2: '프리미엄(T2)', p3: '디럭스(T3)', p4: '스페셜(T4)',
-};
-
-// ─── 배너 상태 배지 ─────────────────────────────────────────────────────────────
-const BannerStatusBadge = ({ status }: { status: string | null | undefined }) => {
-    if (!status) return null;
-    const map: Record<string, { label: string; cls: string; icon: React.ReactNode }> = {
-        pending_banner: {
-            label: '배너 승인 대기 중',
-            cls: 'bg-amber-50 text-amber-600 border-amber-200',
-            icon: <Clock size={11} />,
-        },
-        approved: {
-            label: '배너 활성화 중',
-            cls: 'bg-green-50 text-green-600 border-green-200',
-            icon: <CheckCircle2 size={11} />,
-        },
-        rejected: {
-            label: '배너 반려됨 — 재등록 가능',
-            cls: 'bg-red-50 text-red-500 border-red-200',
-            icon: <XCircle size={11} />,
-        },
-    };
-    const info = map[status];
-    if (!info) return null;
-    return (
-        <span className={`inline-flex items-center gap-1 text-[10px] font-black px-2 py-0.5 rounded-full border ${info.cls}`}>
-            {info.icon}{info.label}
-        </span>
-    );
-};
-
-// ─── 배너 이미지 업로드 패널 ────────────────────────────────────────────────────
-interface BannerUploadPanelProps {
-    adId: string;
-    currentBannerUrl?: string | null;
-    currentBannerStatus?: string | null;
-    onSuccess: (url: string) => void;
-}
-
-const BannerUploadPanel = ({ adId, currentBannerUrl, currentBannerStatus, onSuccess }: BannerUploadPanelProps) => {
-    const [isUploading, setIsUploading] = React.useState(false);
-    const [previewUrl, setPreviewUrl] = React.useState<string>(currentBannerUrl || '');
-    const [urlInput, setUrlInput] = React.useState('');
-    const [msg, setMsg] = React.useState('');
-
-    const detectMediaType = (url: string): 'image' | 'gif' | 'video' => {
-        const lower = url.toLowerCase();
-        if (lower.endsWith('.mp4') || lower.endsWith('.webm') || lower.endsWith('.mov')) return 'video';
-        if (lower.endsWith('.gif')) return 'gif';
-        return 'image';
-    };
-
-    const saveBannerToDb = async (url: string) => {
-        const mediaType = detectMediaType(url);
-        const { error } = await supabase
-            .from('shops')
-            .update({
-                banner_image_url: url,
-                banner_media_type: mediaType,
-                banner_status: 'pending_banner',
-                updated_at: new Date().toISOString(),
-            })
-            .eq('id', adId);
-        return error;
-    };
-
-    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-
-        const MAX_SIZE = 10 * 1024 * 1024; // 10MB
-        if (file.size > MAX_SIZE) {
-            setMsg('❌ 파일 크기 10MB 이하만 가능합니다.');
-            return;
-        }
-
-        const ext = file.name.split('.').pop()?.toLowerCase() || '';
-        const allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'mp4'];
-        if (!allowed.includes(ext)) {
-            setMsg('❌ JPG/PNG/GIF/WebP/MP4만 가능합니다.');
-            return;
-        }
-
-        setIsUploading(true);
-        setMsg('');
-        try {
-            const fileName = `banners/${adId}_${Date.now()}.${ext}`;
-            const { error: upErr } = await supabase.storage
-                .from('job-images')
-                .upload(fileName, file, { upsert: true });
-            if (upErr) throw upErr;
-
-            const { data: { publicUrl } } = supabase.storage
-                .from('job-images')
-                .getPublicUrl(fileName);
-
-            const dbErr = await saveBannerToDb(publicUrl);
-            if (dbErr) throw dbErr;
-
-            setPreviewUrl(publicUrl);
-            setMsg('✅ 배너 이미지 등록 완료! 관리자 승인 후 슬롯에 반영됩니다.');
-            onSuccess(publicUrl);
-        } catch (err: any) {
-            setMsg(`❌ 업로드 실패: ${err.message || '알 수 없는 오류'}`);
-        } finally {
-            setIsUploading(false);
-            e.target.value = '';
-        }
-    };
-
-    const handleUrlSave = async () => {
-        if (!urlInput.trim()) return;
-        setIsUploading(true);
-        setMsg('');
-        try {
-            const dbErr = await saveBannerToDb(urlInput.trim());
-            if (dbErr) throw dbErr;
-            setPreviewUrl(urlInput.trim());
-            setMsg('✅ 배너 URL 등록 완료! 관리자 승인 후 슬롯에 반영됩니다.');
-            onSuccess(urlInput.trim());
-            setUrlInput('');
-        } catch (err: any) {
-            setMsg(`❌ 저장 실패: ${err.message || '알 수 없는 오류'}`);
-        } finally {
-            setIsUploading(false);
-        }
-    };
-
-    return (
-        <div className="mt-4 p-4 rounded-2xl border-2 border-dashed border-blue-200 bg-gray-50/50 space-y-3">
-            <div className="flex items-center gap-2">
-                <ImageIcon size={14} className="text-blue-600" />
-                <span className="text-[11px] font-black text-blue-700 uppercase tracking-wide">배너 이미지 등록</span>
-                {currentBannerStatus && <BannerStatusBadge status={currentBannerStatus} />}
-            </div>
-
-            {/* 미리보기 */}
-            {previewUrl && (
-                <div className="w-full h-20 rounded-xl overflow-hidden border border-blue-100 bg-white shadow-sm">
-                    {previewUrl.toLowerCase().endsWith('.mp4') ? (
-                        <video src={previewUrl} autoPlay loop muted playsInline className="w-full h-full object-cover" />
-                    ) : (
-                        <img src={previewUrl} alt="배너 미리보기" className="w-full h-full object-cover" />
-                    )}
-                </div>
-            )}
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                {/* 파일 업로드 */}
-                <label className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-[11px] font-black cursor-pointer transition-all active:scale-95 border ${isUploading ? 'bg-gray-100 text-gray-400 border-gray-200 pointer-events-none' : 'bg-gray-900 text-white border-transparent hover:bg-black shadow-md'}`}>
-                    {isUploading ? <><Loader2 size={12} className="animate-spin" />업로드 중...</> : <><ImageIcon size={12} />파일 선택 (JPG/PNG/GIF/MP4)</>}
-                    <input type="file" className="hidden" accept="image/*,video/mp4" onChange={handleFileUpload} disabled={isUploading} />
-                </label>
-
-                {/* URL 입력 */}
-                <div className="flex gap-1.5">
-                    <input
-                        type="text"
-                        value={urlInput}
-                        onChange={e => setUrlInput(e.target.value)}
-                        placeholder="이미지 URL 직접 입력"
-                        className="flex-1 px-3 py-2 text-[11px] font-bold bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-300/30"
-                        disabled={isUploading}
-                        onKeyDown={e => e.key === 'Enter' && handleUrlSave()}
-                    />
-                    <button
-                        onClick={handleUrlSave}
-                        disabled={!urlInput.trim() || isUploading}
-                        className="px-3 py-2 bg-blue-600 text-white text-[11px] font-black rounded-xl hover:bg-blue-700 transition disabled:opacity-40 disabled:cursor-not-allowed"
-                    >
-                        등록
-                    </button>
-                </div>
-            </div>
-
-            <p className="text-[9px] text-gray-400 font-bold">
-                * 권장: 가로 200px 이상 | 최대 10MB | JPG·PNG·GIF·MP4 지원<br />
-                * 등록 후 관리자 승인 시 배너 슬롯에 자동 반영됩니다.
-            </p>
-
-            {msg && (
-                <p className={`text-[11px] font-bold ${msg.startsWith('✅') ? 'text-green-600' : 'text-red-500'}`}>{msg}</p>
-            )}
-        </div>
-    );
-};
 
 // ─── 카드 이미지 업로드 패널 ────────────────────────────────────────────────────
 // 등급별 리스트 카드 썸네일(options.mediaUrl + shops.media_url) 변경용
@@ -349,10 +157,6 @@ export const OngoingAdsView = ({
 }) => {
     const brand = useBrand();
     const [isMounted, setIsMounted] = React.useState(false);
-    // 배너 업로드 패널 열림 상태 (adId → boolean)
-    const [bannerPanelOpen, setBannerPanelOpen] = React.useState<Record<string, boolean>>({});
-    // 배너 업로드 성공 후 URL 업데이트 (로컬 반영용)
-    const [bannerUpdates, setBannerUpdates] = React.useState<Record<string, string>>({});
     // 카드 이미지 업로드 패널 열림 상태
     const [cardImagePanelOpen, setCardImagePanelOpen] = React.useState<Record<string, boolean>>({});
     // 카드 이미지 업로드 성공 후 로컬 반영용
@@ -365,23 +169,10 @@ export const OngoingAdsView = ({
     const getTierLabel = (ad: any) => {
         if (!ad) return 'T7';
         const pt = (ad.productType || ad.tier || ad.product_type || ad.ad_type || ad.options?.product_type || 'p7').toLowerCase();
-        if (pt.includes('grand') || pt === 'p1') return 'T1';
         if (pt.includes('premium') || pt === 'p2') return 'T2';
         if (pt === 'p3' || pt.includes('deluxe')) return 'T3';
         if (pt === 'p4' || pt.includes('special')) return 'T4';
-        if (pt === 'p5') return 'T5';
-        if (pt === 'p6') return 'T6';
         return 'T7';
-    };
-
-    // 배너 등록 가능 여부: T1~T4 + 반려/종료 아닌 상태 (심사중·진행중 모두 허용)
-    const isBannerEligible = (ad: any) => {
-        const tier = (ad.productType || ad.tier || ad.product_type || ad.ad_type || ad.options?.product_type || '').toLowerCase();
-        const isEligibleTier = BANNER_ELIGIBLE_TIERS.includes(tier);
-        // 반려됐거나 종료된 광고는 배너 등록 불가, 심사중이어도 미리 등록 가능
-        const isNotRejectedOrClosed = ad.status !== 'rejected' && ad.status !== 'REJECTED'
-            && ad.status !== 'CLOSED' && ad.status !== 'closed';
-        return isEligibleTier && isNotRejectedOrClosed;
     };
 
     if (!isMounted) return <div className="p-12 text-center text-gray-400 font-bold min-h-screen">로딩 중...</div>;
@@ -435,20 +226,13 @@ export const OngoingAdsView = ({
                 ) : (
                     activeAds.map((ad) => {
                         const tLabel = getTierLabel(ad);
-                        const limit = (tLabel === 'T1' || tLabel === 'T2') ? 15
-                            : (tLabel === 'T3' || tLabel === 'T4') ? 10
-                            : (tLabel === 'T5' || tLabel === 'T6') ? 8 : 5;
+                        const limit = tLabel === 'T2' ? 15
+                            : (tLabel === 'T3' || tLabel === 'T4') ? 10 : 5;
                         const options = ad.options || {};
                         const lastDate = options.last_manual_jump_date || ad.last_manual_jump_date || ad.last_jump_date;
                         const usedCount = lastDate === today ? (options.daily_manual_jump_count || ad.daily_manual_jump_count || 0) : 0;
                         const remainCount = Math.max(0, limit - usedCount);
                         const isExhausted = remainCount <= 0;
-
-                        const eligibleForBanner = isBannerEligible(ad);
-                        const tierText = TIER_LABEL_MAP[(ad.productType || ad.tier || ad.product_type || ad.ad_type || ad.options?.product_type || '').toLowerCase()] || '';
-                        const bannerStatus = ad.banner_status;
-                        const bannerImgUrl = bannerUpdates[ad.id] || ad.banner_image_url;
-                        const isPanelOpen = !!bannerPanelOpen[ad.id];
 
                         return (
                             <div key={ad.id} className={`p-6 rounded-[32px] border transition-all duration-300 shadow-sm overflow-hidden group ${brand.theme === 'dark' ? 'bg-gray-900 border-gray-800 hover:bg-gray-800/50' : 'bg-white border-gray-100 hover:shadow-xl hover:border-blue-100 hover:translate-y-[-2px]'}`}>
@@ -468,8 +252,6 @@ export const OngoingAdsView = ({
                                             <span className="flex items-center gap-1 text-[11px] font-bold text-gray-400">
                                                 <Calendar size={12} /> {ad.approved_at ? new Date(ad.approved_at).toLocaleDateString() : '심사 대기'}
                                             </span>
-                                            {/* 배너 상태 배지 */}
-                                            <BannerStatusBadge status={bannerStatus} />
                                         </div>
 
                                         <h4
@@ -541,26 +323,6 @@ export const OngoingAdsView = ({
                                             })()}
                                         </div>
 
-                                        {/* ── 사이드바 배너 이미지 등록 버튼 (T1~T4) ── */}
-                                        {eligibleForBanner && (
-                                            <button
-                                                onClick={() => setBannerPanelOpen(prev => ({ ...prev, [ad.id]: !prev[ad.id] }))}
-                                                className={`w-full flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-[11px] font-black transition-all active:scale-95 border ${isPanelOpen
-                                                    ? 'bg-blue-600 text-white border-blue-600 shadow-md shadow-sm'
-                                                    : bannerStatus === 'approved'
-                                                        ? 'bg-green-50 text-green-600 border-green-200 hover:bg-green-100'
-                                                        : bannerStatus === 'pending_banner'
-                                                            ? 'bg-amber-50 text-amber-600 border-amber-200 hover:bg-amber-100'
-                                                            : 'bg-white text-blue-600 border-blue-200 hover:bg-blue-50'
-                                                }`}
-                                            >
-                                                <ImageIcon size={12} />
-                                                {bannerStatus === 'approved' ? '사이드 배너 활성화 중 (수정)' :
-                                                 bannerStatus === 'pending_banner' ? '사이드 배너 승인 대기 (수정)' :
-                                                 tierText ? `${tierText} 사이드 배너 등록` : '사이드 배너 등록'}
-                                            </button>
-                                        )}
-
                                         {/* ── 카드 리스트 이미지 변경 버튼 (전 등급 — 반려/종료 제외) ── */}
                                         {ad.status !== 'rejected' && ad.status !== 'REJECTED' && ad.status !== 'CLOSED' && ad.status !== 'closed' && (
                                             <button
@@ -580,18 +342,6 @@ export const OngoingAdsView = ({
                                         )}
                                     </div>
                                 </div>
-
-                                {/* ── 사이드바 배너 업로드 패널 (펼침) ── */}
-                                {eligibleForBanner && isPanelOpen && (
-                                    <BannerUploadPanel
-                                        adId={ad.id}
-                                        currentBannerUrl={bannerImgUrl}
-                                        currentBannerStatus={bannerStatus}
-                                        onSuccess={(url) => {
-                                            setBannerUpdates(prev => ({ ...prev, [ad.id]: url }));
-                                        }}
-                                    />
-                                )}
 
                                 {/* ── 카드 이미지 업로드 패널 (펼침) ── */}
                                 {cardImagePanelOpen[ad.id] && (

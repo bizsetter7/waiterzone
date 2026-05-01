@@ -3,14 +3,10 @@
 import React, { Suspense } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 
-import { BannerSidebar } from './BannerSidebar';
-import { StickyWrapper } from './ui/StickyWrapper';
-import { useMobile } from '@/hooks/useMobile';
 import { MobileBottomNav } from './ui/MobileBottomNav';
 import { useBrand } from './BrandProvider';
 import { Footer } from './layout/Footer';
 import MainHeader from './common/MainHeader';
-import { Shop } from '@/types/shop';
 import { AdultVerificationGate } from './common/AdultVerificationGate';
 import { AuditLanding } from './audit/AuditLanding';
 
@@ -24,11 +20,9 @@ import { PushPermission } from './PushPermission';
 
 interface LayoutWrapperProps {
     children: React.ReactNode;
-    sideAds: Shop[]; // [Optimization]
 }
 
-export const LayoutWrapper = ({ children, sideAds }: LayoutWrapperProps) => {
-    const isMobile = useMobile();
+export const LayoutWrapper = ({ children }: LayoutWrapperProps) => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const isAdminPage = pathname?.startsWith('/admin');
@@ -200,30 +194,11 @@ export const LayoutWrapper = ({ children, sideAds }: LayoutWrapperProps) => {
                 */}
                 <div className={`w-full max-w-[1432px] mx-auto relative h-auto flex-1`}>
 
-                    <div className={(isMobile || isAdminPage || isAuthPage) ? "block min-h-screen" : "grid grid-cols-1 xl:grid-cols-[160px_1fr_160px] xl:gap-8 xl:px-0 min-h-full items-stretch"}>
-                        {/* Left Sidebar Spacer + Component - [Optimization] PC Only, 인증 페이지 제외 */}
-                        {/* [Fix] isMounted 조건 추가 — hydration 직후 isMobile=false 기본값으로 모바일에서도 마운트되던 버그 차단 */}
-                        {(isMounted && !isMobile && !isAdminPage && !isAuthPage) && (
-                            <aside className="hidden xl:flex flex-col w-[160px] relative z-[10001] self-stretch">
-                                <StickyWrapper offsetTop={56} zIndex={10001}>
-                                    <BannerSidebar side="left" shops={sideAds} />
-                                </StickyWrapper>
-                            </aside>
-                        )}
-
+                    <div className="block min-h-screen">
                         {/* Main Content */}
                         <main className={`w-full flex-1 min-w-0 relative z-[10] ${isAdminPage ? 'px-0' : ''}`}>
                             {children}
                         </main>
-
-                        {/* Right Sidebar - [Optimization] PC Only, UI_Z_INDEX.SIDEBAR (10001) 표준 적용 */}
-                        {(isMounted && !isMobile && !isAdminPage && !isAuthPage) && (
-                            <aside className="hidden xl:flex flex-col w-[160px] relative z-[10001] self-stretch">
-                                <StickyWrapper offsetTop={56} zIndex={10001}>
-                                    <BannerSidebar side="right" shops={sideAds} />
-                                </StickyWrapper>
-                            </aside>
-                        )}
                     </div>
 
                 </div>

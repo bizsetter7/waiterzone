@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import { useBrand } from '@/components/BrandProvider';
 import {
-    Phone, ChevronRight, Star, Flame, Zap, Gift, Crown, User, Sparkles, List, FileText, ChevronDown
+    Phone, ChevronRight, User, ChevronDown
 } from 'lucide-react';
 
 interface LeftSidebarProps {
@@ -14,7 +14,6 @@ interface LeftSidebarProps {
     setSelectedSubRegion: (subRegion: string) => void;
     selectedJobType: string;
     setSelectedJobType: (jobType: string) => void;
-    onPaymentClick: (tier: string) => void;
     isLoggedIn?: boolean;
     userName?: string;
     userType?: 'corporate' | 'individual';
@@ -47,28 +46,14 @@ const JOB_TYPE_BUTTONS = ['룸살롱', '가라오케', '클럽', '나이트', '�
 
 import { SIDEBAR_KEYWORDS } from '@/constants/job-options';
 
-const CATEGORY_LINKS = [
-    { icon: Crown, label: '그랜드', color: 'text-amber-500', tier: 'grand' },
-    { icon: Star, label: '프리미엄', color: 'text-purple-500', tier: 'premium' },
-    { icon: Zap, label: '디럭스', color: 'text-blue-500', tier: 'deluxe' },
-    { icon: Sparkles, label: '스페셜', color: 'text-blue-500', tier: 'special' },
-    { icon: Flame, label: '급구', color: 'text-red-500', tier: 'urgent' },
-    { icon: Gift, label: '추천', color: 'text-emerald-500', tier: 'urgent' },
-    { icon: List, label: '리스트네이티브', color: 'text-cyan-500', tier: 'native' },
-    { icon: FileText, label: '베이직(줄광고)', color: 'text-gray-500', tier: 'basic' },
-];
-
 import { useAuth } from '@/hooks/useAuth';
 import { useMobile } from '@/hooks/useMobile';
-import { InnerSidebarCarousel } from '@/components/InnerSidebarCarousel';
-
 export default function LeftSidebar({
     selectedRegion,
     setSelectedRegion,
     setSelectedSubRegion,
     selectedJobType,
     setSelectedJobType,
-    onPaymentClick,
     isLoggedIn: propIsLoggedIn,
     userName: propUserName,
     userType: propUserType,
@@ -92,7 +77,6 @@ export default function LeftSidebar({
     const [isRegionOpen, setIsRegionOpen] = React.useState(false);
     const [isJobTypeOpen, setIsJobTypeOpen] = React.useState(true);
     const [isKeywordOpen, setIsKeywordOpen] = React.useState(false);
-    const [isAdProductOpen, setIsAdProductOpen] = React.useState(false);
 
     const [isLoginLoading, setIsLoginLoading] = React.useState(false);
     const [loginId, setLoginId] = React.useState('');
@@ -455,50 +439,6 @@ export default function LeftSidebar({
                     })}
                 </div>
             </div>
-
-            {/* 6. 카테고리 링크 + 광고신청 */}
-            <div className={`rounded-xl border overflow-hidden ${brand.theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-                <div
-                    className="flex items-center justify-between px-4 py-2.5 cursor-pointer group"
-                    onClick={() => setIsAdProductOpen(!isAdProductOpen)}
-                >
-                    <h4 className={`text-sm font-black ${brand.theme === 'dark' ? 'text-white' : 'text-black'}`}>
-                        <span className="text-purple-600">광고상품</span> 바로가기
-                    </h4>
-                    <ChevronDown
-                        size={14}
-                        className={`text-gray-400 group-hover:text-purple-500 transition-transform duration-300 ${isAdProductOpen ? 'rotate-0' : '-rotate-90'}`}
-                    />
-                </div>
-
-                <div className={`transition-all duration-300 overflow-hidden ${isAdProductOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                    {CATEGORY_LINKS.map((cat, idx) => (
-                        <div
-                            key={idx}
-                            className={`flex items-center justify-between px-3 py-2.5 border-t ${brand.theme === 'dark' ? 'border-gray-700' : 'border-gray-100'}`}
-                        >
-                            <div className="flex items-center gap-2">
-                                <cat.icon size={14} className={cat.color} />
-                                <span className={`text-[11px] font-bold ${brand.theme === 'dark' ? 'text-gray-200' : 'text-black'}`}>{cat.label}</span>
-                            </div>
-                            <button
-                                onClick={() => {
-                                    setIsAdProductOpen(false); // Can auto-close on click
-                                    onPaymentClick(cat.tier);
-                                }}
-                                className="px-2 py-1 bg-gray-100 hover:bg-blue-100 text-gray-500 hover:text-blue-600 rounded text-[9px] font-bold transition"
-                            >
-                                광고신청
-                            </button>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-
-            {/* 7-A. 디럭스/스페셜 내부 사이드바 슬롯 — 캐러셀 */}
-            {/* 광고상품 바로가기 아래 2슬롯: 디럭스(p3) → 스페셜(p4) 랜덤 슬라이드 */}
-            <InnerSidebarCarousel />
 
             {/* 8. 광고 슬롯 2 - 웨이터존 광고입전상담 */}
             <div

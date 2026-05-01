@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { BrandProvider } from "@/components/BrandProvider";
 import { Suspense } from "react";
-import { Shop } from "@/types/shop";
 import { LayoutWrapper } from "@/components/LayoutWrapper";
 import ScrollToTop from "@/components/common/ScrollToTop";
 import { MonitorProvider } from "@/components/MonitorProvider";
@@ -106,8 +105,6 @@ export const viewport: Viewport = {
   colorScheme: "light",
 };
 
-import shopsData from "@/lib/data/shops.json";
-
 import Script from "next/script";
 
 export default function RootLayout({
@@ -115,11 +112,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // [Optimization] Server-side data prep for sidebars
-  const grandAds = (shopsData as Shop[]).filter(s => s.tier === 'grand');
-  const premiumAds = (shopsData as Shop[]).filter(s => s.tier === 'premium' || s.is_premium);
-  const sideAds = [...grandAds, ...premiumAds];
-
   return (
     <html lang="ko" suppressHydrationWarning={true}>
       <head />
@@ -204,7 +196,7 @@ export default function RootLayout({
             <VisitorTracker />
             <div className="flex flex-col h-auto">
               <Suspense fallback={<div className="min-h-screen bg-white" />}>
-                <LayoutWrapper sideAds={sideAds}>
+                <LayoutWrapper>
                   <Suspense fallback={null}>
                     {children}
                   </Suspense>

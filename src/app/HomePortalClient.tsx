@@ -44,13 +44,10 @@ export default function HomePortalClient() {
     const getTierRank = (tier: string): number => {
       const t = (tier || '').toLowerCase();
       const ORDER: Record<string, number> = {
-        p1: 1, grand: 1, vip: 1,
         p2: 2, premium: 2,
         p3: 3, deluxe: 3,
-        p4: 4, special: 4,
-        p5: 5, urgent: 5, recommended: 5,
-        p6: 6, native: 6,
-        p7: 7, basic: 7, common: 7,
+        p4: 4, special: 4, standard: 4,
+        p7: 7, basic: 7,
       };
       return ORDER[t] ?? 99;
     };

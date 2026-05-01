@@ -76,7 +76,6 @@ export function enrichAdData(ad: any, userData: any[] = []): Shop {
             // 3. media_url (DB root 컬럼)
             // 4. 목업 전용 picsum (실제 광고에는 절대 미적용)
             mediaUrl:
-                (ad?.banner_status === 'approved' && ad?.banner_image_url ? ad.banner_image_url : undefined) ||
                 ad?.options?.mediaUrl ||
                 ad?.media_url ||
                 ((ad?.isMock || ad?.isRecovered) && (ad?.tier === 'grand' || ad?.tier === 'premium')

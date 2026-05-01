@@ -53,7 +53,7 @@ export default async function RegionPage() {
     // [Fix 2] 메인 페이지와 동일한 정렬 기준 (p1~p7 tier, 실제광고 우선)
     const getTierRank = (tier: string): number => {
         const t = (tier || '').toLowerCase();
-        const O: Record<string, number> = { p1:1,grand:1,vip:1, p2:2,premium:2, p3:3,deluxe:3, p4:4,special:4, p5:5,urgent:5,recommended:5, p6:6,native:6, p7:7,basic:7,common:7 };
+        const O: Record<string, number> = { p2:2,premium:2, p3:3,deluxe:3, p4:4,special:4,standard:4, p7:7,basic:7 };
         return O[t] ?? 99;
     };
     const isMockAd = (ad: any) => ad.isMock === true || String(ad.user_id||'').startsWith('6fc68887') || String(ad.id||'').startsWith('AD_MOCK_');

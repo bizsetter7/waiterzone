@@ -163,7 +163,6 @@ export default function JobClient({ shops }: JobClientProps) {
                         setSelectedSubRegion={setSelectedSubRegion}
                         selectedJobType={selectedJobType}
                         setSelectedJobType={handleSetSelectedJobType}
-                        onPaymentClick={openPaymentPopup}
                         isLoggedIn={isLoggedIn}
                         userType={userType === 'admin' || userType === 'guest' ? undefined : userType}
                         userName={userName}

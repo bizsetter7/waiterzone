@@ -27,7 +27,6 @@ import { AdminPaymentManagement } from '@/components/admin/payment/AdminPaymentM
 import { AdminAdManagement } from '@/components/admin/ad/AdminAdManagement';
 import { BusinessVerifyView } from '@/components/admin/BusinessVerifyView';
 import { AdminApplicationManagement } from '@/components/admin/applications/AdminApplicationManagement';
-import { AdminBannerManagement } from '@/components/admin/banner/AdminBannerManagement';
 import { AdminYasajangManagement } from '@/components/admin/yasajang/AdminYasajangManagement';
 import { useBrand } from '@/components/BrandProvider';
 import { enrichAdData, anyAdToShop } from '@/lib/adUtils';
@@ -51,7 +50,6 @@ function AdminContent() {
     const [realUsers, setRealUsers] = useState<any[]>([]);
     const [payments, setPayments] = useState<any[]>([]);
     const [pendingApplications, setPendingApplications] = useState(0);
-    const [pendingBannerCount, setPendingBannerCount] = useState(0);
     const [pendingYasajangCount, setPendingYasajangCount] = useState(0);
     const [healthIssueCount, setHealthIssueCount] = useState(0);
     const [liveVisitors, setLiveVisitors] = useState<number | null>(null);
@@ -166,13 +164,6 @@ function AdminContent() {
                 .select('id', { count: 'exact', head: true })
                 .eq('status', 'pending');
             setPendingApplications(appCount || 0);
-
-            // 3-2. Fetch pending banner count
-            const { count: bannerCount } = await supabase
-                .from('shops')
-                .select('id', { count: 'exact', head: true })
-                .eq('banner_status', 'pending_banner');
-            setPendingBannerCount(bannerCount || 0);
 
             // 3-3. Fetch pending yasajang businesses
             const { count: yasajangCount } = await supabase
@@ -668,13 +659,6 @@ function AdminContent() {
             {/* Tab: Applications */}
             {activeTab === 'applications' && (
                 <AdminApplicationManagement fetchData={fetchData} />
-            )}
-
-            {/* Tab: Banner Slot Management */}
-            {activeTab === 'banner' && (
-                <AdminBannerManagement
-                    onCountChange={(count) => setPendingBannerCount(count)}
-                />
             )}
 
             {/* Tab: Yasajang Management */}

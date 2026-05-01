@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Search, Unlock, Lock, XCircle, TrendingUp, Zap, Coins, Send } from 'lucide-react';
+import { Search, Unlock, Lock, XCircle, TrendingUp, Send } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
-import { AdminAdRegistrationModal } from '../ad/AdminAdRegistrationModal';
 
 interface AdminMemberManagementProps {
     users: any[];
@@ -15,14 +14,12 @@ export function AdminMemberManagement({ users, mockUsers, fetchData }: AdminMemb
     const [search, setSearch] = useState('');
     const [selectedUser, setSelectedUser] = useState<any | null>(null);
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
-    const [isAdModalOpen, setIsAdModalOpen] = useState(false);
-    const [adTargetUser, setAdTargetUser] = useState<any | null>(null);
     const [pointAmount, setPointAmount] = useState('');
     const [pointNote, setPointNote] = useState('');
     const [isGrantingPoint, setIsGrantingPoint] = useState(false);
 
-    // 모달 오픈 시 배경 스크롤 차단 (회원상세 또는 광고등록)
-    useBodyScrollLock(isDetailModalOpen || isAdModalOpen);
+    // 모달 오픈 시 배경 스크롤 차단
+    useBodyScrollLock(isDetailModalOpen);
 
     const handleUserToggleStatus = async (userId: string, currentStatus: string) => {
         const newStatus = currentStatus === 'blocked' ? 'active' : 'blocked';
@@ -218,26 +215,6 @@ export function AdminMemberManagement({ users, mockUsers, fetchData }: AdminMemb
                                                     상세정보
                                                 </button>
                                                 <button
-                                                    onClick={() => {
-                                                        // 사업자 정보 자동반영 — AdminAdRegistrationModal User 인터페이스에 맞게 전달
-                                                        setAdTargetUser({
-                                                            id: user.id,
-                                                            name: user.full_name || user.name,
-                                                            full_name: user.full_name,
-                                                            phone: user.phone || user.manager_phone,
-                                                            nickname: user.nickname,
-                                                            business_name: user.business_name,
-                                                            business_number: user.business_number,
-                                                            manager_kakao: user.manager_kakao,
-                                                            manager_telegram: user.manager_telegram,
-                                                        });
-                                                        setIsAdModalOpen(true);
-                                                    }}
-                                                    className="flex items-center gap-1 px-2.5 py-1.5 bg-blue-600 text-white rounded-lg text-[10px] font-black hover:bg-blue-700 transition active:scale-95 shadow-sm shadow-blue-100"
-                                                >
-                                                    <Zap size={12} fill="currentColor" /> 광고등록
-                                                </button>
-                                                <button
                                                     onClick={() => handleUserToggleType(user.id, user.user_type || user.type || 'individual')}
                                                     className="p-1.5 rounded-lg bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-all"
                                                     title="회원 유형 전환 (기업/개인)"
@@ -286,25 +263,6 @@ export function AdminMemberManagement({ users, mockUsers, fetchData }: AdminMemb
                                 </div>
                             </div>
                             <div className="flex items-center gap-2">
-                                <button
-                                    onClick={() => {
-                                        setAdTargetUser({
-                                            id: selectedUser.id,
-                                            name: selectedUser.full_name || selectedUser.name,
-                                            full_name: selectedUser.full_name,
-                                            phone: selectedUser.phone || selectedUser.manager_phone,
-                                            nickname: selectedUser.nickname,
-                                            business_name: selectedUser.business_name,
-                                            business_number: selectedUser.business_number,
-                                            manager_kakao: selectedUser.manager_kakao,
-                                            manager_telegram: selectedUser.manager_telegram,
-                                        });
-                                        setIsAdModalOpen(true);
-                                    }}
-                                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl text-xs font-black hover:bg-blue-700 transition active:scale-95 shadow-lg shadow-blue-100"
-                                >
-                                    <Zap size={14} fill="currentColor" /> 광고 등록하기
-                                </button>
                                 <button onClick={() => setIsDetailModalOpen(false)} className="p-2 text-slate-300 hover:text-slate-950 transition-colors">
                                     <XCircle size={24} />
                                 </button>
@@ -415,17 +373,6 @@ export function AdminMemberManagement({ users, mockUsers, fetchData }: AdminMemb
                 </div>
             )}
 
-            {/* Admin Ad Registration Modal */}
-            {isAdModalOpen && adTargetUser && (
-                <AdminAdRegistrationModal
-                    user={adTargetUser}
-                    onClose={() => {
-                        setIsAdModalOpen(false);
-                        setAdTargetUser(null);
-                    }}
-                    fetchData={fetchData}
-                />
-            )}
         </div>
     );
 }

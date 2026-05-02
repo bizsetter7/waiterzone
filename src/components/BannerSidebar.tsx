@@ -224,10 +224,11 @@ export const BannerSidebar = React.memo(({ side, shops = [] }: BannerSidebarProp
                                 <div
                                     key={`empty-${i}`}
                                     onClick={() => router.push('/customer-center?tab=ad')}
-                                    className="w-full h-[140px] rounded-xl border border-dashed border-gray-200 bg-gray-50 flex flex-col items-center justify-center gap-1 cursor-pointer hover:border-amber-300 hover:bg-amber-50 transition-all"
+                                    className="w-full h-[140px] rounded-xl border border-dashed border-gray-200 bg-gray-50 flex flex-col items-center justify-center gap-1.5 cursor-pointer hover:border-amber-300 hover:bg-amber-50 transition-all group"
                                 >
-                                    <Crown size={14} className="text-gray-300" />
-                                    <span className="text-[9px] font-bold text-gray-300 uppercase tracking-widest">AD SLOT</span>
+                                    <span className="text-[9px] text-gray-300 font-medium tracking-wide">150 × 140</span>
+                                    <Crown size={13} className="text-gray-300 group-hover:text-amber-400 transition-colors" />
+                                    <span className="text-[10px] font-black text-gray-300 group-hover:text-amber-500 transition-colors tracking-tight">광고문의</span>
                                 </div>
                             ))}
                         </div>

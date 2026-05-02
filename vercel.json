@@ -1,9 +1,6 @@
 {
+  "_comment": "daily-jump-tasks는 P2 전사 처리 (user_jumps 사용자 단위, 플랫폼 무관). P9/P10 중복 실행 제거 (M-060). expire-ads는 platform별 처리 필요해서 유지.",
   "crons": [
-    {
-      "path": "/api/cron/daily-jump-tasks",
-      "schedule": "0 0 * * *"
-    },
     {
       "path": "/api/cron/expire-ads",
       "schedule": "30 15 * * *"

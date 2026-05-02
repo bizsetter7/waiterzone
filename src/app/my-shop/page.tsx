@@ -675,19 +675,8 @@ function MyShopContent() {
                 return;
             }
 
-            if (!formState.selectedAdProduct) {
-                alert('메인 광고 상품을 선택해주세요.');
-                document.getElementById('myshop-step-3')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                return;
-            }
-
-            // selectedAdPeriod는 30|60|90 타입이므로 ! 체크가 항상 false임
-
-            if (formState.borderOption !== 'none' && formState.borderPeriod === 0) {
-                alert("'테두리 효과'의 기간을 선택해주세요.");
-                document.getElementById('myshop-step-4')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                return;
-            }
+            // [Phase A 정정] STEP3(메인 광고 상품)·STEP4(부스터) 제거됨 — 야사장 구독/입점 방식으로 변경
+            // 기존 selectedAdProduct·borderOption 검증은 잔재 코드. 제거하지 않으면 등록 막힘.
 
             setIsSaving(true);
             // [Fix] 에디터 내용 최종 동기화 강제 (저장 직전)

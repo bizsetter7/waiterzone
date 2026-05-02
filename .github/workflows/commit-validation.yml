@@ -1,0 +1,81 @@
+name: Commit Validation
+
+# Phase 3: 메모리 추적성 보장 + 금지 파일 차단 (2026-05-02)
+# Refs: AI_SOP.md "절대 운영 수칙 7번", PATTERNS/INDEX.md
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-commit:
+    runs-on: ubuntu-latest
+    name: M·P 참조 + 금지 파일 검증
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Validate commit message
+        id: validate
+        run: |
+          set -euo pipefail
+
+          MSG=$(git log -1 --pretty=%B)
+          echo "::group::Commit message"
+          echo "$MSG"
+          echo "::endgroup::"
+
+          # ── Bypass: [skip-validation] flag ──
+          if echo "$MSG" | grep -qF "[skip-validation]"; then
+            echo "::notice::Validation bypassed via [skip-validation] flag"
+            exit 0
+          fi
+
+          # ── HARD FAIL: 금지 파일 패턴 검출 ──
+          DIFF_FILES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || git ls-files)
+          FORBIDDEN_REGEX='^\.env$|^\.env\.|secrets/|keys\.json$|\.snap\.json$|^dev_.*\.json$|err\.json$'
+
+          if echo "$DIFF_FILES" | grep -qE "$FORBIDDEN_REGEX"; then
+            echo "::error::🚫 금지 파일 패턴이 커밋에 포함되어 있습니다."
+            echo "다음 파일을 .gitignore에 등록하거나 'git rm --cached'로 제거하세요:"
+            echo "$DIFF_FILES" | grep -E "$FORBIDDEN_REGEX" | sed 's/^/  - /'
+            exit 1
+          fi
+          echo "✅ 금지 파일 검사 통과"
+
+          # ── M·P 참조 검사 (commit type별 분기) ──
+          TYPE=$(echo "$MSG" | head -n 1 | grep -oE '^(fix|feat|refactor|style|docs|chore|test|perf|ci|build)' || echo "unknown")
+
+          case "$TYPE" in
+            fix|feat|refactor)
+              if echo "$MSG" | grep -qE '(M-[0-9]+|P-[0-9]+)'; then
+                REFS=$(echo "$MSG" | grep -oE '(M-[0-9]+|P-[0-9]+)' | tr '\n' ' ')
+                echo "✅ M·P 참조 발견: $REFS"
+              else
+                echo "::error::❌ '$TYPE' 타입 커밋은 M-XXX 또는 P-XX 참조가 필수입니다."
+                echo ""
+                echo "📋 해결 방법:"
+                echo "  1. 관련 M-번호(MISTAKES_LOG)나 P-번호(PATTERNS) 추가:"
+                echo "     예: 'Refs: M-062, P-02'"
+                echo "  2. 신규 발견된 실수면 MISTAKES_LOG에 M-XXX 등록 후 참조"
+                echo "  3. 사소한 변경이면 커밋 메시지에 [skip-validation] 추가"
+                echo ""
+                echo "참조: AI_SOP.md '절대 운영 수칙 7번', PATTERNS/INDEX.md"
+                exit 1
+              fi
+              ;;
+            docs|chore|style|test|ci|build|perf)
+              echo "ℹ️  '$TYPE' 타입 — M·P 참조 불필요 (PASS)"
+              ;;
+            *)
+              echo "::warning::알 수 없는 커밋 타입 '$TYPE'. 권장: fix/feat/refactor/docs/chore/style"
+              ;;
+          esac
+
+          echo ""
+          echo "🎉 모든 검증 통과"

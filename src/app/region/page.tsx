@@ -42,6 +42,7 @@ export default async function RegionPage() {
     const { data } = await supabase
         .from('shops')
         .select('*')
+        .eq('platform', 'waiterzone')  // ⭐ Phase A: SSOT (P-08) — 자기 플랫폼만
         .eq('is_closed', false)
         .order('created_at', { ascending: false })
         .limit(500);

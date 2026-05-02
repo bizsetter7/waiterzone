@@ -226,7 +226,7 @@ export const BannerSidebar = React.memo(({ side, shops = [] }: BannerSidebarProp
                                     onClick={() => router.push('/customer-center?tab=ad')}
                                     className="w-full h-[140px] rounded-xl border border-dashed border-gray-200 bg-gray-50 flex flex-col items-center justify-center gap-1.5 cursor-pointer hover:border-amber-300 hover:bg-amber-50 transition-all group"
                                 >
-                                    <span className="text-[9px] text-gray-300 font-medium tracking-wide">150 × 140</span>
+                                    <span className="text-[9px] text-gray-300 font-medium tracking-wide">160 × 140</span>
                                     <Crown size={13} className="text-gray-300 group-hover:text-amber-400 transition-colors" />
                                     <span className="text-[10px] font-black text-gray-300 group-hover:text-amber-500 transition-colors tracking-tight">광고문의</span>
                                 </div>

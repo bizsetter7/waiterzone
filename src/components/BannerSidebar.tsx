@@ -215,23 +215,21 @@ export const BannerSidebar = React.memo(({ side, shops = [] }: BannerSidebarProp
                         </div>
 
                         <div className="flex flex-col gap-1 px-1">
-                            {sidebarAds.length > 0 ? (
-                                sidebarAds.map((ad) => (
-                                    <SideAdCard key={ad.id} ad={ad} onSelect={setSelectedAd} />
-                                ))
-                            ) : (
-                                // 광고 없을 때 빈 슬롯 4개 표시
-                                Array.from({ length: 4 }).map((_, i) => (
-                                    <div
-                                        key={i}
-                                        onClick={() => router.push('/customer-center?tab=ad')}
-                                        className="w-full h-[140px] rounded-xl border border-dashed border-gray-200 bg-gray-50 flex flex-col items-center justify-center gap-1 cursor-pointer hover:border-amber-300 hover:bg-amber-50 transition-all"
-                                    >
-                                        <Crown size={14} className="text-gray-300" />
-                                        <span className="text-[9px] font-bold text-gray-300 uppercase tracking-widest">AD SLOT</span>
-                                    </div>
-                                ))
-                            )}
+                            {/* 실제 광고 카드 */}
+                            {sidebarAds.map((ad) => (
+                                <SideAdCard key={ad.id} ad={ad} onSelect={setSelectedAd} />
+                            ))}
+                            {/* 항상 4개 고정 — 나머지 빈 슬롯으로 채움 */}
+                            {Array.from({ length: Math.max(0, 4 - sidebarAds.length) }).map((_, i) => (
+                                <div
+                                    key={`empty-${i}`}
+                                    onClick={() => router.push('/customer-center?tab=ad')}
+                                    className="w-full h-[140px] rounded-xl border border-dashed border-gray-200 bg-gray-50 flex flex-col items-center justify-center gap-1 cursor-pointer hover:border-amber-300 hover:bg-amber-50 transition-all"
+                                >
+                                    <Crown size={14} className="text-gray-300" />
+                                    <span className="text-[9px] font-bold text-gray-300 uppercase tracking-widest">AD SLOT</span>
+                                </div>
+                            ))}
                         </div>
                     </div>
 

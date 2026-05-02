@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        const { email, password, name, nickname, role, phone, birthdate, gender, contact_email, identity_ci } = await req.json();
+        const { email, password, name, nickname, role, phone, birthdate, gender, contact_email, identity_ci, username: usernameParam } = await req.json();
 
         if (!email || !password) {
             return NextResponse.json(
@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
         // 트리거가 있어도 upsert는 중복 없이 안전하게 동작
         if (data.user?.id) {
             const finalRole = role || 'individual';
-            const finalUsername = email.split('@')[0];
+            const finalUsername = usernameParam || email.split('@')[0];
             const profilePayload: Record<string, any> = {
                 id: data.user.id,
                 username: finalUsername,

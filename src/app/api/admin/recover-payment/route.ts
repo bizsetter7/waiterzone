@@ -95,6 +95,7 @@ export async function POST(request: NextRequest) {
             amount: adPrice,
             status: 'completed',
             pay_type: 'AD',
+            platform: 'waiterzone',  // ⭐ Phase A-4 (P-08 SSOT)
             method: 'bank_transfer',
             description: `[관리자수복] ${shopName} 결제 완료`,
             created_at: nowIso,

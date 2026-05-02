@@ -50,6 +50,7 @@ export async function POST(request: NextRequest) {
                     amount: amount || 0,
                     status: 'completed',
                     pay_type: 'AD',                 // ✅ pay_type (type 컬럼 없음)
+                    platform: 'waiterzone',         // ⭐ Phase A-4 (P-08 SSOT)
                     method: 'admin_manual',         // ✅ payments.method 컬럼 존재
                     description: `[백필] ${shop.title} (소급 등록)`, // ✅ payments.description 컬럼 존재
                     metadata: {

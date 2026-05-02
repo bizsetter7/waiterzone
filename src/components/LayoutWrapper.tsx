@@ -17,6 +17,7 @@ import { AUDIT_MODE, ADULT_GATE_DISABLED } from '@/lib/brand-config';
 import { isWorkTypeSlug } from '@/lib/data/work-type-guide';
 import OpenEventPopup from './OpenEventPopup';
 import { PushPermission } from './PushPermission';
+import { BannerSidebar } from './BannerSidebar';
 
 interface LayoutWrapperProps {
     children: React.ReactNode;
@@ -194,11 +195,17 @@ export const LayoutWrapper = ({ children }: LayoutWrapperProps) => {
                 */}
                 <div className={`w-full max-w-[1432px] mx-auto relative h-auto flex-1`}>
 
-                    <div className="block min-h-screen">
+                    <div className="xl:grid xl:grid-cols-[160px_1fr_160px] min-h-screen">
+                        {/* Left Banner Sidebar — 향후 새 배너 시스템 연동 예정 */}
+                        <BannerSidebar side="left" />
+
                         {/* Main Content */}
                         <main className={`w-full flex-1 min-w-0 relative z-[10] ${isAdminPage ? 'px-0' : ''}`}>
                             {children}
                         </main>
+
+                        {/* Right Banner Sidebar — 향후 새 배너 시스템 연동 예정 */}
+                        <BannerSidebar side="right" />
                     </div>
 
                 </div>

@@ -63,7 +63,7 @@ const LoginForm = ({ id, setId, pw, setPw, loginType, setLoginType, handleLogin,
 
         <form onSubmit={handleLogin} className="flex gap-1.5 h-20">
             <div className="flex-1 flex flex-col gap-1.5">
-                <input type="text" placeholder="아이디" value={id} onChange={(e) => setId(e.target.value)} className="w-full h-1/2 px-3 border-2 border-gray-100 text-[12px] font-bold focus:border-red-500 outline-none rounded-md bg-gray-50/20" />
+                <input type="text" placeholder="아이디@이메일 (예: hong@gmail.com)" value={id} onChange={(e) => setId(e.target.value)} className="w-full h-1/2 px-3 border-2 border-gray-100 text-[12px] font-bold focus:border-red-500 outline-none rounded-md bg-gray-50/20" />
                 <input type="password" placeholder="비밀번호" value={pw} onChange={(e) => setPw(e.target.value)} className="w-full h-1/2 px-3 border-2 border-gray-100 text-[12px] font-bold focus:border-red-500 outline-none rounded-md bg-gray-50/20" />
             </div>
             <button type="submit" style={{ backgroundColor: primaryColor || '#1e3a5f' }} className="w-20 h-full text-white font-black text-xs hover:brightness-105 active:scale-95 transition-all rounded-md shadow-sm">로그인</button>

@@ -118,7 +118,7 @@ export const LoginPage = () => {
             <div className="space-y-4">
                 <input
                     type="text"
-                    placeholder="아이디"
+                    placeholder="아이디@이메일 (예: hong@gmail.com)"
                     value={loginId}
                     onChange={(e) => setLoginId(e.target.value)}
                     className={`w-full p-4 rounded-xl border ${brand.theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} `}

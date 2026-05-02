@@ -45,6 +45,7 @@ const REGION_BUTTONS: { label: string; value: string }[] = [
 const JOB_TYPE_BUTTONS = ['룸살롱', '가라오케', '클럽', '나이트', '바', '기타'];
 
 import { SIDEBAR_KEYWORDS } from '@/constants/job-options';
+import { InnerSidebarCarousel } from '@/components/InnerSidebarCarousel';
 
 import { useAuth } from '@/hooks/useAuth';
 import { useMobile } from '@/hooks/useMobile';
@@ -251,7 +252,7 @@ export default function LeftSidebar({
                             <div className="space-y-2">
                                 <input
                                     type="text"
-                                    placeholder="ID"
+                                    placeholder="아이디@이메일 (예: hong@gmail.com)"
                                     value={loginId}
                                     onChange={(e) => setLoginId(e.target.value)}
                                     onKeyDown={handleKeyDown}
@@ -439,6 +440,9 @@ export default function LeftSidebar({
                     })}
                 </div>
             </div>
+
+            {/* 7-A. 내부 배너 캐러셀 슬롯 — 향후 새 배너 시스템 연동 예정 */}
+            <InnerSidebarCarousel />
 
             {/* 8. 광고 슬롯 2 - 웨이터존 광고입전상담 */}
             <div

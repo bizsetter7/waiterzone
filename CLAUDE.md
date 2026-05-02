@@ -1,5 +1,11 @@
 # P9 웨이터존 (waiterzone) CLAUDE.md
-> 최종 업데이트: 2026-04-28 | 작성자: 코부장
+> 최종 업데이트: 2026-05-02 | 작성자: 코부장
+
+> **[필독] 작업 시작 전 선행 문서 (Phase 1·2·3 신규 추가)**
+> 1. `D:\토탈프로젝트\My-site\p1.choco-idea\PATTERNS\INDEX.md` — 재사용 패턴 P-01~P-06 ⭐
+> 2. `D:\토탈프로젝트\My-site\p1.choco-idea\MISTAKES_LOG.md` — M-001~M-062
+> 3. `D:\토탈프로젝트\My-site\p1.choco-idea\AI_SOP.md` — 전사 운영 SOP
+> 4. `D:\토탈프로젝트\My-site\p1.choco-idea\RECIPES\R-01_new_brand_clone.md` — 브랜드 복제 가이드
 
 ---
 

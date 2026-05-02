@@ -336,13 +336,13 @@ export const SignupPage = () => {
             if (iPw !== iPwConfirm) { alert('비밀번호가 일치하지 않습니다.'); return; }
             if (iPw.length < 6) { alert('비밀번호는 6자 이상이어야 합니다.'); return; }
             if (!iNickname) { alert('닉네임을 입력해주세요.'); return; }
-            if (!iEmail) { alert('이메일을 입력해주세요. (비밀번호 분실 시 재설정에 필요합니다.)'); return; }
+            if (!iEmail) { alert('로그인 이메일을 입력해주세요. (가입 후 이 이메일로 로그인합니다.)'); return; }
         } else {
             if (!cIdChecked) { alert('아이디 중복확인을 완료해주세요.'); return; }
             if (!cId || !cPw || !cPwConfirm) { alert('필수 항목을 모두 입력해주세요.'); return; }
             if (cPw !== cPwConfirm) { alert('비밀번호가 일치하지 않습니다.'); return; }
             if (!verified) { alert('담당자 본인인증을 먼저 완료해주세요.'); return; }
-            if (!cEmail) { alert('이메일을 입력해주세요. (비밀번호 분실 시 재설정에 필요합니다.)'); return; }
+            if (!cEmail) { alert('로그인 이메일을 입력해주세요. (가입 후 이 이메일로 로그인합니다.)'); return; }
         }
 
         setIsLoading(true);
@@ -568,8 +568,8 @@ export const SignupPage = () => {
                             )}
                         </Field>
 
-                        {/* 이메일 (비밀번호 찾기용, 필수) */}
-                        <Field label="이메일" required hint="비밀번호 분실 시 재설정에 사용 — 반드시 입력">
+                        {/* 이메일 — 로그인 계정으로 사용 (필수) */}
+                        <Field label="로그인 이메일" required hint="가입 후 이 이메일로 로그인합니다 — 실제 사용 중인 이메일을 입력하세요">
                             <Input type="email" placeholder="example@gmail.com"
                                 value={iEmail} onChange={(e) => setIEmail(e.target.value)} required />
                         </Field>
@@ -642,7 +642,7 @@ export const SignupPage = () => {
                                     <p className="text-[11px] text-red-500 font-bold mt-1">비밀번호가 일치하지 않습니다.</p>
                                 )}
                             </Field>
-                            <Field label="이메일" required hint="비밀번호 분실 시 재설정에 사용 — 반드시 입력">
+                            <Field label="로그인 이메일" required hint="가입 후 이 이메일로 로그인합니다 — 실제 사용 중인 이메일을 입력하세요">
                                 <Input type="email" placeholder="example@gmail.com"
                                     value={cEmail} onChange={(e) => setCEmail(e.target.value)} required />
                             </Field>

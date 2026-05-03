@@ -195,7 +195,7 @@ export const LayoutWrapper = ({ children }: LayoutWrapperProps) => {
                 */}
                 <div className={`w-full max-w-[1432px] mx-auto relative h-auto flex-1`}>
 
-                    <div className="xl:grid xl:grid-cols-[160px_1fr_160px] min-h-screen">
+                    <div className={`${isAdminPage ? '' : 'xl:grid xl:grid-cols-[160px_1fr_160px]'} min-h-screen`}>
                         {/* Left Banner Sidebar */}
                         {!isAdminPage && <BannerSidebar side="left" />}
 

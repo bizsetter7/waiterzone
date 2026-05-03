@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { DETAILED_PRICING } from './constants';
 import { ICONS } from '@/constants/job-options';
+import { normalizeRegionFull } from '@/lib/regionUtils';
 
 // [Total Reset] Robust Helper
 const getValid = (v1: any, v2: any, defaultValue: any = '') => {
@@ -381,12 +382,7 @@ export function useAdFormState(userId?: string) {
         setTitle(norm.title);
         setIndustryMain(norm.category);
         setIndustrySub(norm.industrySub);
-        const REGION_ALIAS: Record<string, string> = {
-            '경기': '경기도', '강원': '강원도', '경남': '경상남도', '경북': '경상북도',
-            '전남': '전라남도', '전북': '전라북도', '충남': '충청남도', '충북': '충청북도',
-            '제주': '제주도',
-        };
-        setRegionCity(REGION_ALIAS[norm.regionCity] || norm.regionCity);
+        setRegionCity(normalizeRegionFull(norm.regionCity));
         setRegionGu(norm.regionGu);
         setAddressDetail(norm.addressDetail);
 

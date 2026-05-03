@@ -47,7 +47,7 @@ export function AdminStatsOverview({ stats, userStats, adStats, setActiveTab }: 
                     trend={`오늘 +${stats.newUserToday}`}
                     icon={<Users size={24} />}
                     color="slate"
-                    onClick={() => setActiveTab('users')}
+                    onClick={() => setActiveTab('stats')}
                 />
                 <StatCard
                     title="전체 트래픽(UV)"

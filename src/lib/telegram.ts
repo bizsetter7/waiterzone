@@ -89,7 +89,7 @@ export async function sendJobsApprovalAlert(shop: {
     const payStr    = shop.pay && shop.pay !== '면접후결정'
         ? `${shop.pay_type ?? ''} ${Number(String(shop.pay).replace(/[^0-9]/g, '')).toLocaleString()}원`
         : '면접 후 결정';
-    const url = `https://www.waiterzone.kr/coco/${encodeURIComponent(region)}/${shop.id}`;
+    const url = `https://www.waiterzone.kr/waiter/${encodeURIComponent(region)}/${shop.id}`;
 
     const text = [
         `🆕 <b>[신규 공고 등록]</b>`,

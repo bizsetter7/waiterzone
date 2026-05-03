@@ -56,7 +56,7 @@ export const AdBannerCard = React.memo(({ shop, tierId, onClick }: AdBannerCardP
 
     return (
         <a 
-            href={`/coco/${slugify(shop.region)}/${shop.id}`}
+            href={`/waiter/${slugify(shop.region)}/${shop.id}`}
             onClick={(e) => {
                 if (onClick) {
                     e.preventDefault();

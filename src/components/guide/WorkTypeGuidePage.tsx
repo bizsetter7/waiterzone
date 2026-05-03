@@ -21,7 +21,7 @@ export default function WorkTypeGuidePage({ regionSlug, regionName, workTypeSlug
             <nav className="text-sm text-gray-400 mb-6 flex items-center gap-1 flex-wrap">
                 <Link href="/" className="hover:text-[#1e3a5f]">홈</Link>
                 <span>›</span>
-                <Link href={`/coco/${regionSlug}`} className="hover:text-[#1e3a5f]">{regionName} 알바</Link>
+                <Link href={`/waiter/${regionSlug}`} className="hover:text-[#1e3a5f]">{regionName} 알바</Link>
                 <span>›</span>
                 <span className="text-gray-700 font-medium">{regionName} {workTypeInfo.name}</span>
             </nav>
@@ -137,7 +137,7 @@ export default function WorkTypeGuidePage({ regionSlug, regionName, workTypeSlug
                     {otherWorkTypes.map((slug) => (
                         <Link
                             key={slug}
-                            href={`/coco/${regionSlug}/${slug}`}
+                            href={`/waiter/${regionSlug}/${slug}`}
                             className="px-4 py-2 rounded-full border border-gray-200 text-sm text-gray-600 hover:border-[#1e3a5f]/30 hover:text-[#1e3a5f] hover:bg-[#1e3a5f]/5 transition-colors"
                         >
                             {WORK_TYPE_INFO[slug].name}
@@ -155,7 +155,7 @@ export default function WorkTypeGuidePage({ regionSlug, regionName, workTypeSlug
                     웨이터존에서 검증된 {regionName} 지역 업소만 모아보세요
                 </p>
                 <Link
-                    href={`/coco/${regionSlug}`}
+                    href={`/waiter/${regionSlug}`}
                     className="inline-block bg-white text-[#1e3a5f] font-bold px-6 py-3 rounded-full hover:bg-blue-50 transition-colors"
                 >
                     {regionName} 공고 보러가기 →

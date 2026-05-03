@@ -581,7 +581,7 @@ export const JobDetailContent = ({
                             {relatedSlugs.map(slug => (
                                 <Link
                                     key={slug}
-                                    href={`/coco/${regionSlug}/${slug}`}
+                                    href={`/waiter/${regionSlug}/${slug}`}
                                     className="px-2.5 py-1 rounded-full bg-white border border-pink-100 text-[10px] font-medium text-pink-500 hover:bg-pink-50 hover:border-pink-300 transition-colors"
                                 >
                                     {regionName}{WORK_TYPE_INFO[slug].name.replace(/\s*\(.*\)/, '').replace('알바', '알바')}

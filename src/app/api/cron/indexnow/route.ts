@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
             const region = String(shop.region ?? '').replace(/[\[\]]/g, '').trim();
             const regionSlug = slugify(region);
             if (regionSlug) {
-                urls.push(`${BASE_URL}/coco/${regionSlug}/${shop.id}`);
+                urls.push(`${BASE_URL}/waiter/${regionSlug}/${shop.id}`);
             }
         }
 

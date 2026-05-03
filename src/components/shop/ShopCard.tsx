@@ -78,7 +78,7 @@ export const ShopCard = React.memo(({ shop, rank, tierLabel, tierId, onClick, hi
 
     return (
         <a
-            href={`/coco/${slugify(shop.region)}/${shop.id}`}
+            href={`/waiter/${slugify(shop.region)}/${shop.id}`}
             onClick={(e) => {
                 if (onClick) {
                     e.preventDefault();

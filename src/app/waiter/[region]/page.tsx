@@ -41,12 +41,12 @@ export async function generateMetadata({ params }: { params: Promise<{ region: s
         title,
         description,
         alternates: {
-            canonical: `https://www.waiterzone.kr/coco/${encodeURIComponent(decodedRegionSlug)}`,
+            canonical: `https://www.waiterzone.kr/waiter/${encodeURIComponent(decodedRegionSlug)}`,
         },
         openGraph: {
             title,
             description,
-            url: `https://www.waiterzone.kr/coco/${region}`,
+            url: `https://www.waiterzone.kr/waiter/${region}`,
             siteName: '웨이터존',
             images: [
                 {
@@ -109,7 +109,7 @@ export default async function CocoRegionPage({ params }: { params: Promise<{ reg
         "@type": "WebPage",
         "name": `${regionName} 여자야간알바·여자남성유흥알바 전문 - 웨이터존`,
         "description": `${regionName} 지역 검증된 ${kw0}, ${kw1} 상세정보를 실시간으로 확인하세요.`,
-        "url": `https://www.waiterzone.kr/coco/${region}`,
+        "url": `https://www.waiterzone.kr/waiter/${region}`,
         "publisher": { "@type": "Organization", "name": "웨이터존", "url": "https://www.waiterzone.kr" }
     };
 
@@ -120,7 +120,7 @@ export default async function CocoRegionPage({ params }: { params: Promise<{ reg
         "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "홈", "item": "https://www.waiterzone.kr" },
             { "@type": "ListItem", "position": 2, "name": "지역별 채용", "item": "https://www.waiterzone.kr/region" },
-            { "@type": "ListItem", "position": 3, "name": `${regionName} 채용`, "item": `https://www.waiterzone.kr/coco/${region}` }
+            { "@type": "ListItem", "position": 3, "name": `${regionName} 채용`, "item": `https://www.waiterzone.kr/waiter/${region}` }
         ]
     };
 
@@ -180,57 +180,15 @@ export default async function CocoRegionPage({ params }: { params: Promise<{ reg
         ]
     };
 
-    // [SEO 튜닝] 오늘 날짜를 보정하여 구글에 최신 정보임을 알림
-    const today = new Date();
-    const isoDate = today.toISOString().split('T')[0] + 'T00:00:00Z';
-
-    // [JSON-LD 4] JobPosting - 엔터알바 제거 및 브랜드 정격화
-    const jobPostingSchema = {
-        "@context": "https://schema.org",
-        "@type": "JobPosting",
-        "title": `[${regionName}] 노래방알바·남성유흥알바·마사지·엔터 정보 플랫폼 웨이터존`,
-        "description": `${regionName} 지역 1등 고소득 남성알바 정보를 실시간 확인하세요. 엔터, 노래주점, 마사지 등 대한민국 프리미엄 고수익 알바 정보를 안전하게 제공합니다.`,
-        "identifier": {
-            "@type": "PropertyValue",
-            "name": "WAITERZONE",
-            "value": `REGION_ADS_${region}`
-        },
-        "datePosted": isoDate,
-        "validThrough": "2026-12-31T23:59:59Z",
-        "employmentType": "FULL_TIME",
-        "hiringOrganization": {
-            "@type": "Organization",
-            "name": "WAITERZONE",
-            "sameAs": "https://waiterzone.kr"
-        },
-        "jobLocation": {
-            "@type": "Place",
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": `${regionName} 중심상업로 및 번화가 일대`,
-                "addressLocality": regionName,
-                "addressRegion": "KR",
-                "postalCode": "16450", // 수원 팔달구 기준 기본값 (GSC 경고 방지)
-                "addressCountry": "KR"
-            }
-        },
-        "baseSalary": {
-            "@type": "MonetaryAmount",
-            "currency": "KRW",
-            "value": {
-                "@type": "QuantitativeValue",
-                "value": 500000,
-                "unitText": "DAY"
-            }
-        }
-    };
+    // [SEO-1E 2026-05-03] placeholder JobPosting 제거
+    // 사유: 단일 페이지에 일반화된 placeholder JobPosting은 Google 정책 위반(스팸 신호).
+    //      실제 채용공고 마크업은 광고 상세 [id]/page.tsx 에서만 사용.
 
     return (
         <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }} />
             <RegionClient shops={shops} initialRegion={initialRegion} regionSlug={decodedRegionSlug} />
 
             {/* ── 지역×업종 가이드 링크 그리드 (서버사이드 렌더링 — 내부 링크 SEO) ── */}
@@ -245,7 +203,7 @@ export default async function CocoRegionPage({ params }: { params: Promise<{ reg
                     {WORK_TYPE_SLUGS.map((slug) => (
                         <Link
                             key={slug}
-                            href={`/coco/${encodeURIComponent(decodedRegionSlug)}/${slug}`}
+                            href={`/waiter/${encodeURIComponent(decodedRegionSlug)}/${slug}`}
                             className="px-3 py-1.5 rounded-full bg-white border border-gray-200 text-xs text-gray-600 hover:border-pink-300 hover:text-pink-600 hover:bg-pink-50 transition-colors shadow-sm"
                         >
                             {regionName} {WORK_TYPE_INFO[slug].name.replace(/\s*\(.*\)$/, '')}

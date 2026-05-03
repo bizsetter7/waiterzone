@@ -136,5 +136,5 @@ export function buildShopImageSitemapEntry(shop: ShopLike): ImageSitemapEntry | 
  * 광고 상세 페이지 URL 생성
  */
 export function buildShopPageUrl(shop: ShopLike, regionSlug: string): string {
-    return `${BASE_URL}/coco/${regionSlug}/${shop.id}`;
+    return `${BASE_URL}/waiter/${regionSlug}/${shop.id}`;
 }

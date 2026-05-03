@@ -72,7 +72,7 @@ export async function GET() {
             const imageUrl = shop.banner_image_url || shop.media_url;
             if (!imageUrl || !imageUrl.startsWith('http')) continue;
 
-            const pageUrl  = `${BASE_URL}/coco/${slugify(regionRaw)}/${shop.id}`;
+            const pageUrl  = `${BASE_URL}/waiter/${slugify(regionRaw)}/${shop.id}`;
             const shopName = shop.nickname || shop.name || '업체';
             const category = shop.category || '알바';
             const altText  = `${regionRaw} ${category} 구인공고 - ${shopName} | 웨이터존`;

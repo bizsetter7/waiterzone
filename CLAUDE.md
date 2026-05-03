@@ -1,5 +1,5 @@
 # P9 웨이터존 (waiterzone) CLAUDE.md
-> 최종 업데이트: 2026-05-02 | 작성자: 코부장
+> 최종 업데이트: 2026-05-03 | 작성자: 코부장 | **브랜드 URL 정규화: /coco/ → /waiter/ (SEO-1E)**
 
 > **[필독] 작업 시작 전 선행 문서 (Phase 1·2·3 신규 추가)**
 > 1. `D:\토탈프로젝트\My-site\p1.choco-idea\PATTERNS\INDEX.md` — 재사용 패턴 P-01~P-06 ⭐
@@ -35,18 +35,18 @@
 ## 3. 라우팅 구조 (핵심 — 절대 변경 금지)
 
 ```
-/                     → 홈 (HomePortalClient.tsx)
-/coco/[region]        → 지역 SEO 랜딩 페이지
-/coco/[region]/[id]   → 광고 상세
-/jobs                 → 구인 목록
-/jobs/[id]            → 구인 상세
-/region               → 지역 목록
-/community            → 커뮤니티
-/go/[slug]            → 단축 URL 리다이렉트
-/admin/*              → 관리자 (어드민 이메일 체크)
+/                       → 홈 (HomePortalClient.tsx)
+/waiter/[region]        → 지역 SEO 랜딩 페이지 (브랜드 일치 — SEO-1E 2026-05-03)
+/waiter/[region]/[id]   → 광고 상세
+/jobs                   → 구인 목록
+/jobs/[id]              → 구인 상세
+/region                 → 지역 목록
+/community              → 커뮤니티
+/go/[slug]              → 단축 URL 리다이렉트
+/admin/*                → 관리자 (어드민 이메일 체크)
 ```
 
-**⚠️ 주의**: Footer/page.tsx의 링크는 반드시 `/coco/` 경로 사용. `/waiter/` 경로는 존재하지 않음!
+**⚠️ 주의**: Footer/page.tsx의 링크는 반드시 `/waiter/` 경로 사용. `/coco/` 경로는 next.config.ts redirects()에서 301로 `/waiter/`로 매핑되며, 코드에서 직접 `/coco/`를 사용하면 안 됨.
 
 ---
 
@@ -68,7 +68,7 @@
 2. **`middleware.ts`에 어드민 리다이렉트 추가 금지** — Vercel 무한루프 원인
 3. **파일 전체 덮어쓰기 금지** — Edit 핀셋 수정만
 4. **shops.json에 P2 광고데이터 절대 복사 금지** — `[]` 유지
-5. **`/waiter/` 경로 링크 금지** — 존재하지 않는 라우트, `/coco/` 사용
+5. **`/coco/` 경로 직접 사용 금지** — 브랜드 URL은 `/waiter/`. 구 `/coco/` URL은 next.config.ts 301 redirect로 자동 매핑됨 (SEO-1E 2026-05-03)
 
 ---
 
@@ -115,7 +115,7 @@
 - [x] TS 빌드 에러 전면 수정 (work-type-guide.ts, Route exports, params Promise 등)
 - [x] shops.json 초기화 (P2 광고 데이터 제거)
 - [x] COCOALBA 브랜딩 잔재 제거
-- [x] /waiter/ → /coco/ 라우팅 수정
+- [x] **2026-05-03 SEO-1E**: 브랜드 URL 정규화 `/coco/` → `/waiter/` (폴더 rename + 21개 파일 치환 + 301 redirect 추가 + placeholder JobPosting 제거)
 - [x] Shadow_SEO_Master.json "(COCOALBA)" 제거
 
 ### 미완료 TODO

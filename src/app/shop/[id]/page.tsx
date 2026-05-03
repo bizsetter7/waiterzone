@@ -15,7 +15,7 @@ export default async function LegacyShopRedirect({ params }: Props) {
     if (staticShop?.region) {
         const rawRegion = staticShop.region.replace(/\[|\]/g, '').trim();
         const regionSlug = slugify(rawRegion.normalize('NFC'));
-        if (regionSlug) permanentRedirect(`/coco/${encodeURIComponent(regionSlug)}/${id}`);
+        if (regionSlug) permanentRedirect(`/waiter/${encodeURIComponent(regionSlug)}/${id}`);
     }
 
     // 2. Supabase 실제 공고 조회
@@ -31,7 +31,7 @@ export default async function LegacyShopRedirect({ params }: Props) {
 
     if (shop?.region) {
         const regionSlug = slugify(shop.region.normalize('NFC'));
-        if (regionSlug) permanentRedirect(`/coco/${encodeURIComponent(regionSlug)}/${id}`);
+        if (regionSlug) permanentRedirect(`/waiter/${encodeURIComponent(regionSlug)}/${id}`);
     }
 
     permanentRedirect('/jobs');

@@ -35,7 +35,7 @@ export const JobTypeGuideLinks = ({ jobType }: JobTypeGuideLinksProps) => {
                 {TOP_REGIONS.map((region) => (
                     <Link
                         key={region}
-                        href={`/coco/${region}/${guideSlug}`}
+                        href={`/waiter/${region}/${guideSlug}`}
                         className="inline-block px-4 py-2 bg-pink-500 text-white rounded-full text-sm font-medium hover:bg-pink-600 transition-colors shadow-sm active:scale-95"
                     >
                         {region} {jobType}

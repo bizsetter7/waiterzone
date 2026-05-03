@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { isWhitelistedBot } from '@/lib/seo';
 
 // ─── 차단할 봇 User-Agent 목록 ──────────────────────────────────
 const BLOCKED_BOTS = [
@@ -112,27 +113,28 @@ export function middleware(request: NextRequest) {
 
     // 1. 보안 제외 경로 (Audit Mode 대응)
     const isAuditPath = pathname.includes('/audit') || pathname.includes('/test');
-    const isGooglebot = ua.includes('googlebot');
+    // P-03 표준: 검색엔진 봇 8종 화이트리스트 (Googlebot/Naverbot/Bingbot/Yeti/Daumoa 등 즉시 통과)
+    const isSearchBot = isWhitelistedBot(ua);
 
     // 2. 봇 User-Agent 차단 (로컬 IP는 제외 — TestSprite 등 로컬 테스트 도구 허용)
     const isLocalIp = ip === '127.0.0.1' || ip === '::1';
     const isBlockedBot = BLOCKED_BOTS.some(bot => ua.includes(bot.toLowerCase()));
-    
-    // Googlebot은 명시적으로 허용
-    if (isBlockedBot && !isAuditPath && !isLocalIp && !isGooglebot) {
+
+    // 검색엔진 봇은 명시적으로 허용
+    if (isBlockedBot && !isAuditPath && !isLocalIp && !isSearchBot) {
         console.warn(`[BOT BLOCKED] IP: ${ip} | UA: ${ua.substring(0, 80)}`);
         return blocked('자동화된 접근이 차단되었습니다.', 403);
     }
 
     // 3. User-Agent 없는 요청 차단 (빈 UA는 거의 100% 봇)
-    if ((!ua || ua.length < 10) && !isAuditPath && !isGooglebot) {
+    if ((!ua || ua.length < 10) && !isAuditPath && !isSearchBot) {
         return blocked('올바른 브라우저로 접속해주세요.', 403);
     }
 
     // 4. Rate Limiting — 1분에 60회 초과 시 차단 (다만 /audit 경로 및 로컬/터널 트래픽 제외)
-    // Googlebot도 Rate Limit에서 제외하여 원활한 색인 허용
+    // 검색엔진 봇도 Rate Limit에서 제외하여 원활한 색인 허용
     const isLocalTraffic = !request.headers.get('cf-connecting-ip');
-    if (isRateLimited(ip) && !isAuditPath && !isLocalTraffic && !isGooglebot) {
+    if (isRateLimited(ip) && !isAuditPath && !isLocalTraffic && !isSearchBot) {
         console.warn(`[RATE LIMITED] IP: ${ip} | Path: ${pathname}`);
         return new NextResponse('요청이 너무 많습니다. 잠시 후 다시 시도해주세요.', {
             status: 429,

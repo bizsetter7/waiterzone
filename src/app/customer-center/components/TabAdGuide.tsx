@@ -32,11 +32,11 @@ const PLANS = [
         price: 0,
         description: '밤길 3개월 무료 체험',
         platforms: ['밤길'],
-        waiterzone: false,
+        cocoalba: false,
         features: [
             '밤길 지도 기본 핀 노출',
             '3개월 무료 체험',
-            '※ 웨이터존 미노출',
+            '※ 코코알바 미노출',
         ],
         icon: <FileText className="text-gray-400" />,
         highlight: false,
@@ -45,12 +45,12 @@ const PLANS = [
         id: 'basic',
         name: '베이직',
         price: 22000,
-        description: '밤길 기본 노출 (웨이터존 미포함)',
-        platforms: ['밤길'],
-        waiterzone: false,
+        description: '첫 시작을 위한 기본 플랜',
+        platforms: ['밤길', '웨이터존'],
+        cocoalba: false,
         features: [
             '밤길 지도 기본 핀 노출',
-            '※ 웨이터존 노출은 스탠다드 이상부터',
+            '웨이터존 리스트 노출',
         ],
         icon: <FileText className="text-gray-400" />,
         highlight: false,
@@ -59,13 +59,13 @@ const PLANS = [
         id: 'standard',
         name: '스탠다드',
         price: 66000,
-        description: '야사장에서 웨이터존 선택 시 일반 리스트 노출',
-        platforms: ['밤길', '웨이터존'],
-        waiterzone: true,
+        description: '코코알바 또는 선수존 선택 노출',
+        platforms: ['밤길', '코코알바 또는 선수존'],
+        cocoalba: true,
         features: [
             '밤길 지도 기본 핀 노출',
-            '웨이터존 일반 리스트 노출',
-            '※ 야사장에서 코코알바·선수존 중 1개 선택도 가능',
+            '코코알바 업체정보 리스트 노출',
+            '선수존 리스트 노출 (택 1)',
         ],
         icon: <Star className="text-blue-400" />,
         highlight: false,
@@ -74,13 +74,14 @@ const PLANS = [
         id: 'special',
         name: '스페셜',
         price: 88000,
-        description: '웨이터존 업체정보 강화 노출',
-        platforms: ['밤길', '웨이터존'],
-        waiterzone: true,
+        description: '3개 플랫폼 동시 노출',
+        platforms: ['밤길', '웨이터존', '코코알바 또는 선수존'],
+        cocoalba: true,
         features: [
             '밤길 지도 기본 핀 노출',
-            '웨이터존 일반 리스트 노출',
-            '웨이터존 업체정보 강화 노출',
+            '웨이터존 리스트 노출',
+            '코코알바 업체정보 리스트 노출',
+            '선수존 리스트 노출 (택 1)',
             '광고 점프:\n무료 10회 + 자동 3회/일',
         ],
         icon: <Zap className="text-[#1e3a5f]" />,
@@ -90,13 +91,12 @@ const PLANS = [
         id: 'deluxe',
         name: '디럭스',
         price: 199000,
-        description: '강조 효과 + PC 사이드바 노출',
-        platforms: ['밤길', '웨이터존'],
-        waiterzone: true,
+        description: '강조 효과로 경쟁 업소 압도',
+        platforms: ['밤길', '웨이터존', '코코알바 또는 선수존'],
+        cocoalba: true,
         features: [
             '스페셜의 모든 기능 포함',
             '인기 업소 아이콘 강조 표시',
-            'PC 사이드바 노출',
             '밤길 대형 핀 노출',
             '광고 점프:\n무료 30회 + 자동 6회/일',
         ],
@@ -108,12 +108,13 @@ const PLANS = [
         name: '프리미엄',
         price: 399000,
         description: 'PC·모바일 상위노출 최강 패키지',
-        platforms: ['밤길', '웨이터존'],
-        waiterzone: true,
+        platforms: ['밤길', '웨이터존', '코코알바 또는 선수존'],
+        cocoalba: true,
         features: [
-            '디럭스의 모든 기능 포함',
-            '웨이터존 프리미엄 채용 섹션 노출',
+            '스페셜의 모든 기능 포함',
+            '코코알바 프리미엄 채용 섹션 노출',
             'PC·모바일 최상단 고정 노출',
+            '인기 업소 아이콘 강조 표시',
             '광고 점프:\n무료 30회 +\n매일 +1회 추가 + 자동 8회/일',
         ],
         icon: <Sparkles className="text-amber-400" />,
@@ -147,22 +148,22 @@ export function TabAdGuide({ onTabChange }: TabAdGuideProps) {
     return (
         <div className="space-y-8">
 
-            {/* 페이지 헤더 — minimal */}
-            <div className="pb-6 border-b border-gray-100">
-                <div className="flex items-center gap-3 mb-2">
-                    <div className="w-1 h-7 bg-[#1e3a5f] rounded-full shrink-0" />
-                    <h2 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tighter">야사장 구독으로 한 번에 🚀</h2>
+            {/* 히어로 배너 */}
+            <div className="text-center py-10 md:py-12 bg-gradient-to-br from-[#1e3a5f] to-[#162d4a] rounded-[40px] text-white shadow-xl shadow-blue-200/50 relative overflow-hidden border border-blue-900">
+                <div className="absolute top-0 right-0 p-10 opacity-10">
+                    <Zap size={150} strokeWidth={3} className="text-white" />
                 </div>
-                <p className={`text-sm font-bold ml-4 mb-4 ${dark ? 'text-gray-400' : 'text-gray-500'}`}>
+                <h2 className="text-2xl md:text-3xl font-black mb-3 tracking-tighter text-white">야사장 구독으로 한 번에 🚀</h2>
+                <p className="text-blue-100 text-[13px] md:text-sm font-black tracking-tight opacity-90">
                     밤길 · {brand.name} · 웨이터존 · 선수존 — 플랫폼을 구독 하나로 통합 관리하세요.
                 </p>
                 <a
                     href="https://yasajang.kr/register"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="ml-4 inline-flex items-center gap-2 px-5 py-2.5 bg-[#1e3a5f] text-white font-black rounded-xl shadow-md hover:bg-[#162d4a] transition text-[13px]"
+                    className="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-white text-[#1e3a5f] font-black rounded-full shadow-lg hover:scale-105 transition text-[14px]"
                 >
-                    야사장 입점 신청 <ArrowRight size={15} />
+                    야사장 입점 신청 <ArrowRight size={16} />
                 </a>
             </div>
 
@@ -318,11 +319,11 @@ export function TabAdGuide({ onTabChange }: TabAdGuideProps) {
                             {[
                                 { label: '밤길 기본 핀', plans: ['basic', 'standard', 'special', 'deluxe', 'premium'] },
                                 { label: '밤길 대형 핀', plans: ['deluxe', 'premium'] },
-                                { label: '웨이터존 일반 리스트', plans: ['standard', 'special', 'deluxe', 'premium'] },
-                                { label: '웨이터존 업체정보 강화', plans: ['special', 'deluxe', 'premium'] },
-                                { label: 'PC 사이드바 노출', plans: ['deluxe', 'premium'] },
+                                { label: '웨이터존 리스트', plans: ['basic', 'special', 'deluxe', 'premium'] },
+                                { label: '코코알바 업체정보', plans: ['standard', 'special', 'deluxe'] },
+                                { label: '코코알바 프리미엄 채용', plans: ['premium'] },
+                                { label: '선수존 리스트', plans: ['standard', 'special', 'deluxe', 'premium'] },
                                 { label: '강조 아이콘', plans: ['deluxe', 'premium'] },
-                                { label: '웨이터존 프리미엄 채용', plans: ['premium'] },
                                 { label: '최상단 고정 노출', plans: ['premium'] },
                             ].map((row) => (
                                 <tr key={row.label} className="hover:bg-blue-50/10 transition-colors">
@@ -341,7 +342,7 @@ export function TabAdGuide({ onTabChange }: TabAdGuideProps) {
                     </table>
                 </div>
                 <p className={`text-[11px] font-bold ${dark ? 'text-gray-500' : 'text-gray-400'}`}>
-                    ※ 야사장 가입 후 코코알바·웨이터존·선수존 중 1개를 선택해 노출됩니다. 웨이터존을 선택하면 위 표대로 노출되며, 다른 플랫폼 선택 시에는 해당 플랫폼 기준으로 노출됩니다.
+                    ※ 야사장 가입 후 코코알바·웨이터존·선수존 중 1개를 선택해 노출됩니다. 코코알바를 선택하면 위 표대로 노출되며, 다른 플랫폼 선택 시에는 해당 플랫폼 기준으로 노출됩니다.
                 </p>
             </div>
 

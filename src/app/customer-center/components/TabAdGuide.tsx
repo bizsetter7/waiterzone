@@ -1,26 +1,18 @@
 'use client';
 
 import React, { useState } from 'react';
-import { createPortal } from 'react-dom';
-import Image from 'next/image';
 import { useBrand } from '@/components/BrandProvider';
 import {
     Zap,
     Star,
     Crown,
     FileText,
-    Search,
-    Monitor,
-    Smartphone,
-    ChevronUp,
-    ChevronDown,
     Info,
     ArrowRight,
     MapPin,
     CheckCircle2,
     Clock,
     Home,
-    X,
     Sparkles,
 } from 'lucide-react';
 
@@ -140,8 +132,7 @@ interface TabAdGuideProps {
 
 export function TabAdGuide({ onTabChange }: TabAdGuideProps) {
     const brand = useBrand();
-    const [activeAccordion, setActiveAccordion] = useState<string | null>(null);
-    const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    const [activePlatformTab, setActivePlatformTab] = useState<string>('bamgil');
 
     const dark = brand.theme === 'dark';
 
@@ -422,59 +413,264 @@ export function TabAdGuide({ onTabChange }: TabAdGuideProps) {
                 </div>
             </div>
 
-            {/* 노출 상세 가이드 아코디언 */}
+            {/* 노출 상세 및 영역 안내 — 플랫폼 쇼케이스 */}
             <section className="space-y-6">
                 <div className="flex items-center gap-3">
                     <div className="w-2 h-8 bg-[#1e3a5f] rounded-full" />
                     <h3 className={`text-2xl font-black uppercase tracking-tighter ${dark ? 'text-white' : 'text-gray-900'}`}>노출 상세 및 영역 안내</h3>
                 </div>
-                <div className="space-y-4">
-                    {[
-                        { id: 'pc_1', title: 'PC 가이드 (1) - 메인/사이드/전체', img: '/images/guide/pc_1.png' },
-                        { id: 'pc_2', title: 'PC 가이드 (2) - 업종별/지역별', img: '/images/guide/pc_2.png' },
-                        { id: 'pc_3', title: 'PC 가이드 (3) - 디럭스/스페셜', img: '/images/guide/pc_3.png' },
-                        { id: 'pc_4', title: 'PC 가이드 (4) - 베이직/네이티브', img: '/images/guide/pc_4.png' },
-                        { id: 'mobile', title: '모바일 가이드 - 통합 레이아웃', img: '/images/guide/모바일.png', isMobile: true },
-                    ].map((item) => (
-                        <div key={item.id} className={`overflow-hidden rounded-2xl border ${dark ? 'bg-gray-800/30 border-gray-700' : 'bg-white border-gray-200 shadow-sm'}`}>
-                            <button
-                                onClick={() => setActiveAccordion(activeAccordion === item.id ? null : item.id)}
-                                className={`w-full p-4 md:p-5 flex items-center justify-between transition-colors ${activeAccordion === item.id ? (dark ? 'bg-gray-700/50' : 'bg-gray-50') : ''}`}
-                            >
-                                <div className="flex items-center gap-3">
-                                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${dark ? 'bg-gray-800 text-[#1e3a5f]' : 'bg-blue-50 text-[#1e3a5f]'}`}>
-                                        {(item as any).isMobile ? <Smartphone size={16} /> : <Monitor size={16} />}
-                                    </div>
-                                    <h4 className={`text-[13px] md:text-[14px] font-black ${dark ? 'text-white' : 'text-gray-900'}`}>{item.title}</h4>
-                                </div>
-                                {activeAccordion === item.id ? <ChevronUp size={18} className="text-gray-400" /> : <ChevronDown size={18} className="text-gray-400" />}
-                            </button>
-                            {activeAccordion === item.id && (
-                                <div className="p-4">
-                                    <div
-                                        className={`relative cursor-pointer overflow-hidden rounded-xl border ${dark ? 'border-gray-700' : 'border-gray-100'} ${(item as any).isMobile ? 'max-w-[180px] mx-auto aspect-[9/16]' : 'aspect-[16/10]'}`}
-                                        onClick={() => setSelectedImage(item.img)}
-                                    >
-                                        <Image
-                                            src={item.img}
-                                            alt={item.title}
-                                            width={(item as any).isMobile ? 180 : 800}
-                                            height={(item as any).isMobile ? 320 : 500}
-                                            className="w-full h-full object-cover"
-                                        />
-                                        <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
-                                            <span className="text-white font-black flex items-center gap-1.5 bg-[#1e3a5f] px-3 py-1.5 rounded-full text-[10px] shadow-xl">
-                                                <Search size={12} /> 확대
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className="mt-3 flex items-center justify-center gap-1.5 text-gray-400 text-[10px] font-bold">
-                                        <Info size={12} /> 클릭 시 확대
-                                    </div>
-                                </div>
-                            )}
+
+                <div className={`rounded-[32px] border overflow-hidden shadow-sm ${dark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'}`}>
+                    {/* 탭 헤더 */}
+                    <div className={`px-5 md:px-8 pt-6 pb-4 border-b ${dark ? 'border-gray-700' : 'border-gray-100'}`}>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1">야사장 구독 시</p>
+                        <h4 className={`text-xl md:text-2xl font-black tracking-tighter mb-4 ${dark ? 'text-white' : 'text-gray-900'}`}>여기에 노출됩니다</h4>
+                        <div className="flex gap-2 overflow-x-auto pb-1">
+                            {[
+                                { id: 'bamgil', label: '밤길', sub: '지도 핀 노출' },
+                                { id: 'cocoalba', label: brand.name, sub: '구인 리스트' },
+                                { id: 'waiterzone', label: '웨이터존', sub: '구인 리스트' },
+                                { id: 'sunsuzone', label: '선수존', sub: '구인 리스트' },
+                            ].map(tab => (
+                                <button
+                                    key={tab.id}
+                                    onClick={() => setActivePlatformTab(tab.id)}
+                                    className={`flex flex-col items-center gap-0.5 px-4 py-2 rounded-2xl text-[11px] font-black whitespace-nowrap transition shrink-0 border
+                                        ${activePlatformTab === tab.id
+                                            ? 'bg-[#1e3a5f] text-white border-[#1e3a5f] shadow-md'
+                                            : dark ? 'bg-gray-700 text-gray-400 border-gray-600' : 'bg-gray-50 text-gray-500 border-gray-100 hover:bg-gray-100'
+                                        }`}
+                                >
+                                    <span>{tab.label}</span>
+                                    <span className={`text-[9px] font-bold ${activePlatformTab === tab.id ? 'text-white/70' : 'text-gray-400'}`}>{tab.sub}</span>
+                                </button>
+                            ))}
                         </div>
-                    ))}
+                    </div>
+
+                    {/* 플랫폼별 콘텐츠 */}
+                    <div className={`p-5 md:p-8 ${dark ? '' : 'bg-gray-50/50'}`}>
+                        <div className="flex flex-col md:flex-row gap-6 items-start">
+
+                            {/* 모바일 스크린 목업 */}
+                            <div className="w-full md:w-[190px] shrink-0">
+                                <div className={`rounded-[28px] border-4 overflow-hidden shadow-2xl ${dark ? 'border-gray-600' : 'border-gray-800'}`} style={{ aspectRatio: '9/18' }}>
+
+                                    {activePlatformTab === 'bamgil' && (
+                                        <div className="h-full flex flex-col" style={{ background: '#1a2035' }}>
+                                            <div className="px-3 py-2 flex items-center gap-1.5" style={{ background: '#111827' }}>
+                                                <div className="w-4 h-4 rounded-full bg-[#1e3a5f] flex items-center justify-center"><MapPin size={8} className="text-white" /></div>
+                                                <span className="text-white text-[10px] font-black">밤길</span>
+                                                <span className="ml-auto text-[8px] text-gray-400 font-bold">서울 강남</span>
+                                            </div>
+                                            <div className="flex-1 relative" style={{ background: '#2a3d2a', backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0, rgba(255,255,255,0.04) 1px, transparent 0, transparent 20px), repeating-linear-gradient(-90deg, rgba(255,255,255,0.04) 0, rgba(255,255,255,0.04) 1px, transparent 0, transparent 20px)' }}>
+                                                {([
+                                                    { x: '28%', y: '22%', large: true, color: '#f59e0b' },
+                                                    { x: '55%', y: '32%', large: false, color: '#1e3a5f' },
+                                                    { x: '72%', y: '18%', large: false, color: '#60a5fa' },
+                                                    { x: '18%', y: '52%', large: true, color: '#a855f7' },
+                                                    { x: '62%', y: '58%', large: false, color: '#1e3a5f' },
+                                                    { x: '40%', y: '68%', large: false, color: '#60a5fa' },
+                                                    { x: '80%', y: '45%', large: false, color: '#60a5fa' },
+                                                ] as const).map((pin, i) => (
+                                                    <div key={i} className="absolute flex items-center justify-center" style={{ left: pin.x, top: pin.y, width: pin.large ? 18 : 12, height: pin.large ? 18 : 12, marginLeft: -(pin.large ? 9 : 6), marginTop: -(pin.large ? 9 : 6), background: pin.color, borderRadius: '50%' }}>
+                                                        <MapPin size={pin.large ? 8 : 5} color="white" />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <div className="p-2 flex flex-wrap gap-x-2 gap-y-1" style={{ background: '#111827' }}>
+                                                {([['#f59e0b', '프리미엄'], ['#a855f7', '디럭스'], ['#1e3a5f', '스페셜'], ['#60a5fa', '베이직']] as const).map(([c, l]) => (
+                                                    <div key={l} className="flex items-center gap-0.5">
+                                                        <div className="w-2 h-2 rounded-full shrink-0" style={{ background: c }} />
+                                                        <span className="text-[7px] text-gray-400">{l}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {activePlatformTab === 'cocoalba' && (
+                                        <div className="h-full flex flex-col bg-white">
+                                            <div className="px-3 py-2.5 flex items-center" style={{ background: '#f82b60' }}>
+                                                <span className="text-white text-[10px] font-black">{brand.name}</span>
+                                                <span className="ml-auto text-white/70 text-[8px]">전체보기</span>
+                                            </div>
+                                            <div className="px-2 pt-2 pb-1">
+                                                <div className="flex items-center gap-1 mb-1">
+                                                    <Crown size={8} className="text-amber-400" />
+                                                    <span className="text-[7px] font-black text-amber-500">PREMIUM</span>
+                                                </div>
+                                                <div className="bg-amber-50 rounded-lg p-1.5 border border-amber-100 mb-1 flex gap-1.5">
+                                                    <div className="w-8 h-8 rounded-md bg-amber-200 shrink-0" />
+                                                    <div className="flex-1 space-y-1">
+                                                        <div className="h-1.5 bg-gray-300 rounded w-4/5" />
+                                                        <div className="h-1.5 bg-gray-200 rounded w-2/3" />
+                                                        <span className="text-[6px] font-black text-amber-500 border border-amber-300 px-1 rounded">프리미엄</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="px-2 pb-1">
+                                                <span className="text-[7px] text-gray-400 font-bold block mb-1">스탠다드 이상</span>
+                                                {([
+                                                    { b: '디럭스', c: '#a855f7', bg: '#f3e8ff' },
+                                                    { b: '스페셜', c: '#f82b60', bg: '#fff0f3' },
+                                                    { b: '스탠다드', c: '#6b7280', bg: '#f9fafb' },
+                                                    { b: '스탠다드', c: '#6b7280', bg: '#f9fafb' },
+                                                ] as const).map((item, i) => (
+                                                    <div key={i} className="flex gap-1.5 p-1.5 rounded-lg border border-gray-100 mb-1">
+                                                        <div className="w-6 h-6 rounded-md bg-gray-200 shrink-0" />
+                                                        <div className="flex-1 space-y-1">
+                                                            <div className="h-1.5 bg-gray-200 rounded w-4/5" />
+                                                            <div className="h-1 bg-gray-100 rounded w-1/2" />
+                                                        </div>
+                                                        <span className="text-[6px] font-black px-1 py-0.5 rounded shrink-0" style={{ color: item.c, background: item.bg }}>{item.b}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {activePlatformTab === 'waiterzone' && (
+                                        <div className="h-full flex flex-col bg-white">
+                                            <div className="px-3 py-2.5 flex items-center" style={{ background: '#1e3a5f' }}>
+                                                <span className="text-white text-[10px] font-black">웨이터존</span>
+                                                <span className="ml-auto text-white/70 text-[8px]">전체보기</span>
+                                            </div>
+                                            <div className="px-2 pt-2 flex-1 overflow-hidden">
+                                                {([
+                                                    { b: '프리미엄', c: '#f59e0b', bg: '#fffbeb' },
+                                                    { b: '디럭스', c: '#1e3a5f', bg: '#eff6ff' },
+                                                    { b: '스페셜', c: '#1e40af', bg: '#e0e7ff' },
+                                                    { b: '베이직', c: '#6b7280', bg: '#f9fafb' },
+                                                    { b: '베이직', c: '#6b7280', bg: '#f9fafb' },
+                                                ] as const).map((item, i) => (
+                                                    <div key={i} className="flex gap-1.5 p-1.5 rounded-lg border border-gray-100 mb-1">
+                                                        <div className="w-6 h-6 rounded-md bg-gray-200 shrink-0" />
+                                                        <div className="flex-1 space-y-1">
+                                                            <div className="h-1.5 bg-gray-200 rounded w-4/5" />
+                                                            <div className="h-1 bg-gray-100 rounded w-1/2" />
+                                                        </div>
+                                                        <span className="text-[6px] font-black px-1 py-0.5 rounded shrink-0" style={{ color: item.c, background: item.bg }}>{item.b}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {activePlatformTab === 'sunsuzone' && (
+                                        <div className="h-full flex flex-col bg-white">
+                                            <div className="px-3 py-2.5 flex items-center" style={{ background: '#D4AF37' }}>
+                                                <span className="text-white text-[10px] font-black">선수존</span>
+                                                <span className="ml-auto text-white/70 text-[8px]">전체보기</span>
+                                            </div>
+                                            <div className="px-2 pt-2 flex-1 overflow-hidden">
+                                                {([
+                                                    { b: '프리미엄', c: '#D4AF37', bg: '#fffbeb' },
+                                                    { b: '디럭스', c: '#b8922e', bg: '#fef9ee' },
+                                                    { b: '스페셜', c: '#b8922e', bg: '#fefce8' },
+                                                    { b: '스탠다드', c: '#6b7280', bg: '#f9fafb' },
+                                                    { b: '스탠다드', c: '#6b7280', bg: '#f9fafb' },
+                                                ] as const).map((item, i) => (
+                                                    <div key={i} className="flex gap-1.5 p-1.5 rounded-lg border border-gray-100 mb-1">
+                                                        <div className="w-6 h-6 rounded-md bg-gray-200 shrink-0" />
+                                                        <div className="flex-1 space-y-1">
+                                                            <div className="h-1.5 bg-gray-200 rounded w-4/5" />
+                                                            <div className="h-1 bg-gray-100 rounded w-1/2" />
+                                                        </div>
+                                                        <span className="text-[6px] font-black px-1 py-0.5 rounded shrink-0" style={{ color: item.c, background: item.bg }}>{item.b}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* 설명 패널 */}
+                            <div className="flex-1 space-y-4 pt-0 md:pt-2">
+                                {activePlatformTab === 'bamgil' && (<>
+                                    <div>
+                                        <h5 className={`text-[16px] font-black mb-2 ${dark ? 'text-white' : 'text-gray-900'}`}>🗺️ 밤길 지도에서 핀으로 노출</h5>
+                                        <p className={`text-[12px] leading-relaxed ${dark ? 'text-gray-300' : 'text-gray-600'}`}>밤길 지역별 지도 화면에 핀으로 표시됩니다. 구독 등급에 따라 핀 크기와 색상이 달라집니다.</p>
+                                    </div>
+                                    <div className="space-y-2">
+                                        {[
+                                            { tier: '베이직·스탠다드', desc: '기본 핀 노출 (파란색)', c: 'bg-blue-100 text-blue-700' },
+                                            { tier: '스페셜', desc: '기본 핀 (강조 색상)', c: 'bg-indigo-100 text-indigo-700' },
+                                            { tier: '디럭스·프리미엄', desc: '대형 핀 + 강조 표시', c: 'bg-amber-100 text-amber-700' },
+                                        ].map((item, i) => (
+                                            <div key={i} className={`flex items-center gap-3 p-2.5 rounded-xl border ${dark ? 'bg-gray-700/50 border-gray-600' : 'bg-white border-gray-100'}`}>
+                                                <span className={`text-[10px] font-black px-2 py-0.5 rounded-full whitespace-nowrap ${item.c}`}>{item.tier}</span>
+                                                <span className={`text-[12px] font-bold ${dark ? 'text-gray-300' : 'text-gray-600'}`}>{item.desc}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </>)}
+                                {activePlatformTab === 'cocoalba' && (<>
+                                    <div>
+                                        <h5 className={`text-[16px] font-black mb-2 ${dark ? 'text-white' : 'text-gray-900'}`}>💼 {brand.name}에서 채용공고 노출</h5>
+                                        <p className={`text-[12px] leading-relaxed ${dark ? 'text-gray-300' : 'text-gray-600'}`}>스탠다드 이상 구독 시 {brand.name}에 업체정보·채용공고가 노출됩니다. 프리미엄은 최상단 전용 섹션에 노출됩니다.</p>
+                                    </div>
+                                    <div className="space-y-2">
+                                        {[
+                                            { tier: '스탠다드', desc: '업체정보 리스트 노출', c: 'bg-blue-100 text-blue-700' },
+                                            { tier: '스페셜·디럭스', desc: '리스트 + 강조 아이콘', c: 'bg-rose-100 text-rose-700' },
+                                            { tier: '프리미엄', desc: '최상단 프리미엄 전용 섹션', c: 'bg-amber-100 text-amber-700' },
+                                        ].map((item, i) => (
+                                            <div key={i} className={`flex items-center gap-3 p-2.5 rounded-xl border ${dark ? 'bg-gray-700/50 border-gray-600' : 'bg-white border-gray-100'}`}>
+                                                <span className={`text-[10px] font-black px-2 py-0.5 rounded-full whitespace-nowrap ${item.c}`}>{item.tier}</span>
+                                                <span className={`text-[12px] font-bold ${dark ? 'text-gray-300' : 'text-gray-600'}`}>{item.desc}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </>)}
+                                {activePlatformTab === 'waiterzone' && (<>
+                                    <div>
+                                        <h5 className={`text-[16px] font-black mb-2 ${dark ? 'text-white' : 'text-gray-900'}`}>🍶 웨이터존에서 구인 리스트 노출</h5>
+                                        <p className={`text-[12px] leading-relaxed ${dark ? 'text-gray-300' : 'text-gray-600'}`}>베이직 이상 구독 시 웨이터존 구인 리스트에 노출됩니다. 프리미엄·디럭스는 상단 우선 노출됩니다.</p>
+                                    </div>
+                                    <div className="space-y-2">
+                                        {[
+                                            { tier: '베이직', desc: '웨이터존 기본 리스트 노출', c: 'bg-blue-100 text-blue-700' },
+                                            { tier: '스페셜·디럭스', desc: '리스트 + 강조 아이콘', c: 'bg-indigo-100 text-indigo-700' },
+                                            { tier: '프리미엄', desc: '최상단 고정 노출', c: 'bg-amber-100 text-amber-700' },
+                                        ].map((item, i) => (
+                                            <div key={i} className={`flex items-center gap-3 p-2.5 rounded-xl border ${dark ? 'bg-gray-700/50 border-gray-600' : 'bg-white border-gray-100'}`}>
+                                                <span className={`text-[10px] font-black px-2 py-0.5 rounded-full whitespace-nowrap ${item.c}`}>{item.tier}</span>
+                                                <span className={`text-[12px] font-bold ${dark ? 'text-gray-300' : 'text-gray-600'}`}>{item.desc}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </>)}
+                                {activePlatformTab === 'sunsuzone' && (<>
+                                    <div>
+                                        <h5 className={`text-[16px] font-black mb-2 ${dark ? 'text-white' : 'text-gray-900'}`}>✨ 선수존에서 구인 리스트 노출</h5>
+                                        <p className={`text-[12px] leading-relaxed ${dark ? 'text-gray-300' : 'text-gray-600'}`}>스탠다드 이상 구독 시 선수존 구인 리스트에 노출됩니다. 프리미엄·디럭스는 상단 우선 노출됩니다.</p>
+                                    </div>
+                                    <div className="space-y-2">
+                                        {[
+                                            { tier: '스탠다드', desc: '선수존 기본 리스트 노출', c: 'bg-yellow-100 text-yellow-700' },
+                                            { tier: '스페셜·디럭스', desc: '리스트 + 강조 아이콘', c: 'bg-amber-100 text-amber-700' },
+                                            { tier: '프리미엄', desc: '최상단 고정 노출', c: 'bg-orange-100 text-orange-700' },
+                                        ].map((item, i) => (
+                                            <div key={i} className={`flex items-center gap-3 p-2.5 rounded-xl border ${dark ? 'bg-gray-700/50 border-gray-600' : 'bg-white border-gray-100'}`}>
+                                                <span className={`text-[10px] font-black px-2 py-0.5 rounded-full whitespace-nowrap ${item.c}`}>{item.tier}</span>
+                                                <span className={`text-[12px] font-bold ${dark ? 'text-gray-300' : 'text-gray-600'}`}>{item.desc}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </>)}
+                                <a
+                                    href="https://yasajang.kr/register"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#1e3a5f] text-white font-black rounded-full shadow-md text-[12px] hover:bg-[#162d4a] transition"
+                                >
+                                    야사장 입점 신청 <ArrowRight size={14} />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -638,33 +834,6 @@ export function TabAdGuide({ onTabChange }: TabAdGuideProps) {
                 </div>
             </section>
 
-            {/* selectedImage Modal */}
-            {selectedImage && createPortal(
-                <div className="fixed inset-0 z-[20000] bg-black/80 flex items-center justify-center p-4 backdrop-blur-sm" onClick={() => setSelectedImage(null)}>
-                    <div className="relative max-w-5xl w-full flex flex-col items-center justify-center" onClick={e => e.stopPropagation()}>
-                        <div className="mb-6 text-center">
-                            <h3 className="text-2xl md:text-3xl font-black text-white tracking-tighter mb-2">노출 상세 및 영역 안내</h3>
-                            <div className="w-12 h-1 bg-[#1e3a5f] mx-auto rounded-full" />
-                        </div>
-                        <div className="relative w-full h-full flex items-center justify-center">
-                            <Image
-                                src={selectedImage}
-                                alt="Ad Placement Guide Full"
-                                width={1000}
-                                height={1500}
-                                className="max-width-full max-h-[75vh] object-contain rounded-2xl shadow-2xl border border-white/10"
-                            />
-                            <button
-                                onClick={() => setSelectedImage(null)}
-                                className="absolute -top-12 md:-top-10 right-0 md:-right-16 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full backdrop-blur-md transition-all border border-white/20 shadow-lg"
-                            >
-                                <X size={24} />
-                            </button>
-                        </div>
-                    </div>
-                </div>,
-                document.body
-            )}
         </div>
     );
 }

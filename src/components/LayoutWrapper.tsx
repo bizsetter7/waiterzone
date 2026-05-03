@@ -196,16 +196,16 @@ export const LayoutWrapper = ({ children }: LayoutWrapperProps) => {
                 <div className={`w-full max-w-[1432px] mx-auto relative h-auto flex-1`}>
 
                     <div className="xl:grid xl:grid-cols-[160px_1fr_160px] min-h-screen">
-                        {/* Left Banner Sidebar — 향후 새 배너 시스템 연동 예정 */}
-                        <BannerSidebar side="left" />
+                        {/* Left Banner Sidebar */}
+                        {!isAdminPage && <BannerSidebar side="left" />}
 
                         {/* Main Content */}
                         <main className={`w-full flex-1 min-w-0 relative z-[10] ${isAdminPage ? 'px-0' : ''}`}>
                             {children}
                         </main>
 
-                        {/* Right Banner Sidebar — 향후 새 배너 시스템 연동 예정 */}
-                        <BannerSidebar side="right" />
+                        {/* Right Banner Sidebar */}
+                        {!isAdminPage && <BannerSidebar side="right" />}
                     </div>
 
                 </div>

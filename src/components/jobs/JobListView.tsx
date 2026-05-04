@@ -45,40 +45,39 @@ interface JobListViewProps {
 }
 
 // [Optimization] Helper for Pay Badge Logic (Pure function)
-// ⚠️ Pay Badge Standards v1.0 — standards.ts PAY_BADGE_STANDARDS와 동기화 유지
+// ⚠️ Pay Badge Standards v2.1 — standards.ts PAY_BADGE_STANDARDS 풀네임 표기 (2026-05-04)
 const getPayBadgeInfo = (shop: Shop) => {
     const payStr = shop.pay || '';
-    let badgeLabel = '협';
-    let badgeColor = 'bg-gray-400';   // 기본값: 협의
+    let badgeLabel = '협의';
+    let badgeColor = 'bg-gray-400';
     let amount = payStr;
 
     const typeToCheck = shop.payType || payStr;
 
-    // PAY_BADGE_STANDARDS v2.0 — standards.ts 동기화 (2026-03-22)
     if (typeToCheck.includes('TC') || typeToCheck === 'T') {
-        badgeLabel = 'T';
-        badgeColor = 'bg-orange-500'; // TC — 🟠 orange (v2.0)
+        badgeLabel = 'TC';
+        badgeColor = 'bg-orange-500';
     } else if (typeToCheck.includes('시급') || typeToCheck === '시') {
-        badgeLabel = '시';
-        badgeColor = 'bg-cyan-500';   // 시급 — 🩵 cyan
-    } else if (typeToCheck.includes('일급') || typeToCheck.includes('일')) {
-        badgeLabel = '일';
-        badgeColor = 'bg-blue-500';   // 일급 — 🔵 blue
-    } else if (typeToCheck.includes('주급') || typeToCheck.includes('주')) {
-        badgeLabel = '주';
-        badgeColor = 'bg-green-500';  // 주급 — 🟢 green (v2.0: blue→green)
-    } else if (typeToCheck.includes('월급') || typeToCheck.includes('월')) {
-        badgeLabel = '월';
-        badgeColor = 'bg-purple-500'; // 월급 — 🟣 purple
-    } else if (typeToCheck.includes('연봉') || typeToCheck.includes('연')) {
-        badgeLabel = '연';
-        badgeColor = 'bg-red-500';    // 연봉 — 🔴 red (v2.0: green→red)
-    } else if (typeToCheck.includes('건별') || typeToCheck.includes('건당') || typeToCheck.includes('건')) {
-        badgeLabel = '건';
-        badgeColor = 'bg-slate-500';  // 건별 — ⬛ slate
+        badgeLabel = '시급';
+        badgeColor = 'bg-cyan-500';
+    } else if (typeToCheck.includes('일급') || typeToCheck === '일') {
+        badgeLabel = '일급';
+        badgeColor = 'bg-blue-500';
+    } else if (typeToCheck.includes('주급') || typeToCheck === '주') {
+        badgeLabel = '주급';
+        badgeColor = 'bg-green-500';
+    } else if (typeToCheck.includes('월급') || typeToCheck === '월') {
+        badgeLabel = '월급';
+        badgeColor = 'bg-purple-500';
+    } else if (typeToCheck.includes('연봉') || typeToCheck === '연') {
+        badgeLabel = '연봉';
+        badgeColor = 'bg-red-500';
+    } else if (typeToCheck.includes('건별') || typeToCheck.includes('건당') || typeToCheck === '건') {
+        badgeLabel = '건별';
+        badgeColor = 'bg-slate-500';
     } else if (typeToCheck.includes('협의') || amount === '면접후결정') {
-        badgeLabel = '협';
-        badgeColor = 'bg-gray-400';   // 협의 — ⬜ gray
+        badgeLabel = '협의';
+        badgeColor = 'bg-gray-400';
         amount = '면접후협의';
     }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Shop } from '@/types/shop';
 import { formatKoreanMoney } from '@/utils/formatMoney';
-import { getPayColor } from '@/utils/payColors';
+import { getPayColor, getPayAbbreviation } from '@/utils/payColors';
 import { getHighlighterStyle } from '@/utils/highlighter';
 import { cleanShopTitle, slugify } from '@/utils/shopUtils';
 import { IconBadge } from '../common/IconBadge';
@@ -53,7 +53,7 @@ export const ShopCard = React.memo(({ shop, rank, tierLabel, tierId, onClick, hi
     const showImage = !isUrgentType && !hideImage;
     const cleanTitle = cleanShopTitle(shop.title, shop.name);
     const paySuffixes: string[] = shop.options?.paySuffixes || (shop.options as any)?.pay_suffixes || (shop as any).paySuffixes || [];
-    const badgeChar = shop.payType?.substring(0, 1) || '시';
+    const badgeChar = getPayAbbreviation(shop.payType || '시급');
     const borderCls = getBorderClass(shop.options?.border, shop.options?.border_period);
 
     // 업종(workType/category) 기반 그라디언트 — 이미지 없을 때 업소 특성 시각화
@@ -185,7 +185,7 @@ export const ShopCard = React.memo(({ shop, rank, tierLabel, tierId, onClick, hi
                         {/* Row 2: 급여종류배지+급여(좌) | 업종정보(우) */}
                         <div className="flex justify-between items-center gap-2 min-w-0">
                             <div className="flex items-center gap-1 min-w-0">
-                                <span className={`text-[10px] font-black w-[18px] h-[18px] flex items-center justify-center rounded-[4px] ${getPayColor(shop.payType || '시급')} whitespace-nowrap flex-shrink-0 text-white shadow-sm`}>
+                                <span className={`text-[10px] font-black px-1.5 h-[18px] inline-flex items-center justify-center rounded-[4px] ${getPayColor(shop.payType || '시급')} whitespace-nowrap flex-shrink-0 text-white shadow-sm`}>
                                     {badgeChar}
                                 </span>
                                 <span className="text-[13px] font-black text-gray-900 tracking-tighter truncate">
@@ -251,7 +251,7 @@ export const ShopCard = React.memo(({ shop, rank, tierLabel, tierId, onClick, hi
                         {/* Row 2: 급여종류배지+급여(좌) | 업종(우) */}
                         <div className="flex justify-between items-center gap-2 min-w-0">
                             <div className="flex items-center gap-1 min-w-0">
-                                <span className={`text-[10px] font-black w-[16px] h-[16px] flex items-center justify-center rounded-[3px] ${getPayColor(shop.payType || '시급')} whitespace-nowrap flex-shrink-0 text-white shadow-sm`}>
+                                <span className={`text-[10px] font-black px-1.5 h-[16px] inline-flex items-center justify-center rounded-[3px] ${getPayColor(shop.payType || '시급')} whitespace-nowrap flex-shrink-0 text-white shadow-sm`}>
                                     {badgeChar}
                                 </span>
                                 <span className="text-[12px] font-black text-gray-900 tracking-tighter truncate">

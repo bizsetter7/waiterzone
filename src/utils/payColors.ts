@@ -21,18 +21,17 @@ export const getPayColor = (payType: string = '') => {
 };
 
 export const getPayAbbreviation = (payType: string = '') => {
-    if (!payType) return '협';
+    if (!payType) return '협의';
     const type = payType.trim();
-    if (type.startsWith('TC') || type === 'T') return 'T';
-    if (type.includes('시급') || type === '시') return '시';
-    if (type.includes('일급') || type.includes('일')) return '일';
-    if (type.includes('주급') || type.includes('주')) return '주';
-    if (type.includes('월급') || type.includes('월')) return '월';
-    if (type.includes('연봉') || type.includes('연')) return '연';
-    if (type.includes('건별') || type.includes('건당') || type.includes('건')) return '건';
-    if (type.includes('협의') || type.includes('협')) return '협';
-    // [Fix] 플레이스홀더가 들어온 경우 무작정 첫 글자('급')를 따지 않고 '협'으로 안전하게 매칭
-    if (type.includes('선택') || type.includes('종류')) return '협';
-    
-    return type.substring(0, 1) || '협';
+    if (type.startsWith('TC') || type === 'T') return 'TC';
+    if (type.includes('시급') || type === '시') return '시급';
+    if (type.includes('일급') || type === '일') return '일급';
+    if (type.includes('주급') || type === '주') return '주급';
+    if (type.includes('월급') || type === '월') return '월급';
+    if (type.includes('연봉') || type === '연') return '연봉';
+    if (type.includes('건별') || type.includes('건당') || type === '건') return '건별';
+    if (type.includes('협의') || type === '협') return '협의';
+    // 플레이스홀더 안전 매칭
+    if (type.includes('선택') || type.includes('종류')) return '협의';
+    return '협의';
 };

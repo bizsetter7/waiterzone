@@ -3,29 +3,32 @@
  * 모든 UI 구성 요소 및 서버 유틸리티는 이 상수를 참조하여 정합성을 유지합니다.
  */
 
-// 1. 광고 등급 비주얼 표준 (Ad Tier Standards)
+// 1. 광고 등급 비주얼 표준 (Ad Tier Standards) — 야사장 구독 플랜 기준 (2026-05-04 v2.1, P2 동기화)
+// 신규 광고는 야사장 구독 플랜만 사용. legacy 등급(grand/recommended/native)은 구 데이터 호환용
 export const AD_TIER_STANDARDS = [
-    { name: 'T1 (Grand)', id: 'p1', altId: 'grand', tw: 'bg-amber-500', hex: '#F59E0B' },
-    { name: 'T2 (Premium)', id: 'p2', altId: 'premium', tw: 'bg-red-600', hex: '#DC2626' },
-    { name: 'T3 (Deluxe)', id: 'p3', altId: 'deluxe', tw: 'bg-blue-600', hex: '#2563EB' },
-    { name: 'T4 (Special)', id: 'p4', altId: 'special', tw: 'bg-emerald-600', hex: '#059669' },
-    { name: 'T5 (Urgent/Recommended)', id: 'p5', altId: 'recommended', tw: 'bg-purple-600', hex: '#9333EA' },
-    { name: 'T6 (Native)', id: 'p6', altId: 'native', tw: 'bg-slate-600', hex: '#475569' },
-    { name: 'T7 (Basic)', id: 'p7', altId: 'basic', tw: 'bg-sky-600',   hex: '#0284C7' },
+    // ── 현행 야사장 구독 플랜 (active) ──
+    { name: '프리미엄 (Premium)', id: 'p2', altId: 'premium',  tw: 'bg-red-600',     hex: '#DC2626', legacy: false },
+    { name: '디럭스 (Deluxe)',    id: 'p3', altId: 'deluxe',   tw: 'bg-blue-600',    hex: '#2563EB', legacy: false },
+    { name: '스페셜 (Special)',   id: 'p4', altId: 'special',  tw: 'bg-emerald-600', hex: '#059669', legacy: false },
+    { name: '스탠다드 (Standard)',id: 'p6', altId: 'standard', tw: 'bg-slate-600',   hex: '#475569', legacy: false },
+    { name: '베이직 (Basic)',     id: 'p7', altId: 'basic',    tw: 'bg-sky-600',     hex: '#0284C7', legacy: false },
+    // ── 구 직접입점 등급 (legacy — 신규 사용 금지, 기존 DB 데이터 호환용) ──
+    { name: '그랜드 [legacy]',    id: 'p1', altId: 'grand',       tw: 'bg-amber-500',  hex: '#F59E0B', legacy: true },
+    { name: '급구·추천 [legacy]', id: 'p5', altId: 'recommended', tw: 'bg-purple-600', hex: '#9333EA', legacy: true },
+    { name: '네이티브 [legacy]',  id: 'p6_native', altId: 'native', tw: 'bg-zinc-500', hex: '#71717A', legacy: true },
 ];
 
-// 2. 급여 배지 약어 및 컬러 표준 (Pay Badge Standards v2.0 — 2026-03-22 확정)
-// ⚠️ PROTECTED: 아래 색상/약어는 대표님 확정 규칙. 임의 변경 금지.
-// v2.0: 유사색 제거, 8종 완전 구별 색상으로 재정의
+// 2. 급여 배지 약어 및 컬러 표준 (Pay Badge Standards v2.1 — 2026-05-04, P2 동기화)
+// ⚠️ PROTECTED: 색상은 대표님 확정 규칙. abbr는 풀네임 표기 (대표님 승인 2026-05-04)
 export const PAY_BADGE_STANDARDS = [
-    { name: '시급', id: 'hourly',  abbr: '시', hex: '#06B6D4', tw: 'bg-cyan-500'    }, // 🩵 Cyan   — 시급
-    { name: '일급', id: 'daily',   abbr: '일', hex: '#3B82F6', tw: 'bg-blue-500'    }, // 🔵 Blue   — 일급
-    { name: '주급', id: 'weekly',  abbr: '주', hex: '#22C55E', tw: 'bg-green-500'   }, // 🟢 Green  — 주급 (v2: 파랑→초록)
-    { name: '월급', id: 'monthly', abbr: '월', hex: '#A855F7', tw: 'bg-purple-500'  }, // 🟣 Purple — 월급
-    { name: '연봉', id: 'yearly',  abbr: '연', hex: '#EF4444', tw: 'bg-red-500'     }, // 🔴 Red    — 연봉 (v2: 초록→빨강)
-    { name: 'TC',   id: 'tc',      abbr: 'T',  hex: '#F97316', tw: 'bg-orange-500'  }, // 🟠 Orange — TC (v2: 에메랄드→오렌지)
-    { name: '건별', id: 'per_job', abbr: '건', hex: '#64748B', tw: 'bg-slate-500'   }, // ⬛ Slate  — 건별
-    { name: '협의', id: 'nego',    abbr: '협', hex: '#9CA3AF', tw: 'bg-gray-400'    }, // ⬜ Gray   — 협의/면접후결정
+    { name: '시급', id: 'hourly',  abbr: '시급', hex: '#06B6D4', tw: 'bg-cyan-500'    }, // 🩵 Cyan
+    { name: '일급', id: 'daily',   abbr: '일급', hex: '#3B82F6', tw: 'bg-blue-500'    }, // 🔵 Blue
+    { name: '주급', id: 'weekly',  abbr: '주급', hex: '#22C55E', tw: 'bg-green-500'   }, // 🟢 Green
+    { name: '월급', id: 'monthly', abbr: '월급', hex: '#A855F7', tw: 'bg-purple-500'  }, // 🟣 Purple
+    { name: '연봉', id: 'yearly',  abbr: '연봉', hex: '#EF4444', tw: 'bg-red-500'     }, // 🔴 Red
+    { name: 'TC',   id: 'tc',      abbr: 'TC',   hex: '#F97316', tw: 'bg-orange-500'  }, // 🟠 Orange
+    { name: '건별', id: 'per_job', abbr: '건별', hex: '#64748B', tw: 'bg-slate-500'   }, // ⬛ Slate
+    { name: '협의', id: 'nego',    abbr: '협의', hex: '#9CA3AF', tw: 'bg-gray-400'    }, // ⬜ Gray
 ];
 
 // 3. 유료 강조 옵션 표준 (Paid Option Standards)

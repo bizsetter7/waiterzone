@@ -2,7 +2,7 @@ import React from 'react';
 import { Shop } from '@/types/shop';
 import { useMobile } from '@/hooks/useMobile';
 import { formatKoreanMoney } from '@/utils/formatMoney';
-import { getPayColor } from '@/utils/payColors';
+import { getPayColor, getPayAbbreviation } from '@/utils/payColors';
 import { cleanShopTitle, slugify } from '@/utils/shopUtils';
 
 interface AdBannerCardProps {
@@ -42,7 +42,7 @@ export const AdBannerCard = React.memo(({ shop, tierId, onClick }: AdBannerCardP
     // enrichAdData: approved배너 → options.mediaUrl → media_url → picsum(mock only) 순 우선순위
     const hasImage = !!shop.options?.mediaUrl && !imgError;
     const paySuffixes: string[] = shop.options?.paySuffixes || (shop.options as any)?.pay_suffixes || (shop as any).paySuffixes || [];
-    const badgeChar = shop.payType?.substring(0, 1) || '시';
+    const badgeChar = getPayAbbreviation(shop.payType || '시급');
     const borderCls = getBorderClass(shop.options?.border, shop.options?.border_period);
 
     // AD_TIER_STANDARDS 동기화 — 이미지 없을 때 등급별 고정 그라디언트 (2026-03-22)
@@ -151,7 +151,7 @@ export const AdBannerCard = React.memo(({ shop, tierId, onClick }: AdBannerCardP
                 {/* Row 2: 급여종류배지+급여(좌) | 업종정보(우) */}
                 <div className="flex justify-between items-center gap-2 min-w-0">
                     <div className="flex items-center gap-1 min-w-0">
-                        <span className={`text-[10px] font-black w-[18px] h-[18px] flex items-center justify-center rounded-[4px] ${getPayColor(shop.payType || '시급')} whitespace-nowrap flex-shrink-0 text-white shadow-sm`}>
+                        <span className={`text-[10px] font-black px-1.5 h-[18px] inline-flex items-center justify-center rounded-[4px] ${getPayColor(shop.payType || '시급')} whitespace-nowrap flex-shrink-0 text-white shadow-sm`}>
                             {badgeChar}
                         </span>
                         <span className="text-[13px] font-black text-gray-900 tracking-tighter truncate">

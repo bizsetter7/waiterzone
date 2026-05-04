@@ -171,15 +171,17 @@ export const MobilePreviewContent: React.FC<MobilePreviewContentProps> = ({ form
     // const badgeBg = currentStyle.badge;
 
 
-    // Pay type abbreviation
+    // Pay type label — v2.1 풀네임 표기 (시급/일급/주급/월급/연봉/TC/건별/협의)
     const getPayAbbr = (type: string) => {
-        if (type?.includes('시급')) return '시';
-        if (type?.includes('일급')) return '일';
-        if (type?.includes('주급')) return '주';
-        if (type?.includes('월급')) return '월';
-        if (type?.includes('연봉')) return '연';
-        if (type?.includes('건당')) return '건';
-        return type?.[0] || '급';
+        if (type?.includes('TC') || type === 'T') return 'TC';
+        if (type?.includes('시급')) return '시급';
+        if (type?.includes('일급')) return '일급';
+        if (type?.includes('주급')) return '주급';
+        if (type?.includes('월급')) return '월급';
+        if (type?.includes('연봉')) return '연봉';
+        if (type?.includes('건당') || type?.includes('건별')) return '건별';
+        if (type?.includes('협의')) return '협의';
+        return '협의';
     };
 
     const getBorderClass = (opt: string) => {

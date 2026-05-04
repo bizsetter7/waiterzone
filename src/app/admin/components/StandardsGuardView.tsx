@@ -564,14 +564,14 @@ export const StandardsGuardView = ({ ads = EMPTY_ARRAY, payments = EMPTY_ARRAY }
                                 </h3>
 
                                 <div className="space-y-4">
-                                    {/* 7.1 Tier Icons Mapping */}
+                                    {/* 7.1 Tier Icons Mapping — 현행 야사장 구독 플랜 우선 + legacy는 흐리게 */}
                                     <div className="space-y-3">
                                         <div className="flex items-center gap-2 mb-2">
                                             <div className="w-2 h-2 rounded-full bg-purple-400"></div>
                                             <h4 className="text-xs font-black text-slate-700">Tier Icons Mapping (PC/Mobile)</h4>
                                         </div>
-                                        <div className="grid grid-cols-4 md:grid-cols-7 gap-3">
-                                            {AD_TIER_STANDARDS.map((t, i) => (
+                                        <div className="grid grid-cols-3 md:grid-cols-5 gap-3">
+                                            {AD_TIER_STANDARDS.filter(t => !t.legacy).map((t, i) => (
                                                 <div key={i} className="flex flex-col items-center gap-1 p-2 bg-slate-50 rounded-lg">
                                                     <div className={`w-8 h-8 rounded-lg ${t.tw} flex items-center justify-center text-white`}>
                                                         <Zap size={16} />
@@ -579,6 +579,19 @@ export const StandardsGuardView = ({ ads = EMPTY_ARRAY, payments = EMPTY_ARRAY }
                                                     <span className="text-[9px] font-black text-slate-500 uppercase">{t.id}</span>
                                                 </div>
                                             ))}
+                                        </div>
+                                        <div className="pt-2 mt-2 border-t border-dashed border-rose-200">
+                                            <p className="text-[9px] font-black text-rose-400 mb-2 uppercase tracking-widest">Legacy (사용 중지)</p>
+                                            <div className="grid grid-cols-3 md:grid-cols-5 gap-3 opacity-50">
+                                                {AD_TIER_STANDARDS.filter(t => t.legacy).map((t, i) => (
+                                                    <div key={i} className="flex flex-col items-center gap-1 p-2 bg-rose-50/30 rounded-lg border border-dashed border-rose-200">
+                                                        <div className={`w-8 h-8 rounded-lg ${t.tw} flex items-center justify-center text-white`}>
+                                                            <Zap size={16} />
+                                                        </div>
+                                                        <span className="text-[9px] font-black text-rose-400 uppercase">{t.id}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
 

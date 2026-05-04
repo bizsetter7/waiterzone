@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Unlock, Lock, XCircle, TrendingUp, Send } from 'lucide-react';
+import { Search, Unlock, Lock, XCircle, TrendingUp, Send, Building2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 
@@ -293,6 +293,43 @@ export function AdminMemberManagement({ users, mockUsers, fetchData }: AdminMemb
                                     <p className="text-sm font-bold text-indigo-900">{Number(selectedUser.points || 0).toLocaleString()} <span className="text-xs text-indigo-500">P</span></p>
                                 </div>
                             </div>
+
+                            {/* 사업자 정보 — 기업회원 또는 사업자번호/상호명 보유 회원만 표시 */}
+                            {(selectedUser.role === 'corporate' || selectedUser.user_type === 'corporate' || selectedUser.business_name || selectedUser.business_number) && (
+                                <div className="p-6 bg-pink-50/40 rounded-3xl border border-pink-100">
+                                    <h4 className="text-xs font-black text-pink-700 mb-4 flex items-center gap-2 uppercase tracking-widest">
+                                        <Building2 size={14} className="text-pink-500" /> 사업자 정보 (Business Info)
+                                    </h4>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div className="p-3 bg-white rounded-xl border border-pink-100">
+                                            <p className="text-[9px] font-black text-pink-400 uppercase mb-1 tracking-widest">상호명 (Business Name)</p>
+                                            <p className="text-sm font-bold text-slate-900 break-all">{selectedUser.business_name || '미입력'}</p>
+                                        </div>
+                                        <div className="p-3 bg-white rounded-xl border border-pink-100">
+                                            <p className="text-[9px] font-black text-pink-400 uppercase mb-1 tracking-widest">사업자번호 (Reg. No.)</p>
+                                            <p className="text-sm font-bold text-slate-900 font-mono">{selectedUser.business_number || '미입력'}</p>
+                                        </div>
+                                        <div className="col-span-2 p-3 bg-white rounded-xl border border-pink-100">
+                                            <p className="text-[9px] font-black text-pink-400 uppercase mb-1 tracking-widest">사업장 주소 (Address)</p>
+                                            <p className="text-sm font-bold text-slate-900 break-all">
+                                                {selectedUser.business_address || '미입력'}
+                                                {selectedUser.business_address_detail && <span className="text-slate-500"> {selectedUser.business_address_detail}</span>}
+                                            </p>
+                                        </div>
+                                        <div className="p-3 bg-white rounded-xl border border-pink-100">
+                                            <p className="text-[9px] font-black text-pink-400 uppercase mb-1 tracking-widest">담당자 직통번호 (Manager Phone)</p>
+                                            <p className="text-sm font-bold text-slate-900">{selectedUser.manager_phone || selectedUser.phone || '미입력'}</p>
+                                        </div>
+                                        <div className="p-3 bg-white rounded-xl border border-pink-100">
+                                            <p className="text-[9px] font-black text-pink-400 uppercase mb-1 tracking-widest">사업자 인증 (Verified)</p>
+                                            <p className={`text-sm font-bold ${selectedUser.business_verified ? 'text-emerald-600' : 'text-rose-500'}`}>
+                                                {selectedUser.business_verified ? '✓ 인증 완료' : '✗ 미인증'}
+                                                {selectedUser.business_verify_status && <span className="text-[10px] text-slate-400 ml-1">({selectedUser.business_verify_status})</span>}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
 
                             <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100">
                                 <h4 className="text-xs font-black text-slate-900 mb-4 flex items-center gap-2">

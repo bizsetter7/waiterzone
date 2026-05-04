@@ -54,25 +54,25 @@ const getPayBadgeInfo = (shop: Shop) => {
 
     const typeToCheck = shop.payType || payStr;
 
-    if (typeToCheck.includes('TC') || typeToCheck === 'T') {
+    if (typeToCheck.includes('TC')) {
         badgeLabel = 'TC';
         badgeColor = 'bg-orange-500';
-    } else if (typeToCheck.includes('시급') || typeToCheck === '시') {
+    } else if (typeToCheck.includes('시급')) {
         badgeLabel = '시급';
         badgeColor = 'bg-cyan-500';
-    } else if (typeToCheck.includes('일급') || typeToCheck === '일') {
+    } else if (typeToCheck.includes('일급')) {
         badgeLabel = '일급';
         badgeColor = 'bg-blue-500';
-    } else if (typeToCheck.includes('주급') || typeToCheck === '주') {
+    } else if (typeToCheck.includes('주급')) {
         badgeLabel = '주급';
         badgeColor = 'bg-green-500';
-    } else if (typeToCheck.includes('월급') || typeToCheck === '월') {
+    } else if (typeToCheck.includes('월급')) {
         badgeLabel = '월급';
         badgeColor = 'bg-purple-500';
-    } else if (typeToCheck.includes('연봉') || typeToCheck === '연') {
+    } else if (typeToCheck.includes('연봉')) {
         badgeLabel = '연봉';
         badgeColor = 'bg-red-500';
-    } else if (typeToCheck.includes('건별') || typeToCheck.includes('건당') || typeToCheck === '건') {
+    } else if (typeToCheck.includes('건별') || typeToCheck.includes('건당')) {
         badgeLabel = '건별';
         badgeColor = 'bg-slate-500';
     } else if (typeToCheck.includes('협의') || amount === '면접후결정') {

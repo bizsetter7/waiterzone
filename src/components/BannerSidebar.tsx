@@ -7,7 +7,7 @@ import { Shop } from '@/types/shop';
 import { useBrand } from './BrandProvider';
 import { useMobile } from '@/hooks/useMobile';
 import { formatKoreanMoney } from '@/utils/formatMoney';
-import { getPayColor } from '@/utils/payColors';
+import { getPayColor, getPayAbbreviation } from '@/utils/payColors';
 import JobDetailModal from './jobs/JobDetailModal';
 import { getFavorites, toggleFavorite as toggleFav, saveShopSnapshot } from '@/utils/favorites';
 import { supabase } from '@/lib/supabase';
@@ -32,7 +32,7 @@ const SideAdCard = React.memo(({ ad, onSelect }: { ad: Shop, onSelect: (shop: Sh
     const isVideo = (ad as any).banner_media_type === 'video';
 
     const hasImage = !!ad.options?.mediaUrl;
-    const badgeChar = ad.payType?.substring(0, 1) || (String(ad.pay) === '면접후결정' ? '면' : '시');
+    const badgeChar = String(ad.pay) === '면접후결정' ? '협의' : getPayAbbreviation(ad.payType || '시급');
     const paySuffixes: string[] = ad.options?.paySuffixes || (ad.options as any)?.pay_suffixes || (ad as any).paySuffixes || [];
 
     if (hasBannerImage) {
@@ -92,7 +92,7 @@ const SideAdCard = React.memo(({ ad, onSelect }: { ad: Shop, onSelect: (shop: Sh
 
                 <div className="flex justify-between items-center gap-1 min-w-0">
                     <div className="flex items-center gap-0.5 min-w-0">
-                        <span className={`shrink-0 w-[13px] h-[13px] flex items-center justify-center rounded-[3px] text-[8px] font-black text-white leading-none ${getPayColor(ad.payType || '')}`}>
+                        <span className={`shrink-0 px-1 h-[13px] inline-flex items-center justify-center rounded-[3px] text-[8px] font-black text-white leading-none whitespace-nowrap ${getPayColor(ad.payType || '')}`}>
                             {badgeChar}
                         </span>
                         <span className="text-[10px] font-black text-gray-900 tracking-tighter truncate">

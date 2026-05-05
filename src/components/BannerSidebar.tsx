@@ -138,7 +138,7 @@ export const BannerSidebar = React.memo(({ side, shops = [] }: BannerSidebarProp
             .eq('status', 'active')
             .eq('platform', 'waiterzone')  // ⭐ Phase A: SSOT — 자기 플랫폼만 (P-08)
             .in('tier', ['p2', 'premium', 'p3', 'deluxe', 'p4', 'special', 'standard'])
-            .in('banner_status', ['approved_banner', 'approved'])
+            .or('banner_status.is.null,banner_status.eq.approved_banner')
             .order('updated_at', { ascending: false })
             .then(({ data }) => {
                 if (data && data.length > 0) {

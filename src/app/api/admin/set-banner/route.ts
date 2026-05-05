@@ -43,7 +43,7 @@ export async function PATCH(req: NextRequest) {
                 banner_image_url: bannerImageUrl,
                 banner_position: bannerPosition,
                 banner_media_type: bannerMediaType || 'image',
-                banner_status: 'approved',  // 관리자 직접 배정 = 즉시 승인
+                banner_status: 'approved_banner',  // 관리자 직접 배정 = 즉시 승인
                 updated_at: new Date().toISOString(),
             })
             .eq('id', Number(shopId));

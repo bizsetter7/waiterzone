@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
         const updateData: Record<string, any> = { updated_at: nowIso };
 
         if (action === 'approve') {
-            updateData.banner_status = 'approved';
+            updateData.banner_status = 'approved_banner';
         } else {
             updateData.banner_status = 'rejected_banner';
             updateData.banner_image_url = null;

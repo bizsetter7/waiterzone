@@ -95,14 +95,6 @@ export function getAllShopSnapshots(): Record<string, any> {
     } catch { return {}; }
 }
 
-/** 특정 shopId의 스크랩 등록일 반환 (없으면 null) */
-export function getScrapDate(id: string): Date | null {
-    try {
-        const timestamps: Record<string, number> = JSON.parse(localStorage.getItem(TIMESTAMPS_KEY) || '{}');
-        return timestamps[id] ? new Date(timestamps[id]) : null;
-    } catch { return null; }
-}
-
 /** 특정 shopId의 만료까지 남은 일수 반환 (타임스탬프 없으면 null) */
 export function getDaysUntilExpiry(id: string): number | null {
     try {

@@ -44,11 +44,17 @@ const getBorderClass = (opt?: string, period?: number): string => {
 export const ShopCard = React.memo(({ shop, rank, tierLabel, tierId, onClick, hideImage }: ShopCardProps) => {
     const isMobile = useMobile();
     const [imgError, setImgError] = React.useState(false);
+    const [imgIndex, setImgIndex] = React.useState(0);
 
-    // mediaUrl이 바뀌면 imgError 초기화 (URL 교체 후 깜빡임 방지)
-    React.useEffect(() => { setImgError(false); }, [shop.options?.mediaUrl]);
-    // enrichAdData: approved배너 → options.mediaUrl → media_url → picsum(mock only) 순 우선순위
-    const hasImage = !!shop.options?.mediaUrl && !imgError;
+    // images 배열: options.images(다중) → [mediaUrl](단일) → []
+    const rawImages = (shop.options?.images as string[] | undefined);
+    const images: string[] = rawImages && rawImages.length > 0
+        ? rawImages
+        : shop.options?.mediaUrl ? [shop.options.mediaUrl] : [];
+
+    // mediaUrl이 바뀌면 imgError + index 초기화
+    React.useEffect(() => { setImgError(false); setImgIndex(0); }, [shop.options?.mediaUrl]);
+    const hasImage = images.length > 0 && !imgError;
     const isUrgentType = tierId === 'urgent' || tierId === 'recommended';
     const showImage = !isUrgentType && !hideImage;
     const cleanTitle = cleanShopTitle(shop.title, shop.name);
@@ -109,13 +115,13 @@ export const ShopCard = React.memo(({ shop, rank, tierLabel, tierId, onClick, hi
                     '초보환영 채용공고',
                 ].filter(Boolean).join(' ') + ' - 웨이터존';
 
+                const currentSrc = images[imgIndex] || '';
                 return (
                     <figure className="relative w-full aspect-[4/3] overflow-hidden bg-slate-900 border-b border-gray-100 m-0">
                         {hasImage ? (
-                            // 미디어 타입에 따른 분기 (비디오/이미지)
-                            shop.options!.mediaUrl?.toLowerCase().match(/\.(mp4|webm|mov)$/i) ? (
+                            currentSrc.toLowerCase().match(/\.(mp4|webm|mov)$/i) ? (
                                 <video
-                                    src={shop.options!.mediaUrl}
+                                    src={currentSrc}
                                     className="w-full h-full object-cover"
                                     muted
                                     autoPlay
@@ -124,9 +130,8 @@ export const ShopCard = React.memo(({ shop, rank, tierLabel, tierId, onClick, hi
                                     onError={() => setImgError(true)}
                                 />
                             ) : (
-                                // 이미지일 경우
                                 <img
-                                    src={shop.options!.mediaUrl}
+                                    src={currentSrc}
                                     alt={imageAlt}
                                     className="w-full h-full object-cover"
                                     loading={rank && rank <= 2 ? 'eager' : 'lazy'}
@@ -136,7 +141,6 @@ export const ShopCard = React.memo(({ shop, rank, tierLabel, tierId, onClick, hi
                                 />
                             )
                         ) : (
-                            // 이미지 없을 경우: 업종 그라디언트 + 업소명 중앙 강조
                             <div className={`absolute inset-0 bg-gradient-to-b ${cardGradient} overflow-hidden`}>
                                 <span className="absolute inset-0 flex items-center justify-center text-white/5 font-black select-none leading-none" style={{ fontSize: '5rem' }}>
                                     {(shop.name || shop.nickname || cleanTitle)?.[0]}
@@ -154,13 +158,34 @@ export const ShopCard = React.memo(({ shop, rank, tierLabel, tierId, onClick, hi
                                 </div>
                             </div>
                         )}
+                        {/* 다중 이미지 캐러셀 <> 버튼 */}
+                        {hasImage && images.length > 1 && (
+                            <>
+                                <button
+                                    type="button"
+                                    aria-label="이전 사진"
+                                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); setImgIndex(i => (i - 1 + images.length) % images.length); }}
+                                    className="absolute left-1 top-1/2 -translate-y-1/2 z-30 w-6 h-6 flex items-center justify-center rounded-full bg-black/50 text-white text-[11px] hover:bg-black/70 transition-colors"
+                                >‹</button>
+                                <button
+                                    type="button"
+                                    aria-label="다음 사진"
+                                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); setImgIndex(i => (i + 1) % images.length); }}
+                                    className="absolute right-1 top-1/2 -translate-y-1/2 z-30 w-6 h-6 flex items-center justify-center rounded-full bg-black/50 text-white text-[11px] hover:bg-black/70 transition-colors"
+                                >›</button>
+                                <div className="absolute bottom-1 left-1/2 -translate-x-1/2 z-30 flex gap-0.5">
+                                    {images.map((_, i) => (
+                                        <span key={i} className={`w-1 h-1 rounded-full ${i === imgIndex ? 'bg-white' : 'bg-white/40'}`} />
+                                    ))}
+                                </div>
+                            </>
+                        )}
                         {/* 순위 배지 */}
                         {rank && (
                             <div className="absolute top-2 right-2 w-5 h-5 bg-yellow-400 rounded-full flex items-center justify-center shadow-md z-20">
                                 <span className="text-[10px] font-black text-black">{rank}</span>
                             </div>
                         )}
-                        {/* [구글 이미지 SEO] figcaption — 시각적으로 숨기되 크롤러/스크린리더 노출 */}
                         {hasImage && <figcaption className="sr-only">{imageAlt}</figcaption>}
                     </figure>
                 );

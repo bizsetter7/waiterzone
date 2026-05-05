@@ -138,7 +138,8 @@ export const BannerSidebar = React.memo(({ side, shops = [] }: BannerSidebarProp
             .eq('status', 'active')
             .eq('platform', 'waiterzone')  // ⭐ Phase A: SSOT — 자기 플랫폼만 (P-08)
             .in('tier', ['p2', 'premium', 'p3', 'deluxe', 'p4', 'special', 'standard'])
-            .or('banner_status.is.null,banner_status.eq.approved_banner')
+            // 배너 이미지 별도 승인된 광고만 (일반 야사장 게시 광고 자동 노출 방지)
+            .eq('banner_status', 'approved_banner')
             .order('updated_at', { ascending: false })
             .then(({ data }) => {
                 if (data && data.length > 0) {

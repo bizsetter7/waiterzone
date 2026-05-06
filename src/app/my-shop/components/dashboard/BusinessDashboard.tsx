@@ -55,6 +55,23 @@ export const BusinessDashboard: React.FC<BusinessDashboardProps> = ({
                 </button>
             )}
 
+            {/* 야사장 유도 CTA — 밤길 노출 관리 */}
+            <a
+                href="https://www.yasajang.kr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex items-center gap-3 p-4 bg-gradient-to-r from-gray-900 to-gray-800 border border-gray-700 rounded-2xl hover:opacity-90 transition group"
+            >
+                <div className="w-9 h-9 bg-pink-500/20 rounded-xl flex items-center justify-center shrink-0">
+                    <Zap size={18} className="text-pink-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                    <p className="font-black text-white text-sm">야사장에서 밤길 노출 관리하세요</p>
+                    <p className="text-xs text-pink-400 font-bold mt-0.5">웨이터 구인 + 밤길 지도 노출을 한 번에 → yasajang.kr</p>
+                </div>
+                <ChevronRight size={16} className="text-gray-500 group-hover:translate-x-0.5 transition-transform shrink-0" />
+            </a>
+
             <header className="flex flex-col gap-2 md:gap-4 mb-2 md:mb-4">
                 <div className={`p-4 md:p-6 sm:rounded-[32px] shadow-sm border relative ${brand.theme === 'dark' ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-100'} `}>
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 md:gap-4">

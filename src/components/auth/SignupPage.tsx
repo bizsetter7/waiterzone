@@ -334,13 +334,14 @@ export const SignupPage = () => {
             if (!iIdChecked) { alert('아이디 중복확인을 완료해주세요.'); return; }
             if (!iId || !iPw || !iPwConfirm) { alert('필수 항목을 모두 입력해주세요.'); return; }
             if (iPw !== iPwConfirm) { alert('비밀번호가 일치하지 않습니다.'); return; }
-            if (iPw.length < 6) { alert('비밀번호는 6자 이상이어야 합니다.'); return; }
+            if (!/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/.test(iPw)) { alert('비밀번호는 8자 이상, 영문+숫자+특수문자(!@#$%^&*)를 모두 포함해야 합니다.'); return; }
             if (!iNickname) { alert('닉네임을 입력해주세요.'); return; }
             if (!iEmail) { alert('로그인 이메일을 입력해주세요. (가입 후 이 이메일로 로그인합니다.)'); return; }
         } else {
             if (!cIdChecked) { alert('아이디 중복확인을 완료해주세요.'); return; }
             if (!cId || !cPw || !cPwConfirm) { alert('필수 항목을 모두 입력해주세요.'); return; }
             if (cPw !== cPwConfirm) { alert('비밀번호가 일치하지 않습니다.'); return; }
+            if (!/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/.test(cPw)) { alert('비밀번호는 8자 이상, 영문+숫자+특수문자(!@#$%^&*)를 모두 포함해야 합니다.'); return; }
             if (!verified) { alert('담당자 본인인증을 먼저 완료해주세요.'); return; }
             if (!cEmail) { alert('로그인 이메일을 입력해주세요. (가입 후 이 이메일로 로그인합니다.)'); return; }
         }

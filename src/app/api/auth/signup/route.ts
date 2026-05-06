@@ -27,6 +27,14 @@ export async function POST(req: NextRequest) {
             );
         }
 
+        const PW_REGEX = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
+        if (!PW_REGEX.test(password)) {
+            return NextResponse.json(
+                { success: false, message: '비밀번호는 8자 이상, 영문+숫자+특수문자(!@#$%^&*)를 모두 포함해야 합니다.' },
+                { status: 400 }
+            );
+        }
+
         const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey, {
             auth: { autoRefreshToken: false, persistSession: false }
         });

@@ -95,7 +95,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             // Health check (경량 GET)
             let healthCount = 0;
             try {
-                const healthRes = await fetch('/api/admin/health', { method: 'GET' });
+                const { data: { session: hlSession } } = await supabase.auth.getSession();
+                const hlToken = hlSession?.access_token;
+                const healthRes = await fetch('/api/admin/health', {
+                    method: 'GET',
+                    headers: hlToken ? { 'Authorization': `Bearer ${hlToken}` } : undefined,
+                });
                 const healthData = await healthRes.json();
                 healthCount = healthData.issueCount || 0;
             } catch { healthCount = 1; }

@@ -285,7 +285,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         if (typeof window !== 'undefined') {
             localStorage.setItem('coco_mock_session', JSON.stringify(mockUser));
-            if (type === 'admin') {
+            if (type === 'admin' && process.env.NODE_ENV !== 'production') {
                 document.cookie = 'coco_admin_mock=1; path=/; max-age=86400; SameSite=Lax';
             }
         }

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Check, X, Building2, FileText, Phone, MessageCircle, Clock, RefreshCw, ChevronDown } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
 
 interface BizRequest {
     id: string;
@@ -32,7 +33,11 @@ export function BusinessVerifyView() {
     const fetchRequests = async () => {
         setIsLoading(true);
         try {
-            const res = await fetch(`/api/admin/business-verify?status=${statusFilter}`);
+            const { data: { session } } = await supabase.auth.getSession();
+            const token = session?.access_token;
+            const res = await fetch(`/api/admin/business-verify?status=${statusFilter}`, {
+                headers: token ? { 'Authorization': `Bearer ${token}` } : undefined,
+            });
             const json = await res.json();
             setRequests(json.data || []);
         } catch (e) {
@@ -50,9 +55,11 @@ export function BusinessVerifyView() {
         if (!confirm('사업자 인증을 승인하시겠습니까? 해당 회원에게 승인 알림이 발송됩니다.')) return;
         setProcessingId(id);
         try {
+            const { data: { session: approveSession } } = await supabase.auth.getSession();
+            const approveToken = approveSession?.access_token;
             const res = await fetch('/api/admin/business-verify', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', ...(approveToken ? { 'Authorization': `Bearer ${approveToken}` } : {}) },
                 body: JSON.stringify({ profileId: id, action: 'approve' }),
             });
             const json = await res.json();
@@ -73,9 +80,11 @@ export function BusinessVerifyView() {
         if (!rejectTargetId) return;
         setProcessingId(rejectTargetId);
         try {
+            const { data: { session: rejectSession } } = await supabase.auth.getSession();
+            const rejectToken = rejectSession?.access_token;
             const res = await fetch('/api/admin/business-verify', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', ...(rejectToken ? { 'Authorization': `Bearer ${rejectToken}` } : {}) },
                 body: JSON.stringify({ profileId: rejectTargetId, action: 'reject', rejectReason }),
             });
             const json = await res.json();

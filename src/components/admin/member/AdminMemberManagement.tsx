@@ -78,13 +78,15 @@ export function AdminMemberManagement({ users, mockUsers, fetchData }: AdminMemb
         if (!confirm(`${selectedUser.name || selectedUser.full_name || '회원'}님께 ${amount}P를 ${amount > 0 ? '지급' : '차감'}하시겠습니까?`)) return;
         setIsGrantingPoint(true);
         try {
+            const { data: { session: grantSession } } = await supabase.auth.getSession();
+            const grantToken = grantSession?.access_token;
             const res = await fetch('/api/admin/grant-points', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    userId: selectedUser.id, 
+                headers: { 'Content-Type': 'application/json', ...(grantToken ? { 'Authorization': `Bearer ${grantToken}` } : {}) },
+                body: JSON.stringify({
+                    userId: selectedUser.id,
                     amount,
-                    reason: pointNote || 'ADMIN_GRANT' // 사유가 없으면 기본값 사용
+                    reason: pointNote || 'ADMIN_GRANT'
                 }),
             });
             const result = await res.json();

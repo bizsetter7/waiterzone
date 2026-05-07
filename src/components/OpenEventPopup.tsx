@@ -84,7 +84,7 @@ export default function OpenEventPopup() {
                     {/* 플랫폼 노출 안내 */}
                     <div className="grid grid-cols-4 gap-2 mb-5">
                         {[
-                            { emoji: '🗺️', name: '밤길', desc: '지도 노출' },
+                            { emoji: '🗺️', name: '밤길', desc: '손님 유입\n지도 노출' },
                             { emoji: '🤵', name: '웨이터존', desc: '웨이터 구인' },
                             { emoji: '💼', name: '코코알바', desc: '아가씨 구인' },
                             { emoji: '⚡', name: '선수존', desc: '선수 구인' },
@@ -92,7 +92,7 @@ export default function OpenEventPopup() {
                             <div key={p.name} className="flex flex-col items-center gap-1 p-2 rounded-xl bg-gray-50 border border-gray-200">
                                 <span className="text-lg">{p.emoji}</span>
                                 <span className="text-[9px] font-black text-gray-800">{p.name}</span>
-                                <span className="text-[8px] text-gray-400 text-center leading-tight">{p.desc}</span>
+                                <span className="text-[8px] text-gray-400 text-center leading-tight whitespace-pre-line">{p.desc}</span>
                             </div>
                         ))}
                     </div>

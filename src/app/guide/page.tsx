@@ -6,6 +6,7 @@ export const metadata: Metadata = {
     title: '이용가이드 - 웨이터존 (룸웨이터·노래방알바·남성유흥알바 초보 가이드)',
     description: '남성알바 구인구직 1위 웨이터존 이용 방법. 룸웨이터, 노래방알바, 남성유흥알바를 안전하고 현명하게 구하는 팁과 고객센터 이용 안내.',
     keywords: ['웨이터존가이드', '남성유흥알바가이드', '야간알바꿀팁', '초보알바가이드', '노래방알바팁', '룸웨이터팁'],
+    robots: { index: false, follow: false },
     alternates: {
         canonical: 'https://www.waiterzone.kr/guide',
     },

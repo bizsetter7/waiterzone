@@ -3,8 +3,6 @@ import type { Shop } from '@/types/shop';
 import shopsData from '@/lib/data/shops.json';
 import seoRegionsMaster from '@/lib/data/seo_regions_master.json';
 import shadowRegionsData from '@/lib/data/Shadow_SEO_Regions.json';
-import { MOCK_POSTS } from '@/constants/community';
-import { supabase } from '@/lib/supabase';
 import { WORK_TYPE_SLUGS } from '@/lib/data/work-type-guide';
 import { slugify } from '@/utils/shopUtils';
 
@@ -15,16 +13,12 @@ export const revalidate = 3600; // Re-generate every 1 hour
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://www.waiterzone.kr';
 
-    // 1. Static Routes
+    // 1. Static Routes (community/talent/guide/favorites 제외 — noindex 처리, 크롤 예산 보호)
     const routes = [
         '',
         '/jobs',
         '/region',
-        '/community',
-        '/talent',
-        '/guide',
         '/customer-center',
-        '/favorites',
         '/notice/card-payment-termination',
         '/notice/job-scam',
     ].map((route) => ({
@@ -84,40 +78,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }))
     );
 
-    // 4. [SAFE] Mock Community Posts - 항상 포함되는 안전장치
-    const mockPostRoutes = MOCK_POSTS.map((post) => ({
-        url: `${baseUrl}/community/${post.id}`,
-        lastModified: new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.6,
-    }));
-
-    // 5. [NEW] Real DB Community Posts - 실제 유저 글도 자동 포함
-    let dbPostRoutes: MetadataRoute.Sitemap = [];
-    try {
-        const { data: dbPosts } = await supabase
-            .from('community_posts')
-            .select('id, created_at')
-            .eq('is_secret', false)
-            .order('created_at', { ascending: false })
-            .limit(500); // 최대 500개
-
-        if (dbPosts && dbPosts.length > 0) {
-            // Mock IDs 제외 (중복 방지)
-            const mockIds = new Set(MOCK_POSTS.map(p => p.id));
-            dbPostRoutes = dbPosts
-                .filter(p => !mockIds.has(p.id))
-                .map((post) => ({
-                    url: `${baseUrl}/community/${post.id}`,
-                    lastModified: new Date(post.created_at),
-                    changeFrequency: 'weekly' as const,
-                    priority: 0.6,
-                }));
-        }
-    } catch (e) {
-        // DB 오류 시 Mock만 사용 (안전장치)
-        console.warn('Sitemap: DB fetch failed, using mock only.');
-    }
-
-    return [...routes, ...regionRoutes, ...shopRoutes, ...guideRoutes, ...mockPostRoutes, ...dbPostRoutes];
+    return [...routes, ...regionRoutes, ...shopRoutes, ...guideRoutes];
 }

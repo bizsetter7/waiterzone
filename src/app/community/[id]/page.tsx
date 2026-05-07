@@ -64,7 +64,8 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     return {
         title,
         description,
-        keywords, // ← 자동 생성된 SEO 키워드
+        keywords,
+        robots: { index: false, follow: false },
         openGraph: {
             title,
             description,

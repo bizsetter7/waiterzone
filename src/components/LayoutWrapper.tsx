@@ -179,7 +179,17 @@ export const LayoutWrapper = ({ children }: LayoutWrapperProps) => {
             {/* [Soft Gate Overlay] — 미인증 시에만 노출 (봇 제외) */}
             {showAdultGate && (
                 <div className="fixed inset-0 z-[20000] bg-white/40 backdrop-blur-xl flex items-center justify-center p-4">
-                    <AdultVerificationGate onVerify={handleVerify} onSkip={handleSkip} />
+                    <AdultVerificationGate
+                        onVerify={handleVerify}
+                        onSkip={handleSkip}
+                        loggedInUserId={
+                            (isLoggedIn && authUser && authUser.id !== 'guest' &&
+                             !authUser.isVerifiedPartnerVerified &&
+                             authUser.type === 'individual')
+                                ? authUser.id
+                                : undefined
+                        }
+                    />
                 </div>
             )}
 

@@ -1,5 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 import type { IdentityVerifyResult } from '@/types/identity-verify';
+
+// service_role — 로그인 유저 본인인증 완료 후 프로필 업데이트용 [M-066]
+const supabaseAdmin = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } }
+);
 
 /**
  * 본인인증 콜백 검증 API (PortOne V2 전용)
@@ -13,7 +21,8 @@ import type { IdentityVerifyResult } from '@/types/identity-verify';
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
-        const { identityVerificationId } = body;
+        // userId: 로그인 상태의 OAuth 유저가 게이트에서 본인인증 시 전달 [M-066]
+        const { identityVerificationId, userId } = body;
 
         if (!identityVerificationId) {
             return NextResponse.json(
@@ -27,6 +36,12 @@ export async function POST(req: NextRequest) {
         
         if (!apiSecret) {
             console.warn('[Identity] PORTONE_API_SECRET 환경변수가 없습니다. Mock 인증으로 대체합니다.');
+            // Mock 환경에서도 userId 전달 시 is_adult_verified=true 저장
+            if (userId && typeof userId === 'string') {
+                try {
+                    await supabaseAdmin.from('profiles').update({ is_adult_verified: true }).eq('id', userId);
+                } catch { /* ignore */ }
+            }
             return NextResponse.json({
                 success: true,
                 code: 'VERIFIED_MOCK',
@@ -98,6 +113,21 @@ export async function POST(req: NextRequest) {
             ci: identity?.ci,
             di: identity?.di
         };
+
+        // [M-066] 로그인 유저 게이트 인증 시 프로필 자동 갱신
+        if (userId && typeof userId === 'string') {
+            try {
+                const profilePatch: Record<string, unknown> = { is_adult_verified: true };
+                if (result.phone) profilePatch.phone = result.phone;
+                if (result.birthdate) profilePatch.birth_date = result.birthdate;
+                if (result.gender) profilePatch.gender = result.gender;
+                if (result.ci) profilePatch.identity_ci = result.ci;
+                if (result.name) profilePatch.full_name = result.name;
+                await supabaseAdmin.from('profiles').update(profilePatch).eq('id', userId);
+            } catch (patchErr) {
+                console.warn('[Identity/verify-result] 프로필 갱신 실패:', patchErr);
+            }
+        }
 
         return NextResponse.json({
             success: true,

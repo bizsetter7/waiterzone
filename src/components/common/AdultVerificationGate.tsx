@@ -12,6 +12,8 @@ import { UI_Z_INDEX } from '@/constants/ui';
 interface AdultVerificationGateProps {
     onVerify: () => void;
     onSkip?: () => void;
+    /** 로그인 상태이나 is_adult_verified=false인 유저의 id (OAuth 가입자 등) */
+    loggedInUserId?: string;
 }
 
 const MOCK_USERS: Record<string, { type: 'corporate' | 'individual', name: string }> = {
@@ -82,7 +84,111 @@ const LoginForm = ({ id, setId, pw, setPw, loginType, setLoginType, handleLogin,
     </div>
 );
 
-export const AdultVerificationGate = ({ onVerify, onSkip }: AdultVerificationGateProps) => {
+// ─── 로그인 유저 전용 간소화 본인인증 UI ─────────────────────────────────────
+interface LoggedInVerifyPanelProps {
+    userId: string;
+    brandName?: string;
+    primaryColor?: string;
+    onVerify: () => void;
+}
+
+const LoggedInVerifyPanel = ({ userId, brandName, primaryColor, onVerify }: LoggedInVerifyPanelProps) => {
+    const [isVerifying, setIsVerifying] = useState(false);
+
+    const handleVerify = async () => {
+        if (typeof (window as any).PortOne === 'undefined') {
+            alert('인증 라이브러리를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+            return;
+        }
+        try {
+            setIsVerifying(true);
+            const response = await (window as any).PortOne.requestIdentityVerification({
+                storeId: 'store-6e7eb5d5-d11e-4f26-bdd4-da8d9a743c0a',
+                channelKey: 'channel-key-4d5d9730-3097-467b-9e86-21bb1fad82c0',
+                identityVerificationId: `verify-${Date.now()}`,
+            });
+
+            if (response.code != null) {
+                alert(`인증 실패: ${response.message}`);
+                setIsVerifying(false);
+                return;
+            }
+
+            // 서버에서 검증 + 프로필 is_adult_verified=true 저장 [M-066]
+            const verifyRes = await fetch('/api/identity/verify-result', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    identityVerificationId: response.identityVerificationId,
+                    userId, // 서버에서 profiles.is_adult_verified=true 갱신
+                }),
+            });
+
+            const data = await verifyRes.json();
+            if (verifyRes.ok && data.success) {
+                onVerify(); // 게이트 해제 — 이후 로그인 시 자동 패스
+            } else {
+                alert(`검증 실패: ${data.message || '인증 정보를 확인할 수 없습니다.'}`);
+            }
+        } catch (error: any) {
+            alert(`오류가 발생했습니다: ${error.message}`);
+        } finally {
+            setIsVerifying(false);
+        }
+    };
+
+    return (
+        <div className="fixed inset-0 z-[20000] overflow-hidden bg-white antialiased flex items-center justify-center p-4">
+            <div className="w-full max-w-sm bg-white rounded-2xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-300">
+                {/* 헤더 */}
+                <div className="px-6 pt-7 pb-5 text-center border-b border-gray-100">
+                    <div className="w-14 h-14 rounded-full border-[3px] border-red-600 flex items-center justify-center mx-auto mb-3 bg-white shadow-sm">
+                        <span className="text-2xl font-black text-gray-900 leading-none">19</span>
+                    </div>
+                    <h2 className="text-base font-black text-gray-900 mb-1">{brandName || '웨이터존'}</h2>
+                    <p className="text-[11.5px] font-bold text-gray-500 leading-snug">
+                        본 정보내용은 청소년 유해매체물로서<br />
+                        <span className="text-red-600 font-black">만 19세 미만 청소년은 이용할 수 없습니다.</span>
+                    </p>
+                </div>
+
+                {/* 본문 */}
+                <div className="px-6 py-5 space-y-4">
+                    <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-center">
+                        <p className="text-[12px] font-black text-amber-800 leading-snug">
+                            로그인된 계정의 성인인증이 확인되지 않았습니다.<br />
+                            <span className="text-amber-600">최초 1회만</span> 인증하면 이후 자동으로 통과됩니다.
+                        </p>
+                    </div>
+
+                    <button
+                        onClick={handleVerify}
+                        disabled={isVerifying}
+                        style={{ backgroundColor: isVerifying ? '#d1d5db' : (primaryColor || '#1e3a5f') }}
+                        className="w-full py-4 text-white font-black text-[13px] rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:cursor-not-allowed shadow-sm"
+                    >
+                        <Smartphone size={16} />
+                        {isVerifying ? '인증 처리 중...' : '휴대폰 본인인증'}
+                    </button>
+
+                    <button
+                        onClick={() => { window.location.href = 'https://www.google.com'; }}
+                        className="w-full py-3 border-2 border-gray-200 text-gray-600 font-black text-[12px] rounded-xl hover:bg-gray-50 transition-all"
+                    >
+                        성인인증없이 나가기
+                    </button>
+                </div>
+
+                {/* 푸터 */}
+                <div className="shrink-0 bg-gray-900 text-white py-3 px-4 text-center">
+                    <p className="text-[10px] font-bold text-gray-400">본인인증 정보는 연령 확인 목적으로만 사용됩니다.</p>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export const AdultVerificationGate = ({ onVerify, onSkip, loggedInUserId }: AdultVerificationGateProps) => {
     if (AUDIT_MODE) return null;
 
     const brand = useBrand();
@@ -92,6 +198,18 @@ export const AdultVerificationGate = ({ onVerify, onSkip }: AdultVerificationGat
     const [id, setId] = useState('');
     const [pw, setPw] = useState('');
     const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+    // 로그인 상태이나 미인증 → 간소화 UI 표시 (로그인 폼 불필요)
+    if (loggedInUserId) {
+        return (
+            <LoggedInVerifyPanel
+                userId={loggedInUserId}
+                brandName={brand.name}
+                primaryColor={brand.primaryColor}
+                onVerify={onVerify}
+            />
+        );
+    }
 
     const handleExit = () => {
         // 나가기 = 사이트 이탈 → Google로 이동 (접근 권한 부여 안 함)

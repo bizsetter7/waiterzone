@@ -467,7 +467,7 @@ export const SignupPage = () => {
                                     </div>
                                     <div className="text-center">
                                         <p className="text-xs font-black text-gray-800">업체(구인)회원</p>
-                                        <p className="text-[10px] text-gray-500 mt-0.5">채용공고등록가능</p>
+                                        <p className="text-[10px] text-gray-500 mt-0.5">야사장에서 통합관리</p>
                                     </div>
                                 </button>
                             </div>
@@ -605,134 +605,48 @@ export const SignupPage = () => {
 
                 {/* ───────────────── STEP 2: 업체(구인)회원 ───────────────── */}
                 {step === 2 && role === 'corporate' && (
-                    <div className="space-y-3 animate-in fade-in slide-in-from-bottom-4 duration-300">
+                    <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-300">
                         <div className="rounded-2xl p-5 text-center text-white" style={gradStyle}>
                             <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
                                 <Building2 size={24} />
                             </div>
-                            <p className="font-black text-base">업체(구인)회원 가입</p>
-                            <p className="text-xs text-white/70 mt-0.5">채용공고등록/이력서열람가능</p>
+                            <p className="font-black text-base">업체(구인)회원 안내</p>
+                            <p className="text-xs text-white/70 mt-0.5">야사장 통합 플랫폼</p>
                         </div>
 
-                        {/* ── 계정 정보 ── */}
-                        <div className="bg-white rounded-2xl p-4 space-y-3 border border-gray-200">
-                            <p className="text-xs font-black text-gray-500 flex items-center gap-2">
-                                <span className="w-1 h-4 rounded-full inline-block" style={{ backgroundColor: primary }} />
-                                계정 정보
-                            </p>
-                            <Field label="아이디" required>
-                                <div className="flex gap-2">
-                                    <Input placeholder="4~20자의 영문/숫자" value={cId}
-                                        onChange={(e) => { setCId(e.target.value); setCIdChecked(false); }} />
-                                    <button type="button" onClick={() => checkId(cId, setCIdChecked)}
-                                        disabled={isCheckingId}
-                                        className="shrink-0 px-3 py-2 rounded-xl text-xs font-black text-white whitespace-nowrap disabled:opacity-60"
-                                        style={{ backgroundColor: cIdChecked ? '#22c55e' : primary }}>
-                                        {isCheckingId ? '확인중...' : cIdChecked ? '확인됨' : '중복확인'}
-                                    </button>
-                                </div>
-                            </Field>
-                            <Field label="비밀번호" required>
-                                <Input type="password" placeholder="6자 이상, 영문/숫자/특수기호 조합 포함"
-                                    value={cPw} onChange={(e) => setCPw(e.target.value)} />
-                            </Field>
-                            <Field label="비밀번호 확인" required>
-                                <Input type="password" placeholder="비밀번호를 다시 입력하세요"
-                                    value={cPwConfirm} onChange={(e) => setCPwConfirm(e.target.value)} />
-                                {cPwConfirm && cPw !== cPwConfirm && (
-                                    <p className="text-[11px] text-red-500 font-bold mt-1">비밀번호가 일치하지 않습니다.</p>
-                                )}
-                            </Field>
-                            <Field label="로그인 이메일" required hint="가입 후 이 이메일로 로그인합니다 — 실제 사용 중인 이메일을 입력하세요">
-                                <Input type="email" placeholder="example@gmail.com"
-                                    value={cEmail} onChange={(e) => setCEmail(e.target.value)} required />
-                            </Field>
+                        {/* 야사장 리다이렉트 안내 */}
+                        <div className="bg-white rounded-2xl p-5 border border-gray-200 space-y-4">
+                            <div className="text-center">
+                                <div className="text-4xl mb-2">🏢</div>
+                                <p className="font-black text-gray-900 text-[15px]">업체 서비스는 야사장에서!</p>
+                                <p className="text-[12px] text-gray-500 mt-2 leading-relaxed">
+                                    {brand.displayName} 구인공고 등록·업체 관리는<br />
+                                    <strong className="text-gray-700">야사장(yasajang.kr)</strong>에서 이용하실 수 있습니다.
+                                </p>
+                            </div>
+                            <div className="bg-gray-50 rounded-xl p-3 space-y-1">
+                                <p className="text-[11px] font-black text-gray-700">야사장 혜택</p>
+                                <p className="text-[11px] text-gray-600 leading-relaxed">
+                                    ✅ 코코알바 · 웨이터존 · 선수존 동시 노출<br />
+                                    ✅ 구인공고 등록 · 관리 · 통계 원스탑<br />
+                                    ✅ 구독 플랜으로 광고 효과 극대화
+                                </p>
+                            </div>
                         </div>
 
-                        {/* ── 담당자 정보 ── */}
-                        <div className="bg-white rounded-2xl p-4 space-y-3 border border-gray-200">
-                            <p className="text-xs font-black text-gray-500 flex items-center gap-2">
-                                <span className="w-1 h-4 rounded-full inline-block" style={{ backgroundColor: primary }} />
-                                담당자 정보
-                            </p>
+                        <button
+                            type="button"
+                            onClick={() => window.open('https://www.yasajang.kr', '_blank')}
+                            className="w-full py-4 rounded-2xl font-black text-sm shadow-xl active:scale-[0.98] transition-all"
+                            style={{ backgroundColor: '#f59e0b', color: '#000' }}
+                        >
+                            야사장으로 이동하기 ↗
+                        </button>
 
-                            <Field label="담당자(성함)" required>
-                                <Input placeholder={verified ? '' : '본인인증 후 자동 입력'}
-                                    value={cManager} disabled={verified}
-                                    onChange={(e) => setCManager(e.target.value)} />
-                            </Field>
-                            <Field label="생년월일" required hint="예: 1990-01-01">
-                                <Input placeholder={verified ? '' : '본인인증 후 자동 입력'}
-                                    value={cBirth} disabled={verified}
-                                    onChange={(e) => setCBirth(e.target.value)} />
-                            </Field>
-                            <Field label="성별">
-                                <GenderSelect value={cGender} onChange={setCGender} primary={primary}
-                                    disabled={verified} />
-                            </Field>
-
-                            {/* 휴대폰 번호 + 본인인증 인라인 */}
-                            <Field label="핸드폰" required>
-                                <div className="flex gap-2">
-                                    <Input placeholder="010-0000-0000" value={cPhone}
-                                        disabled={verified && !!cPhone}
-                                        onChange={(e) => setCPhone(e.target.value)} />
-                                    <button type="button" onClick={() => {
-                                        if (!cPhone.trim()) { alert('휴대폰 번호를 먼저 입력해주세요.'); return; }
-                                        setShowModal(true);
-                                    }}
-                                        className="shrink-0 px-3 py-2 rounded-xl text-xs font-black text-white whitespace-nowrap transition-all"
-                                        style={{ backgroundColor: verified ? '#22c55e' : primary }}>
-                                        {verified ? '인증완료' : '본인인증'}
-                                    </button>
-                                </div>
-                                {verified && verifyResult && (
-                                    <p className="text-[10px] text-green-600 font-bold mt-1 flex items-center gap-1">
-                                        <CheckCircle2 size={10} /> {verifyResult.name}님 본인인증 완료
-                                    </p>
-                                )}
-                                {!verified && (
-                                    <p className="text-[10px] text-red-400 font-bold mt-1">* 가입 전 반드시 본인인증이 필요합니다.</p>
-                                )}
-                            </Field>
-                        </div>
-
-                        {/* ── 사업자 인증 안내 ── */}
-                        <div className="rounded-2xl p-4 border space-y-1"
-                            style={{ borderColor: `${primary}44`, backgroundColor: `${primary}10` }}>
-                            <p className="text-[11px] font-black" style={{ color: primary }}>※ 안내</p>
-                            <p className="text-[11px] leading-relaxed" style={{ color: `${primary}cc` }}>
-                                공고등록 시, 유효한 사업자정보인증이 필요합니다.<br />
-                                가입 후 마이페이지 &gt; 사업자인증을 등록 바랍니다.<br />
-                                인증등록 후 24시간 이내 관리자 승인을 통해 반영되며,<br />
-                                광고등록 시 제공정보로만 서비스가 활용됩니다.
-                            </p>
-                        </div>
-
-                        {/* SMS 수신 동의 */}
-                        <label className="flex items-start gap-3 cursor-pointer p-3 rounded-xl bg-gray-50 border border-gray-200">
-                            <input type="checkbox" className="w-4 h-4 mt-0.5 shrink-0" style={{ accentColor: primary }} />
-                            <span className="text-xs text-gray-700 font-medium leading-relaxed">
-                                <span className="font-bold">SMS수신을 동의합니다.</span><br />
-                                <span className="text-gray-500">수신체크 시 보다 이용이 편리해집니다.</span>
-                            </span>
-                        </label>
-
-                        <div className="flex gap-3 pt-2">
-                            <button type="button" onClick={() => goStep(1)}
-                                className="flex-1 py-4 rounded-2xl border border-gray-300 text-gray-600 font-bold text-sm">
-                                이전
-                            </button>
-                            <button type="button" onClick={handleSubmit} disabled={isLoading}
-                                className="flex-[2] py-4 rounded-2xl text-white font-black text-sm shadow-xl active:scale-[0.98] transition-all disabled:opacity-50"
-                                style={{ backgroundColor: primary }}>
-                                {isLoading ? <Loader2 className="animate-spin mx-auto" size={20} /> : '본인인증 후 가입 진행'}
-                            </button>
-                            <button type="button" onClick={() => router.push('/?page=login')}
-                                className="flex-1 py-4 rounded-2xl border border-gray-300 text-gray-600 font-bold text-sm">
-                                취소
-                            </button>
-                        </div>
+                        <button type="button" onClick={() => goStep(1)}
+                            className="w-full py-3 rounded-2xl border border-gray-300 text-gray-600 font-bold text-sm">
+                            ← 이전 단계로
+                        </button>
                     </div>
                 )}
 

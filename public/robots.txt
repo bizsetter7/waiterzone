@@ -1,20 +1,21 @@
 User-agent: *
 Allow: /
 Allow: /community/
-Allow: /coco/
+Allow: /waiter/
 Disallow: /admin/
 Disallow: /api/
 Disallow: /my-shop/
 Disallow: /favorites/
-Disallow: /_next/
 Crawl-delay: 3
 
-# 착한 검색 봇은 우선 허용
+# 착한 검색 봇은 우선 허용 — /_next/static/ 명시 허용 (JS 번들 차단 방지)
 User-agent: Googlebot
+Allow: /_next/static/
 Allow: /
 Crawl-delay: 1
 
 User-agent: Naverbot
+Allow: /_next/static/
 Allow: /
 Crawl-delay: 1
 
@@ -58,5 +59,4 @@ Disallow: /
 User-agent: DataForSeoBot
 Disallow: /
 
-Sitemap: https://www.cocoalba.kr/sitemap.xml
-Sitemap: https://region.cocoalba.kr/sitemap.xml
+Sitemap: https://www.waiterzone.kr/sitemap.xml

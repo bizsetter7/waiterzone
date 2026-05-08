@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { sendTelegramAlert } from '@/lib/telegram';
 
 /**
  * POST /api/auth/signup
@@ -75,6 +76,13 @@ export async function POST(req: NextRequest) {
                 error.message?.toLowerCase().includes('already registered') ||
                 error.message?.toLowerCase().includes('already exists') ||
                 error.message?.toLowerCase().includes('duplicate');
+            // 중복 외 실제 오류 → 텔레그램 즉시 알림
+            if (!isAlreadyRegistered) {
+                const platform = process.env.NEXT_PUBLIC_SITE_NAME || '웨이터존';
+                await sendTelegramAlert(
+                    `🚨 <b>[가입 오류] ${platform}</b>\n\n이메일: <code>${email}</code>\n오류: ${error.message}`
+                ).catch(() => {});
+            }
             return NextResponse.json(
                 {
                     success: false,
@@ -139,7 +147,13 @@ export async function POST(req: NextRequest) {
                     user_type: finalRole,
                     points: finalRole === 'individual' ? 100 : 0,
                 }, { onConflict: 'id' });
-                if (fallbackErr) console.warn('[signup] profiles 기본 삽입 실패:', fallbackErr.message);
+                if (fallbackErr) {
+                    console.warn('[signup] profiles 기본 삽입 실패:', fallbackErr.message);
+                    const platform = process.env.NEXT_PUBLIC_SITE_NAME || '웨이터존';
+                    await sendTelegramAlert(
+                        `⚠️ <b>[프로필 저장 실패] ${platform}</b>\n\n유저ID: <code>${data.user?.id}</code>\n이메일: <code>${email}</code>\n오류: ${fallbackErr.message}`
+                    ).catch(() => {});
+                }
             }
         }
 

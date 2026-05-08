@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withSentryConfig } from '@sentry/nextjs';
 
 // Forced reload to clear 500 error after cache purge
 const nextConfig: NextConfig = {
@@ -48,4 +49,7 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+    silent: true,
+    disableLogger: true,
+});

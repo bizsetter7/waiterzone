@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import type { IdentityVerifyResult } from '@/types/identity-verify';
+import { sendTelegramAlert } from '@/lib/telegram';
 
 // service_role — 로그인 유저 본인인증 완료 후 프로필 업데이트용 [M-066]
 const supabaseAdmin = createClient(
@@ -66,8 +67,13 @@ export async function POST(req: NextRequest) {
         });
 
         if (!portoneRes.ok) {
-            const errorBody = await portoneRes.json();
+            const errorStatus = portoneRes.status;
+            const errorBody = await portoneRes.json().catch(() => ({}));
             console.error('[Identity/PortOneV2] API 조회 실패:', errorBody);
+            const platform = process.env.NEXT_PUBLIC_SITE_NAME || '웨이터존';
+            await sendTelegramAlert(
+                `🔴 <b>[본인인증 API 실패] ${platform}</b>\n\n인증ID: <code>${identityVerificationId}</code>\n포트원 응답: ${errorStatus}`
+            ).catch(() => {});
             return NextResponse.json(
                 { success: false, code: 'FETCH_FAILED', message: '포트원 서버에서 인증 정보를 가져오지 못했습니다.' },
                 { status: 500 }
@@ -126,6 +132,10 @@ export async function POST(req: NextRequest) {
                 await supabaseAdmin.from('profiles').update(profilePatch).eq('id', userId);
             } catch (patchErr) {
                 console.warn('[Identity/verify-result] 프로필 갱신 실패:', patchErr);
+                const platform = process.env.NEXT_PUBLIC_SITE_NAME || '웨이터존';
+                await sendTelegramAlert(
+                    `⚠️ <b>[인증 후 프로필 저장 실패] ${platform}</b>\n\n유저ID: <code>${userId}</code>\n오류: ${String(patchErr)}`
+                ).catch(() => {});
             }
         }
 
@@ -139,6 +149,10 @@ export async function POST(req: NextRequest) {
     } catch (err: unknown) {
         const message = err instanceof Error ? err.message : '알 수 없는 오류';
         console.error('[Identity/verify-result] 서버 내부 처리 오류:', message);
+        const platform = process.env.NEXT_PUBLIC_SITE_NAME || '웨이터존';
+        await sendTelegramAlert(
+            `💥 <b>[본인인증 서버 오류] ${platform}</b>\n\n오류: ${message}`
+        ).catch(() => {});
         return NextResponse.json(
             { success: false, code: 'SERVER_ERROR', message: '검증 처리 중 서버 오류가 발생했습니다.' },
             { status: 500 }

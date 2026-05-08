@@ -116,9 +116,13 @@ export async function POST(req: NextRequest) {
             };
             // migration 05 컬럼 (있으면 삽입, 없으면 fallback에서 제외)
             if (phone) profilePayload.phone = phone;
+            if (birthdate) profilePayload.birth_date = birthdate; // [Fix M-066] signup route birth_date 미저장 수정
             if (gender) profilePayload.gender = gender;
             if (contact_email) profilePayload.contact_email = contact_email;
-            if (identity_ci) profilePayload.identity_ci = identity_ci;
+            if (identity_ci) {
+                profilePayload.identity_ci = identity_ci;
+                profilePayload.is_adult_verified = true; // [Fix M-066] 본인인증 완료 시 is_adult_verified 명시 저장
+            }
 
             const { error: profileErr } = await supabaseAdmin
                 .from('profiles')

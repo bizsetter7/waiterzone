@@ -6,16 +6,21 @@ Disallow: /admin/
 Disallow: /api/
 Disallow: /my-shop/
 Disallow: /favorites/
+Disallow: /shop/
+Disallow: /_next/static/media/
 Crawl-delay: 3
 
-# 착한 검색 봇은 우선 허용 — /_next/static/ 명시 허용 (JS 번들 차단 방지)
+# 착한 검색 봇은 우선 허용
+# /_next/static/chunks/ 허용 (JS 번들), /_next/static/media/ 차단 (폰트 — 해시 변경으로 404 악순환)
 User-agent: Googlebot
-Allow: /_next/static/
+Allow: /_next/static/chunks/
+Disallow: /_next/static/media/
 Allow: /
 Crawl-delay: 1
 
 User-agent: Naverbot
-Allow: /_next/static/
+Allow: /_next/static/chunks/
+Disallow: /_next/static/media/
 Allow: /
 Crawl-delay: 1
 

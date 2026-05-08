@@ -50,6 +50,8 @@ const nextConfig: NextConfig = {
 };
 
 export default withSentryConfig(nextConfig, {
+    org: 'a5f1f5ea21a7',
+    project: 'javascript-nextjs',
     silent: true,
     disableLogger: true,
 });
